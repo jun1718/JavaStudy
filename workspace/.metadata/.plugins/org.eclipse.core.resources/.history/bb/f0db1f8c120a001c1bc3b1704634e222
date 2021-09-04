@@ -1,0 +1,13 @@
+
+public class _4ConditionalOperatorExample {
+
+	public static void main(String[] args) {
+		//-4~5까지의 정수 난수값 발생
+		double r = Math.random()*10-4;
+		int i = (int)r;
+		System.out.println("-4~5까지의 정수난수값 : " + i);
+	}
+	
+	
+	
+}

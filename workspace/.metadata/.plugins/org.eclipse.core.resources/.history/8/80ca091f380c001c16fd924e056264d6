@@ -1,0 +1,10 @@
+
+public class _1EnhancedForLoop {
+	public static void main(String[] args) {
+		 String[] weekDay = {"일", "월", "화", "수", "목", "금", "토", "북"};
+		 for(int i=0;i<weekDay.length;i++) {
+			 System.out.println(weekDay[i] + "요일");
+		 }
+	}
+
+}

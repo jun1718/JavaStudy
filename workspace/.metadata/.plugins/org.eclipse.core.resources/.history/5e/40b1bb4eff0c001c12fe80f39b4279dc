@@ -1,0 +1,14 @@
+
+public class _1MethodExample1 {
+	public static int calcSum(int num){
+		int sum=0;
+		for(int i=1;i<=num;i++) {
+			sum+=i;
+		}//endFor
+		return sum;
+	}//endMethod
+	
+	public static void main(String[] args) {
+		System.out.println("1~10까지 누적합: "+calcSum(10));
+	}//endMain
+}//endClass

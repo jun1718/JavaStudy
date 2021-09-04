@@ -1,0 +1,19 @@
+
+public class _9CastingOperator {
+	public static void main(String[] args) {
+		char c = 'B';
+		int i = 2;
+		
+//		char cc = c + i; //에러 c+i는 int형으로 반환되는데 그럼 char에 더큰데이터타입인
+						//int를 넣어줘야하니까 강제형변환해야함
+//		char cc = 'B' + 4; //근데 이거도 int로 바꼈을텐데 왜 자동형변환이될까?
+		char cc = 'B' + 1;
+		
+		int d = c+i;	//러안남
+//		char cc = c + i; //
+		
+		
+		
+		System.out.println(cc);
+	}
+}

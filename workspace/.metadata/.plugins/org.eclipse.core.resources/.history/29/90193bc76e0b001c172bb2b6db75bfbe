@@ -1,0 +1,9 @@
+
+public class _2ForExample2 {
+	public static void main(String[] args) {
+		//7~100까지의 정수중 7의 배수를 모두 가로로 출력
+		for(int i=7; i<101; i++) {
+			System.out.print(i+ " ");
+		}
+	}
+}

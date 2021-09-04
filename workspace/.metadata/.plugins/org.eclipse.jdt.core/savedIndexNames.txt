@@ -1,0 +1,10 @@
+INDEX VERSION 1.131+C:\IT\1.programming\6.java\2.material\eclipse-jee-photon-R-win32-x86_64\workspace\.metadata\.plugins\org.eclipse.jdt.core
+917677775.index
+2832610156.index
+1102419545.index
+3755017210.index
+2795118960.index
+1208212082.index
+3636250595.index
+2948331381.index
+836723414.index

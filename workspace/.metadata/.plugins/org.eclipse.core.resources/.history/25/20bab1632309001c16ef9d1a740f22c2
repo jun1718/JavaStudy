@@ -1,0 +1,10 @@
+
+public class _8CastingExample2 {
+	public static void main(String[] args) {		
+		int i = 65536;
+		//char c = i; //에러, 즉 자동형변환 불가
+		char c = (char)i;	//명시적 형변환
+		
+		System.out.println("72의 유니코드문자: " + c);
+	}
+}

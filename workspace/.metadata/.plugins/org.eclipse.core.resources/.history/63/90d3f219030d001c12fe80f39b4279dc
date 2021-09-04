@@ -1,0 +1,13 @@
+
+public class _1MethodExample3 {
+	public static int add(int n1, int n2) {
+		return n1 + n2;
+	}//add
+	
+	public static void main(String[] args) {
+		int r = add(3,5);
+		System.out.println(r);
+		int r2=add(add(4,6), add(8,7));
+		System.out.println(r2);
+	}//main
+}//class

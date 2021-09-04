@@ -1,0 +1,14 @@
+
+public class _8CastingExample1 {
+	public static void main(String[] args) {
+		byte b = 10;
+		int i = b; //자동 형변환(데이터크기의 문제가 없으니까)
+		
+		char c = '가';
+		int j = c;	//위와 같은 케이스 
+		
+		System.out.println("가의 유니코드 : " + j);
+		
+		
+	}
+}
