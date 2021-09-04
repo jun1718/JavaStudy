@@ -1,0 +1,987 @@
+21.08.31_4회차	
+======================================================================================================
+*복습
+======================================================================================================
+
+
+
+
+
+
+######################################################################################################
+개념정리_논리연산자(eager, short circuit evaluation)
+
+연산자마다 가능한연산이있음
+예를들면 *라면 숫자형*숫자형 등은 가능하지만 *연산자의 피연산자로는 논리자료형을 지원하지 않는다.
+
+#논리연산자의 피연산자에따른 역할변경
+	-즉 논리연산자를 사용하려면 피연산자 모두 논리값이 와야한다.
+정수 &(|) 정수: 비트연산
+논리 &(|) 논리: 논리연산
+
+#&논리곱
+ture & true -> true
+true & false -> false
+false & true -> false
+false & false -> false
+
+#|논리합
+ture | true -> true
+true | false -> true
+false | true -> true
+false | false -> false
+
+
+#논리곱에서 연산과정
+	-short circuit evaluation(단락(축)평가): 좌항에서 결과가 판정나면 우항을 실행하지 않는다.
+		(서킷 어바이유웨이션)
+		-사용이유: 메모리를 절약하자
+		-한개짜리 : 좌항에서 결과가 판정되도 우항을 실행한다.
+	-eager evalution(열성적인평가, 이걸 어(굉장히작게)바이유웨이션)
+	**** 참고
+	파이썬(구글링https://yahwang.github.io/posts/55)
+		-eager evalution : &/|
+		-short circuit evalution : and/or
+	java(구글링https://yahwang.github.io/posts/55)
+		-eager evalution : &/|
+		-short circuit evalution : &&/||
+	c(구글링https://yahwang.github.io/posts/55)
+		-eager evalution : 없음, 지원하지 않음
+		-short circuit evalution : &&/||
+
+		
+1)& : FM, eager evaluation
+	ex)논리값과 관계없이 ++b를 꼭해야하는경우
+
+2)&&(short circuit) 
+-좌항이 false면 우항을 실행하지않고 false.
+-좌항이 true면 우항을 실행한다.
+
+#논리합에서 연산과정
+1)| : FM, eager evaluation
+
+
+2)||(short circuit)
+-좌항이 true면 우항을 실행하지않고 true
+-좌항이 false면 우항을 실행하여 판별
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제1)논리연산자의 short circuit evaluation, eager evaluation 응용
+
+1)현재 출력결과에서 두번째 y가 22가 아닌 21로 출력되도록 하라
+2)b값을 2번의 출력 모두 20이 되도록 하라
+
+<아래의 클래스에서  출력결과>
+연산결과가 거짓입니다.
+x: 10 y: 21
+연산결과가 참입니다.
+x: 10 y: 22
+연산결과가 거짓입니다.
+a: 10b: 21
+연산결과가 참입니다.
+a: 10b: 22
+
+
+public class _1LogicalOperating {
+	public static void main(String[] args) {
+		int x = 10, y = 20;
+		if ((x!=10) & (++y == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		if ((x==10)|(++y==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		
+		int a = 10; int b =20;
+		if ((a!=10) & (++b == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+		if ((a==10)|(++b==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+	}
+}
+
+
+public class _1 {
+	
+	public static void main(String[] args) {
+		int x = 10, y = 20;
+		if ((x!=10) & (++y == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		if ((x==10)||(++y==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		
+		int a = 10; int b =20;
+		if ((a!=10) && (++b == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+		if ((a==10)||(++b==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+	}
+}
+
+
+######################################################################################################
+
+
+
+답:
+
+
+
+public class _1LogicalOperating {
+	public static void main(String[] args) {
+		int x = 10, y = 20;
+		if ((x!=10) & (++y == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		if ((x==10)||(++y==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("x: " + x + " y: " + y);
+		
+		
+		int a = 10; int b =20;
+		if ((a!=10) && (++b == 21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+		if ((a==10)||(++b==21)) {
+			System.out.println("연산결과가 참입니다.");
+		}
+		else {
+			System.out.println("연산결과가 거짓입니다.");
+		}
+		System.out.println("a: " + a + "b: " +b);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_대입연산자
+
+-대입연산자의 기본기호는 '='이고, 보다 발전된 대입 연산자는 x operand = a의 형태를 가지고 있으며 이는 x = x operand a와 같은
+역할을 함
+-대입연산자에는 =,+=,-=,*=,/=,%=,<<=,>>=,>>>=,&=,^=,|= 등이 있습니다.
+
+
+
+public class _2AssignmentOperatorExample {
+	public static void main(String[] args) {
+		int a=5, b= 5;
+		a+=3;  //a = a+3
+		b=+ 3; //b = (+3)으로 인식되는거임
+		System.out.println("a : "+a);
+		System.out.println("b : "+b);
+		
+		a-= 4;
+		System.out.println("============================");
+		System.out.println("a : "+a);
+		
+		a *= 6;
+		System.out.println("a : "+a);
+		
+		a/=5;
+		System.out.println("a : "+a);
+		
+		a %=3;
+		System.out.println("a : "+a);
+	}
+}
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제2)난수생성(정수,실수)
+
+1)RandomExample 클래스를 만들어서 아래의 소스코드가 정상적으로 실행되도록 만들어라.
+
+
+public class _3RandomExample {
+	public static void main(String[] args) {
+
+		//실수난수생성하기 0이상 1.0미만
+		System.out.println("랜덤값: " + r);
+	
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if () { 
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if() {
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{
+			System.out.println("집에서 놉시다!!!");
+		}
+		
+		//정수 난수 생성하기 0~9
+
+		System.out.println("=============================");
+		System.out.println("정수 난수값: " + );
+		
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if () { 
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if() { 
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{
+			System.out.println("집에서 놉시다!!!");
+		}
+	}
+}
+
+
+
+public class _1 {
+	public static void main(String[] args) {
+
+		//실수난수생성하기 0이상 1.0미만
+		
+		double r = Math.random();
+		
+		System.out.println("랜덤값: " + r);
+	
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if (r > 0.66) { 
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if(r > 0.33) {  
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{ 
+			System.out.println("집에서 놉시다!!!");
+		}
+		
+		//정수 난수 생성하기 0~9
+		int i = (int)(r*10);
+		System.out.println("=============================");
+		System.out.println("정수 난수값: " + i);
+		
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if (i > 6) { 
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if(i > 3) { 
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{
+			System.out.println("집에서 놉시다!!!");
+		}
+	}
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+
+public class _3RandomExample {
+	public static void main(String[] args) {
+		//난수(랜덤값)을 발생시키는 메서드 random()
+		//0.0이상 1.0미만의 랜덤 실수값을 가져옴 c에서 rand()는 0~65535개였나? 그랬던듯
+		double r = Math.random();
+		System.out.println("랜덤값: " + r);
+		
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if (r >0.66) { //0.67~0.99 33개 이상
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if(r > 0.33) {//0.34~0.66 33개 
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{//0~0.32 33개
+			System.out.println("집에서 놉시다!!!");
+		}
+		
+		//정수 난수 생성하기 0~9
+		int rn = (int)(r*10);
+		System.out.println("=============================");
+		System.out.println("정수 난수값: " + rn);
+		
+		System.out.println("*** 신년 여행지 선정 ! ***");
+		if (rn >0.66) { //0.67~0.99 33개 이상
+			System.out.println("모로코로 갑시다!!!");
+		}
+		else if(rn > 0.33) {//0.34~0.66 33개 
+			System.out.println("상하이로 갑시다!!!");
+		}
+		else{//0~0.32 33개
+			System.out.println("집에서 놉시다!!!");
+		}
+	}
+}
+
+
+
+
+public class _4ConditionalOperatorExample {
+
+	public static void main(String[] args) {
+		//-4~5까지의 정수 난수값 발생
+		int r = (int)(Math.random()*10-4);
+		
+		System.out.println("-4~5까지의 정수난수값 : " + r);
+		
+		
+	}
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제3)조건연산자+난수생성
+
+1)-4~5까지의 정수 난수값 발생후 출력
+2)위의 난수값들을 모두 절대값으로 변경(음수가 없도록 하라는 뜻)하여 abs라는 정수형 공간에 저장한 후 출력
+	-조건: 조건연산자(conditional operator를 사용할것)
+3)조건연산자를 이용해서 조건에따라 성공과 실패를 저장하는 String 객체를 만들어라
+	-무조건 성공만하게 만들어보시오
+
+public class _1 {
+	public static void main(String[] args) {
+		
+		int r = (int)(Math.random()*10 -4);
+		System.out.println("랜덤값 : "+r);
+		
+		int abs = (r >= 0) ? r:-r;
+		System.out.println("랜덤값의 절대값: "+abs);
+		String str = abs >=0 ? "양수입니다." : "음수입니다.";
+		
+		System.out.println(str);
+	}
+}
+
+
+#조건연산자 : if와 같은데 아주 간단한 로직을 만들때 사용함(예를들어 c에서 매크로함수? 였던듯)
+(조건식 ? 연산식1 : 연삭식2) : 조건이 참이면 1식 거짓이면 2식을 실행함
+
+######################################################################################################
+
+
+답:
+
+
+public class _4ConditionalOperatorExample {
+
+	public static void main(String[] args) {
+		//-4~5까지의 정수 난수값 발생
+		int r = (int)(Math.random()*10-4);
+		
+		System.out.println("-4~5까지의 정수난수값 : " + r);
+		
+		//3항조건연산자
+		int abs = (r >=0) ? r : -r;
+		System.out.println(abs);
+		String s = (abs>=0) ? "성공" : "실패";
+		
+		System.out.println(s);
+	}
+	
+	
+	
+}
+
+
+
+######################################################################################################
+개념정리_연산자 우선순위 및 종류
+
+연산자우선순위
+
+1.단항연산자
+(), [], .(참조연산자)
+++--(증감), +-(부호), !(논리반전), ~(비트반전), (type)
+
+2.이항연산자
+*/%(산술연산자)
++-
+
+<< >> >>>(비트이동연산자)	>>>:부호포함 우측이동
+
+< <= > >=(비교연산자)
+== !=
+instanceof(비교연산자:객체형비교)
+
+&, | ^(비트연산자,논리연산자)
+&&, || (논리연산자)
+
+3.삼항연산자
+? : (조건부연산자conditional operator)
+
+4.이항연산자(대입연산자)
+연산후 대입연산자, 대입연산자
+ =,+=,-=,*=,/=,%=,<<=,>>=,>>>=,&=,^=,|=
+
+
+연산자종류	 연산자			피연산자 수
+
+증감 연산	++, --			단항
+비교 연산	==, !=, <, 		이항
+	>, <=, >=, 
+	instanceof	
+비트 연산  ~, &, |, 		이항
+	^, <<, >>,
+	>>>	
+논리 연산	!, &, |,		이항 단항 
+	&&, ||	
+
+조건부 연산 ? : 			삼항
+대입 연산	=, +=, -=, *=, 		이항
+	/=, %= &=, ^=, 
+	|=, <<=, >>=, 
+	>>>=	
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_표준입출력
+
+* 자바 표준 입/출력(IO: Input/Output)
+
+- IO란 입력과 출력을 뜻합니다.
+
+- Input:
+1. 파일의 데이터를 읽는다. (loading)
+1. 키보드의 입력데이터를 읽는다.
+1. 네트워크상의 데이터를 읽는다.
+
+- Output
+1. 파일에 데이터를 쓴다.(save)
+1. 모니터에 데이터를 쓴다.(모니터에 데이터를 출력한다.)
+1. 네트워크상에 데이터를 쓴다.(파일 전송)
+
+- C언어에서는 문자열을 출력할 때 printf() 함수를 이용하고, 입력받을 때 scanf() 함수를 이용합니다.
+
+- 자바에서 데이터를 출력하는 명령은 System.out이고, 데이터를 입력받을 때는 System.in을 이용합니다.
+
+- 데이터를 입력받을 때는 표준 JAVA  API인 Scanner클래스를 사용하며, 이 Scanner 클래스는 다양한 타입의 입력 값들을 읽어들이기  
+	위한 메서드들을 제공합니다.
+
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_자바 표준 API의 class인 Scanner 사용법
+
+0.Scanner가 들어있는 API(import) 불러오기
+
+1. 스캐너 객체 생성
+ex) Scanner scan = new Scanner(System.in);
+
+2. 입력 받을 데이터 타입에 따른 메서드 호출.
+
+ex) scan.next(), scan.nextLine(), scan.nextInt(), scan.nextDouble() 등
+
+- next(): 공백을 포함하지 않는 문자열을 입력 받을 때
+- nextLine(): 공백을 포함한 문자열을 입력 받을 때
+- nextInt(): 정수를 입력 받을 때
+- nextDouble(): 실수를 입력 받을 때
+문자입력은????? 
+
+3. 스캐너 객체 종료. ex) scan.close();
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제4)표준입력함수 사용(ScannerExample)
+
+1)아래 출력결과처럼 이루어지도록 구현하시오.
+
+<출력결과>
+이름을 입력하세요.
+> 이순신
+나이를 입력하세요.
+> 26
+------------------
+이름 : 이순신
+나이 : 26
+
+
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+		
+		int age;
+		String name;
+		
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("이름을 입력하세요.");
+		System.out.print("> ");
+		name = scan.next();
+		
+		System.out.println("나이를 입력하세요.");
+		System.out.print("> ");
+		age = scan.nextInt();
+		
+		System.out.println("이름 : " + name);
+		System.out.println("나이: " + age);
+		
+	}
+}
+
+######################################################################################################
+
+
+답:
+
+import java.util.Scanner;
+
+public class ScannerExample {
+	public static void main(String[] args) {
+		//1.스캐너 객체 생성
+		Scanner scan = new Scanner(System.in);
+		//2.스캐너 클래스가 가지고 있는 입력메서드들을 사용하여 데이터를 입력받음
+		
+		
+		System.out.println("이름을 입력하세요.");
+		System.out.print("> ");	//println하면 안됨
+		String name = scan.next();
+		
+		System.out.println("나이를 입력하세요.");
+		System.out.print("> ");
+		int age = scan.nextInt();
+		
+		
+		
+		System.out.println("------------------------------");
+		System.out.println("이름 : " + name);
+		System.out.println("나이 : " + age);
+		
+		
+		scan.close();
+	
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_배열(Arrays)
+
+-평균낼때 매번학생수 체크해야함, 변수이름이 너무많아짐 그래서 나옴
+
+
+* 배열(Array)
+
+- 배열은 같은 데이터 유형 변수를 여러 개 선언해야 하는 불편함을 줄이기 위해 사용합니다.
+
+- 자바에서는 배열도 일종의 데이터 타입으로 취급할 수 있기 때문에 배열을 정의하는 대괄호"[]"가  배열 변수명 앞에 오는  것이  가능 합니다.
+
+
+-배열(Array)이란 선형 자료구조(Data Structure)중 하나로, 동일한 타입의 연관된 데이터를 메모리에 연속적으로 저장하여 
+하나의 변수에 묶어서 관리하기 위한 자료 구조입니다.  가장 기본적인 자료구조인 만큼 C,Java,Python등 거의 모든 언어에 구현되어 있습니다.
+ 배열의 길이는 최초 선언한 값으로 고정되며 위와 같이 인덱스(Index)를 통해 데이터에 접근 할 수 있습니다
+
+		출처: https://ifuwanna.tistory.com/231 [IfUwanna IT]
+
+#배열 "변수"선언: <데이터 타입><배열 이름[]> or <데이터 타입[]><배열 이름> 배열 생성: <배열 이름> = new <데이터 타입[배열의 크기]>
+	-배열을 선언만한경우 힙영역에 생성은안되고 배열명의 공간에는 nll값이들어온다
+	-c와다르게 []연산자안에 상수값을 안넣어도 컴파일시 문제가 없다.(차후 동적할당된 공간의 주소를받는 포인터형변수로 만들어지나봄?)
+	-ex) int nabi[]; -> 자료형 : int(정수) 기본자료형(타입) 
+	     int[] nabi; -> 자료형 : int(정수) 배열자료형(타입)	=>자바에선 이방식을 선호함
+
+
+- 자바의 배열은 선언시에는 크기를 명시할 수 없으며, 생성시에 크기를 명시한다.
+
+- 배열은 기본데이터 타입이나 객체참조 데이터 타입 또는 다른 배열의 순차적인 집합체라고 할 수 있습니다.
+
+- 하나의 배열에 여러가지 데이터형을 혼합해서 사용할 수 없습니다. 이런 배열의 특징을 동종모음(Homogeneous collection)이라고   합니다.
+
+- 배열은 선언, 생성, 초기화의 과정을 통하여 만들어집니다.
+
+#배열의 생성 : 동적할당
+	-ex) int[] nabi;
+	     nabi = new int[5];
+	-주소값: 한바이트당 하나의 주소를가지고있음
+		-ex)int는 주소값을 4개가지고 있는거임 4byte니까
+	-대표주소만알면된다.
+
+- 선언 시에는 배열에 들어갈 데이터 타입을 결정하고, 생성 시 만들 배열의 크기를 결정합니다. 
+	그리고 초기화 과정을 통하여 배열에 들어갈 값을 입력해 줍니다.
+
+- 배열의 길이란 배열에 저장할 수 있는 전체 항목 수를 말하는데 코드에서 배열의 길이를 얻으려면 '배열변수이름.length'라는 코드를 사용합니다.
+
+
+#배열의 초기화: 각 인덱스에 값을 처음넣는 행위
+	-배열은 생성시 최초에 각 자료형에 대한 기본값으로 초기화가 되지만 그것을 배열의 초기화라고 부르지 않고 그 후 직접 유효값을넣을때
+		배열의 초기화라 하나보다?
+
+#배열특징 
+1)reference Type(기본타입이아니다 참조타입이다)
+2)homogeneous(호모지니어스) collection : 동종모음구조 : 같은 종류의 데이터만 모아지는 것
+		-int형 배열을 만들면 double형 데이터는 해당 배열타입에 들어갈수 없다.
+3)immutable : 크기 변경불가능(배열의 길이)
+	-해결책: 리스트, 셋 등으로 배열을 강화시킬수있다고한다.
+
+*****참고	(멤버변수 및 지역변수 초기화에 대하여)
+#암시적 초기화방법: 클래스에서 멤버변수를 선언과 동시에 초기화하지 않은경우 자동으로 데이터의 형태가 가지는 기본값으로 초기화를 진행한다.
+	-이때 초기화는 멤버변수에서만되고 지역변수에대해서는 기본값으로 초기화되지않는다. 그럼으로 반드시 초기화하여야한다.
+	-각 데이터타입의 기본값(default value), 배열 생성시 배열의 타입별 초기값
+		int[] a; 배열변수->a, 배열변수형->int 힙영역에 생성되는 int배열변수형 공간에서 각 세부공간은 int이고 그공간에
+			배열변수형이 저장됨
+	      배열변수형   초기값
+		byte : 0
+		short : 0
+		int : 0
+		long : 0L
+		float : 0.0F
+		double : 0.0
+		char : " "(유니코드의 공백문자) : '\u0000'
+		boolean : false
+		string : null
+		참조변수(주소가들어가는 모든 변수) : null
+	*java 자료형의 대분류 : 기본자료형(primitive type), 참조자료형(참조타입,reference type)
+		기본자료형 : 정수타입(byte,char,short,int,long), 실수타입(float, double), 논리타입(boolean)
+			-메모리에서 할당된 공간의 값으로 실제 값을 저장
+		참조자료형 : 배열타입, 열거타입, 클래스, 인터페이스
+			-메모리에서 할당된 공간의 값으로 메모리(할당된 특정공간)의 주소값을 저장하는 것
+		*자료형은 메모리에 공간을 할당받았을때 그모양이 무엇이냐 물을때 그 종류라고 보면될듯? 특정 데이터를 저장할수 있는공간의
+											이름 
+#new : 힙영역에 새로운 객체를 만들때 사용하는 연산자로 객체 생성연산자라한다
+String s = "a";	//힙영역에 동적할당된 객체공간의 멤버변수공간에 값 문자 배열이 만들어진후 a값과 널값이 들어가고 해당 객체공간의
+		주소를 s에 넣는다. 즉 s는 참조변수라는 것이다.
+
+s = null; //특히하게도 자바에서는 힙영역의 특정객체에 대한 참조변수가 없으면 garbage collector로 공간할당을 자동해제한다.
+		garbage collector : 사용되지 않는 메모리를 다시 사용할 수 있도록 하는 것 -> jvm이 할당된 모든
+					메모리를 가지고 있고 이를 관리한다는 뜻임
+
+변수의 초기화
+변수를 선언하고 처음으로 값을 저장하는 것을 '변수의 초기화'라고 한다.
+
+멤버변수는 초기화를 하지 않아도 자동적으로 변수의 자료형에 맞는 기본값으로 초기화가 이루어지므로 
+초기화하지 않고 사용해도 되지만 지역 변수는 사용하기 전에 반드시 초기화를 해야한다.
+
+
+class InitTest {
+  int x;
+  int y = x; //문제 없음
+
+  void method() {
+    int i;
+    int j = i; // 컴파일 에러: 지역변수를 초기화하지 않고 사용함
+  }
+}
+
+멤버 변수의 초기화 방법
+명시적 초기화(explicit initialization) : 선언과 동시에 초기화하는 방법임
+생성자(constructor)
+초기화 블럭(initialization block)
+인스턴스 초기화 블럭 : 인스턴스 변수를 초기화 하는데 사용
+클래스 초기화 블럭 : 클래스 변수를 초기화하는데 사용
+
+
+
+
+배열변수의 데이터 타입은 int배열타입이고 배열변수가 참조하는 배열의 타입은 int이다.(아무리 구글링해도 잘 모르겠음)
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제5)배열(객체)의 자료형, 배열변수의 자료형(배열타입)
+
+1)int배열타입 변수인 score를 만들고 응용하라
+
+1-1)배열의 선언
+1-2)배열의 생성
+1-3)배열의 초기화
+1-4)배열의 값참조(사용)
+1-5)배열의 내부 값을 문자열 형태로 출력
+1-6)배열의 길이 출력
+1-7)배열의 선언과 생성을 동시에하는 byte배열타입 변수 bArr(참조변수)를 만들고(배열의 선언) 내부문자열형태로출력,길이출력
+1-8)int배열타입 참조변수를 만들고(int배열타입의 배열을 선언) 생성, 초기화 동시에
+1-9)배열의 초기값설정하지않고 초기값이 기본값으로 자동초기화된것을 확인
+
+
+
+
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+		
+		int[] score;
+		score = new int[5];
+		for (int i=0, b=1;i<4;i++,b++) {
+			score[i] = b;
+		}
+		System.out.println(Arrays.toString(score));
+		System.out.println(score[0]);
+		System.out.println(score.length);
+		
+		byte[] bArr = new byte[5];
+		System.out.println(Arrays.toString(bArr));
+		System.out.println(bArr.length);
+		
+		int[] arr = new int[] {10, 39, 29, 43, 56};
+		System.out.println(Arrays.toString(arr));
+		System.out.println(arr.length);
+		
+		char[] ch = new char[] {'남', 'B', 65, '자'};
+		System.out.println(Arrays.toString(ch));
+		System.out.println(ch.length);
+		
+		String[] str = new String[] {"ㄴ어래ㅑㄷ저ㅐㅑ렂대ㅑㄹ", "hi", " "};
+		System.out.println(Arrays.toString(str));
+		System.out.println(str.length);
+		System.out.println(str.length);
+	}
+}
+
+######################################################################################################
+
+
+답:
+
+
+
+
+import java.util.Arrays;
+
+public class _6ArrayBasic {
+	public static void main(String[] args) {
+		//1.배열의 선언 -stack에 배열의 참조변수를 설정
+//		int score[50];//자바에서는 선언시 크기명시 불가
+//		int score[];	//c style
+		int[] score;    //java style
+				//현재는 힙에 할당안됨 score에는 null 값이 들어가있음
+//		System.out.println(score); //에러
+		
+		
+		
+		//2.배열의 생성 -heap에 실제 데이터가 저장될 공간을 생성
+		//배열은 생성시 크기를 명시함. 한번 설정한 크기는 변경불가
+		score = new int[5];
+		System.out.println(score);
+		System.out.println(score[0]);	//기본값으로 초기화됨
+		
+		//3.배열의 초기화 - 배열에 값을 저장하는 과정
+		score[0] = 87;
+		System.out.println(score[0]);	//배열의 초기화
+			
+		score[2] = 99;
+		score[3] = score[0];
+		
+		
+		//4.배열의 값 참조(사용)
+		System.out.println("배열의 3번째 데이터값 : " + score[2]);
+		System.out.println("배열의 4번째 데이터값 : " + score[3]);
+		
+		/*
+		 * 배열 내부에 저장된 값들을 한눈에 문자열 형태로 확인해보려면 출력메서드 
+		 * println의 매개값으로 Arrays.toString(배열변수명)을 쓰면 됨
+		 */
+		System.out.println(Arrays.toString(score));
+		
+		
+		//배열의 길이를 알아보려면 배열변수명.length 명령을 사용
+		System.out.println("배열의 길이: " + score.length);
+		
+		//배열의 선언과 생성을 동시에 하는방법
+		byte[] bArr = new byte[7];
+		System.out.println(Arrays.toString(bArr));
+		
+		//배열의  선언과 생성과 초기화를 동시하는 방법
+		char[] letters = new char[] {'가', '나', '다', '라'};
+		System.out.println(Arrays.toString(letters));
+		System.out.println("배열의 길이: " + letters.length);
+		
+//		String[] names = new String[] {"홍길동", "심사임당", "강감찬"};
+		String[] names = {"홍길동", "심사임당", "강감찬"}; // 선언-생성-초기화를 동시에
+											//하는경우에는 new 배열타입[] 생략가능
+		System.out.println(names);
+		System.out.println(Arrays.toString(names));
+		System.out.println("배열의 길이: " + names.length);
+		
+		//배열의 초기값을 설정하지 않으면 각 데이터 타입의 기본값으로 자동초기화됨
+		
+		
+	}
+}

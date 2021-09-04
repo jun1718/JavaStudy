@@ -1,0 +1,710 @@
+21.09.01_5회차	
+======================================================================================================
+*복습
+======================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_제어문
+
+* 제어문
+
+- 제어문의 종류는 조건문, 반복문, 탈출문이 있습니다.
+- 조건문은 특정 조건을 만족할 때 실행할 문장을 작성하는데 사용합니다.
+- 반복문은 여러 번 반복 실행할 코드가 있다면 반복문을 작성합니다.
+- 반복문이 실행되는 동안 실행을 중지시키고 싶으면 탈출문을 사용합니다.
+
+
+* 조건문 if ~ else
+
+- if문은 프로그램의 흐름을 바꾸는데 사용되는 조건 선택 분기문입니다.
+- if문의 조건식 결과는 반드시 boolean형이어야 되며, 조건식이 참이면 if문 블록안의 실행문이 실행되고, 거짓이면 else문 블록안의 실행문이 실행됩니다.
+- if문장은 else문장 없이 사용할 수 있습니다. 그러나 else문장은 if문장 없이 단독으로 사용할 수 없습니다.
+- 조건식의 결과가 거짓일 때 실행할 문장이 없다면, else문 이하를 생략해도 됩니다.
+
+
+* 다중 분기 조건문 if ~ else if ~ else
+
+- 여러 조건들을 설정할 때 사용하는 조건문입니다.
+- 다중 분기 조건문은 위에서부터 차례로 조건을 검색합니다.
+
+
+public class _1IfExample1 {
+	public static void main(String[] args) {
+		//0~100까지의 정수형 난수 발생
+		int point = (int)(Math.random()*101);
+		System.out.println("점수: "+point);
+		
+		if(point>=60) {
+			System.out.println("60점 이상입니다.");
+			System.out.println("시험에 합격했습니다.");
+		} else {
+			System.out.println("60점 미만입니다.");
+			System.out.println("시험에 불합격했습니다.");			
+		}//end else
+		System.out.println("수고하셨습니다!");
+	}//end main
+}//end class
+
+
+
+import java.util.Scanner;
+
+public class _1IfExample2 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		
+		System.out.println("점수를 입력하세요.");
+		System.out.print("> ");
+		int point = scan.nextInt();
+		
+		if(point >= 90) {
+			if(point > 100) {
+				System.out.println("점수를 잘못 입력했습니다.");
+			} else if(point >= 95) {
+				System.out.println("당신의 학점은 A+입니다.");
+			} else {
+				System.out.println("당신의 학점은 A입니다.");				
+			}
+		} else if(point >= 80) {			
+			System.out.println("당신의 학점은 B입니다.");
+		} else if(point >= 70) {
+			System.out.println("당신의 학점은 C입니다.");
+		} else if(point >= 60) {
+			System.out.println("당신의 학점은 D입니다.");			
+		} else {
+			System.out.println("당신의 학점은 F입니다.");			
+			System.out.println("당신은 재수강!");			
+		}
+	}//end main
+}//end class
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제6) if 
+
+
+* 1. 양의 정수를 입력받아서 그 수가 홀수라면
+*    "x는 홀수입니다.", 짝수라면 "x는 짝수입니다."가
+*    출력되도록 조건문을 활용하여 코드를 만들어보세요.
+*    힌트) 짝수는 2로 나누면 나머지가 0이다.
+* 2. 만약 사용자가 0을 입력하면 "0입니다." 하고 종료되도록, 음수를
+*    입력하면 "음의 정수입니다."를 출력하고 종료되도록 조건문을
+*    수정해보세요.   
+*/		
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("정수 입력 : ");
+		int num = scan.nextInt();
+		if(num == 0) {
+			System.out.println("0입니다.");
+			return;
+		}
+		if(num < 0) {
+			System.out.println("음의 정수입니다.");
+			return;
+		}
+		
+		if(num%2==0) {
+			System.out.println("짝수입니다.");
+		} else {
+			System.out.println("홀수입니다.");
+		}
+		
+	}
+}
+
+
+######################################################################################################
+
+
+답:
+
+
+import java.util.Scanner;
+
+public class _2IfQuiz {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("양의 정수 입력 : ");
+		int num = scan.nextInt();
+		
+		if(num == 0) {
+			System.out.println("0입니다");
+			return;
+		} else if(num < 0) {
+			System.out.println("음의 정수입니다.");
+			return;			
+		}
+		
+		if(num % 2 == 0) {
+			System.out.println("x는 짝수입니다.");
+		} else {
+			System.out.println("x는 홀수입니다.");			
+		}
+		
+	}//end main
+}//end class
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_switch ~ case
+
+
+
+* 조건문 switch ~ case
+
+- 복합 if문은 구현하기 복잡하고 프로그램의 효율성이 감소되는 단점이 있기 때문에, 다중 분기 문제를 해결할 때는 switch문을 사용합 니다.
+
+- switch문은 다중 분기 구조이므로 복합 if문의 논리적인 구조를 간결하게 표현할 수 있습니다.
+
+- if문과는 달리 조건식이 사용되지 않고, 값을 가지는 변수 또는 표현식이 판단조건으로 사용되며, 연산 결과의 데이터 타입은 int, String, Enum(열거형)이 사용됩니다.
+
+- case문 뒤에 사용되는 값은 변수를 사용할 수 없고, 반드시 상수를 사용해야 합니다.
+
+- switch ~ case문에서 default는 if~else에서 else와 비슷한 효과를 가집니다.
+
+switch (변수) // 변수 : char int string, enum
+{
+case 변수값(상수):
+	해당 case의 실행코드
+case 상수2:
+	해당 case의 실행코드
+default:
+	해당 case의 실행코드
+}	
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제7) switch ~ case
+
+
+1)case 변수를 정수타입으로 두기
+	아래 방식으로 swtich ~ case를 만들어서 효율성을 if보다 좋게하라
+
+90점이상 100점이하 A 출력
+	100점초과시 점수잘못입력함을 출력
+80점이상 B 출력
+70점이상 C 출력
+60점이상 D 출력
+50점이상 D 출력
+
+
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+	
+		Scanner scan = new Scanner(System.in);
+		System.out.print("점수 입력 : ");
+		int point = scan.nextInt();
+		
+		switch(point/10) {
+		case 10:
+		case 9:
+			if (point>100) {
+				System.out.println("100점 이하로 점수입력하세요.");
+			} else {
+				System.out.println("당신의 성적은 A입니다.");				
+			}
+			break;
+		case 8:
+			System.out.println("당신의 성적은 B입니다.");
+			break;
+		case 7:
+			System.out.println("당신의 성적은 C입니다.");
+			break;
+		case 6:
+		case 5:
+			System.out.println("당신의 성적은 D입니다.");
+			break;
+		default :
+			System.out.println("당신의 성적은 F입니다.");
+		}
+	}//end main
+}//end class
+
+
+2)case변수 문자열타입으로 두기
+	아래처럼 출력되게 해봐라
+
+배열이름 : foods
+	배열변수 자료형 : String배열타입
+비빔밥, 사시미, 북경요리, 카레, 똠양꼼
+한식	일식	중식  기타해외요리입니다.
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+	
+		String[] foods = new String[] {"비빔밥", "사시미", "북경요리",
+				"카레", "똠양꼼"};
+		System.out.println(Arrays.toString(foods));
+		int r = (int)(Math.random()*5);
+		System.out.println("오늘의 요리 : " + foods[r]);
+		
+		switch(foods[r]) {
+		case "비빔밥":
+			System.out.println("한국 음식입니다.");
+			break;
+		case "사시미":
+			System.out.println("일본 음식입니다.");
+			break;
+		case "북경요리":
+			System.out.println("중국 음식입니다.");
+			break;
+		default:
+			System.out.println("기타 해외 요리입니다.");
+		}
+	}//end main
+}//end class
+
+######################################################################################################
+
+
+
+
+답:
+
+
+
+
+1)case 변수를 정수타입으로 두기
+	아래 방식으로 swtich ~ case를 만들어서 효율성을 if보다 좋게하라
+
+import java.util.Scanner;
+
+public class _3SwitchExample1 {
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		System.out.print("점수 : ");
+		int point = scan.nextInt();
+		
+		/*
+		 * switch 키워드 뒤에 나오는 변수나 연산식은 결과값이 반드시 문자나 정수타입이어야함
+		 */
+		switch(point/10){
+ 			//case 뒤에는 반드시 상수를 적어야함
+		case 10:
+		case 9:	//90~99
+			if (point > 100) {
+				System.out.println("점수잘못입력함.");
+			} else {
+				System.out.println("당신의 학점은 A입니다.");	
+			}
+			break;
+		case 8:	
+			System.out.println("당신의 학점은 B입니다.");
+			break;
+		case 7:
+			System.out.println("당신의 학점은 C입니다.");
+			break;
+		case 6: //50 ~ 69 D
+		case 5:
+			System.out.println("당신의 학점은 D입니다.");
+			break;
+		default:
+			System.out.println("당신의 학점은 F입니다.");
+		}
+		
+		
+		scan.close();
+	}
+
+}
+
+
+
+
+
+2)case변수 문자열타입으로 두기
+	아래처럼 출력되게 해봐라
+
+public class _3SwitchExample2 {
+	public static void main(String[] args) {
+		String[] foods = {"비빔밥", "사시미", "북경오리", "카레", "똠양꼼"};
+		//index(0~4) 범위 난수 발생
+		int idx = (int)(Math.random() * 5);
+		System.out.println("선택된 음식 : " + foods[idx]);
+		
+		switch(foods[idx]) { //문자나 정수만가능 foods는 String배열타입, idx를하니 char
+								//문자타입 그래서 가능
+		case "비빔밥":
+			System.out.println("한식입니다.");
+			break;
+		case "사시미":
+			System.out.println("일식입니다.");
+			break;
+		case "북경오리":
+			System.out.println("중식입니다.");
+			break;
+		default:
+			System.out.println("기타 해외요리입니다.");
+		}
+	}//end main
+}//end class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제8) switch ~ case 출력결과만으로 유추하여 실행하기(심화)
+
+<출력결과>
+직급을 입력하세요.
+[사원,대리,과장,차장,부장]
+> 사워
+사워은(는) 없는 직급입니다.
+직급을 다시 입력해주세요.
+
+
+직급을 입력하세요.
+[사원,대리,과장,차장,부장]
+> 대리
+대리의 급여는 300만원입니다.
+		//이런식으로 각 월급을 알려줘라 월급은 맘대로 설정
+
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+	
+		System.out.println("직급을 입력하세요.");
+		System.out.println("[사원, 대리, 과장, 차장, 부장]");
+		System.out.print("> ");
+		Scanner scan = new Scanner(System.in);
+		String position = scan.next();
+		
+		switch(position) {
+		case "사원":
+			System.out.println(position+"의 급여는 100만원입니다.");
+			break;
+		case "대리":
+			System.out.println(position+"의 급여는 200만원입니다.");
+			break;
+		case "과장":
+			System.out.println(position+"의 급여는 300만원입니다.");
+			break;
+		case "차장":
+			System.out.println(position+"의 급여는 400만원입니다.");
+			break;
+		case "부장":
+			System.out.println(position+"의 급여는 500만원입니다.");
+			break;
+		default:
+			System.out.println(position+"은(는) 없는 직급입니다.\n직급을 다시 입력해주세요.");				
+		}
+	}//end main
+}//end class
+
+
+
+######################################################################################################
+
+
+
+
+답:
+
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class _4SwitchQuiz {
+	public static void main(String[] args) {
+		
+		System.out.println("직급을 입력하세요.");
+		System.out.println("[사원, 대리, 과장, 차장, 부장]");
+		System.out.print("> ");
+		
+		Scanner scan = new Scanner(System.in);
+		String position = scan.next();
+		
+		switch(name){
+		case "사원":
+			System.out.println(position+"의 직급은 100만원입니다.");
+			break;
+		case "대리":
+			System.out.println(position+"의 직급은 200만원입니다.");
+			break;
+		case "과장":
+			System.out.println(position+"의 직급은 300만원입니다.");
+			break;
+		case "차장":
+			System.out.println(position+"의 직급은 400만원입니다.");
+			break;
+		case "부장":
+			System.out.println(position+"의 직급은 500만원입니다.");
+			break;
+		default:
+			System.out.println(position+"은(는) 없는 직급입니다.");
+			System.out.println("직급을 다시 입력해주세요.");
+		}
+	}//end main
+}//end class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_while
+
+* 반복문 while
+
+- while문은 조건식을 만족하는 동안 반복문을 실행하는데, 조건식을 검사해서 조건식이 참이면 실행문을 반복하고, 거짓이면 while문 을 빠져나옵니다.
+
+- while문에 들어가는 조건식도 if문과 마찬가지로 반드시 boolean타입으로 결과를 반환해야 합니다.
+
+- 조건식 안에 true를 넣으면 무한루프가 발생하기 때문에 반드시 탈출구문을 넣어야 합니다.
+
+
+
+
+public class _5WhileExample1 {
+	public static void main(String[] args) {
+		//1~10까지의 누적합계를 구하는 로직
+		int sum = 0; //합계를 저장할 변수
+		int n=1; //제어변수 : 반복문의 횟수를 제어할 변수
+		
+		while(n <= 10) {
+			sum += n;
+			n++;
+		}
+		System.out.println("1부터 10까지의 합 : "+ sum);
+		
+	}//end main
+}//end class
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제9) while 응용(소수판별로직)
+
+소수를 판별하는 while 제어문을 작성하시오.
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class _1 {
+	public static void main(String[] args) {
+	
+		Scanner scan =new Scanner(System.in);
+		System.out.print("정수입력 : ");
+		int num = scan.nextInt();
+		int i = 2;
+		while(num % i != 0) {
+			i++;
+		}
+		if(num==i) {
+			System.out.println("소수입니다.");
+		} else {
+			System.out.println("소수가 아닙니다.");
+		}
+	}//end main
+}//end class
+
+
+######################################################################################################
+
+
+
+
+답:
+
+
+
+import java.util.Scanner;
+
+public class _5WhileExample2 {
+	public static void main(String[] args) {
+		//정수를 이력받아서 해당 정수가 소수인지 판별
+		Scanner scan = new Scanner(System.in);
+		System.out.print("정수를 입력: ");
+		int num = scan.nextInt();
+		
+		int i=2;
+		while (num%i != 0) {
+			i++;
+		}
+		if (i == num) {
+			System.out.println(num + "은 소수입니다.");
+		}
+		else {
+			System.out.println(num + "은 소수가 아닙니다.");			
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
