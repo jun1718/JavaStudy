@@ -72,6 +72,7 @@ class AccountManager {
 
 //main
 	public static void main(String[] args) {
+		
 		Account p1 = new Account();
 		setAccountInfo(p1);
 
