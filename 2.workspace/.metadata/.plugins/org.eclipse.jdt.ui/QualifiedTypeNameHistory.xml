@@ -6,4 +6,6 @@
 <fullyQualifiedTypeName name="hello.bye.Bye"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="inherit.phone.MainClass"/>
+<fullyQualifiedTypeName name="overriding.Parent"/>
+<fullyQualifiedTypeName name="overriding.Child"/>
 </qualifiedTypeNameHistroy>

@@ -4324,3 +4324,667 @@ public class DmbPhone extends Phone{
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+======================================================================================================
+*21.09.08_12회차(12강)
+======================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_overriding, overloading
+
+
+* 메서드 재정의(Overriding) : 통상적으로 메서드의 기능은 같게끔 하고 내부 블록만 추가하는 것
+
+- 메서드 재정의란 부모클래스로부터 상속받은 메서드를 자식클래스에서 행위를 바꾸거나 보완하기 위해 다시 정의해서 사용하는 것을 말합니다.
+
+- 이는 부모클래스에서 특별한 용도로 사용하던 메서드를 자식클래스에서 다른 용도로 사용할 때 필요합니다.
+
+- 부모클래스의 모든 메서드가 자식클래스에 맞게 설계되어 있다면 가장 이상적인 상속이지만, 특정 메서드는 자식 클래스가 사용하기 에 적합하지 않을 수도 있습니다.
+
+- 이 경우 상속된 일부 메서드는 자식클래스에서 재정의하여 사용해야 합니다.
+
+- 메서드가 자식클래스에서 재정의되었다면 자식객체를 통해 메서드를 호출했을 때 새롭게 재정의된 메서드가 호출됩니다.
+
+- 메서드 재정의 규칙
+1. 반드시 상속을 전제로 해야합니다.
+1. 반드시 반환 유형이 같아야 합니다.
+1. 메서드 이름이 같아야 합니다.
+1. 매개 변수 선언이 정확히 일치해야 합니다.
+1. 접근제한자는 같거나 더 제한이 없어야 합니다.(more public)
+
+
+* 중복(Overloading) : 통상적으로 메서드의 기능을 변경하는 것 
+
+- 자바는 메서드나 생성자의 중복 선언을 허용합니다.
+
+- 중복은 메서드 또는 생성자를 선언할 때 이름은 같지만 매개 변수의 유형이나 개수를 다르게 선언해 놓는 것을 의미합니다.
+
+- 중복을 사용하면 하나의 메서드로 매개 변수의 유형에 따라 다른 동작이 실행되게 합니다.
+
+- 중복의 조건
+
+1. 이름이 같아야 합니다.
+1. 접근제한자나 반환유형은 영향을 미치지 않습니다.
+1. 매개 변수의 유형이 달라야 합니다.
+1. 매개 변수의 개수가 달라야 합니다.
+1. 매개 변수의 순서가 달라야 합니다.
+
+
+
+
+#차이점: 매개변수의 변화
+overriding : 매개변수가 안바뀌고 외부형틀이 완전히 똑같다.
+overloading : 매개변수가 변경되고 반환자료형도 변경할수있다.
+
+공통점: 내부블록 수정가능, 기존메서드와 이름이 같음
+
+
+
+package overloading.basic;
+/*
+ * 오버로딩(중복)-하나의 클래스 내부에 같은 이름을 가진 메서드를 여러개 선언할수 있게하는 문법
+ * 	-부모꺼를 오버로딩할순 없는가?
+ * 1.매개변수의 데이터타입이 달라야함
+ * 2.매개변수의 순서가 달라야함
+ * 3.매개변수의 개수가 달라야함
+ */
+public class Basic {
+	void input(int a) {
+		System.out.println("정수 1개가 입력됨");
+	}
+	void input(int i, int j) {
+		System.out.println("정수 2개가 입력됨");
+	}
+	void input(String s) {
+		System.out.println("문자열 1개가 입력됨");
+	}
+	void input(String s, double d) {
+		System.out.println("문자열 1개, 실수형 1개가 입력됨");
+	}
+	void input(double x, String d) {
+		System.out.println("실수형 1개, 문자열 1개가 입력됨");
+	}
+}
+
+
+
+package overloading.basic;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Basic b = new Basic();
+		b.input(5);
+		b.input("하이");
+		b.input(5,10);
+		b.input(3.14,"하하");
+		
+		System.out.println();
+	}
+
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제17)overriding
+
+11일차의 goodcase안의 employee,main,person,student,teacher를 가져오고 아래처럼 출력되도록
+오버라이딩하라(main은 손대지마라)
+
+이름: 홍길동, 나이: 45
+이름: 이순신, 나이: 23, 학번: 2018110033
+이름: 강감찬, 나이: 44, 과목: 수학
+이름: 신사임당, 나이: 33, 부서: 구매부
+
+######################################################################################################
+
+
+
+
+답:
+
+package overriding.person;
+
+/*
+ * 데이터를 다른 클래스에게 물려주는 클래스를 부모클래스라고 합니다.
+ * 상속을 사용할 시 데이터를 물려받는 클래스에게 부모클래스의 멤버변수,
+ * 메서드가 상속됩니다.
+ * 단, 생성자는 상속되지 않습니다.
+ */
+public class Person {
+	
+	String name;
+	int age;
+	
+	String info() {
+		return "이름: " + name + ", 나이: " + age;
+	}
+	
+}
+
+
+
+package overriding.person;
+
+/*
+ * 다른 클래스로부터 멤버변수와 메서드를 물려받는 클래스를
+ * 자식 클래스라고 부릅니다. 
+ * 자식 클래스의 이름 뒤에 extends라는 키워드를 쓰고 
+ * 물려받을 클래스의 이름을 써줍니다.
+ */
+public class Student extends Person {
+	String stuID;
+	String info() {
+		return "이름: " + name + ", 나이: " + age + ", 학번: " + stuID;
+	}
+	
+}
+
+
+
+
+package overriding.person;
+
+public class Teacher extends Person {
+	
+	String subject;
+	String info() {
+		return "이름: " + name + ", 나이: " + age + ", 과목: " + subject;
+	}
+}
+
+
+
+
+package overriding.person;
+
+public class Employee extends Person {
+	
+	String department;
+	String info() {
+		return "이름: " + name + ", 나이: " + age + ", 부서: " + department;
+	}
+}
+
+
+
+
+package overriding.person;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		
+		Person hong = new Person();
+		hong.name = "홍길동";
+		hong.age = 45;
+		System.out.println(hong.info());
+		
+		Student lee = new Student();
+		lee.stuID = "2018110033";
+		lee.name = "이순신";
+		lee.age = 23;
+		System.out.println(lee.info());
+		
+		Teacher kang = new Teacher();
+		kang.subject = "수학";
+		kang.name = "강감찬";
+		kang.age = 44;
+		System.out.println(kang.info());
+		
+		Employee shin = new Employee();
+		shin.department = "구매부";
+		shin.age = 33;
+		shin.name = "신사임당";
+		System.out.println(shin.info());
+		
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_this
+
+
+#생성자를 메서드명으로 호출하는방법: 첫호출시밖에없음.
+	-그다음부터는 this로
+	-this(name, 1);
+#생성자생성순서: 매개변수가 많을수록 모든 매개변수를 수용할수있는 생성자를 만든후 점점 매개변수를 줄여가는것이 좋다.
+#f3을 누르면 만들어진곳으로 향할수있다.
+
+* this
+
+- this는 자기 자신 객체를 지정할 때 사용하는 키워드입니다.
+
+- this. 을 사용하면 동일 클래스 내의 멤버(멤버변수, 메서드)를 참조할 수 있습니다.
+
+- this()를 사용하면 생성자 내부에서 자신의 다른 생성자를 호출할 수 있습니다.
+
+package this_.car;
+
+public class Car {
+	String model;
+	int speed;
+	Car(String model){
+		this.model = model;
+	}
+	Car(){
+		this("이름없음");
+	}
+	
+	void accel(int speed) {
+		if(this.speed >= 150) {
+			System.out.println("속도를 더이상 올릴수 없습니다.");
+		}else {
+			this.speed = speed;
+		}
+	}
+	void run(int maxSpeed) {
+		for(int i=0;i<=maxSpeed;i+=30) {
+			this.accel(i);
+			System.out.printf("%s가 달립니다.(시속: %dkm/h)\n", this.model, 
+					this.speed);
+		}
+	}
+}
+
+package this_.car;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Car myCar1 = new Car("람보르기니 아벤타도르");
+		Car yourCar = new Car("아반떼 스포츠");
+		
+		myCar1.run(250);
+		System.out.println("==============================");
+		yourCar.run(130);
+	}
+}
+
+
+
+
+
+* super
+
+- super는 한단계 위 부모클래스의 객체를 지정할 때 사용하는 키워드입니다.
+
+- super. 을 사용하면 부모클래스의 멤버를 참조할 수 있습니다.
+
+- super()는 생성자 내부에서만 사용이 가능하며, 부모클래스의 생성자를 호출하는데 사용합니다.
+	-생성자 외부에서는 super()로 부모클래스의 생성자를 불러오는것이안되고
+	 대신에 외부에서 super.으로 메서드 혹은 변수에 접근하는건 가능하다.
+
+package super_.person;
+public class Student extends Person {
+	String stuID;
+	
+	Student(String name, int age, String str){
+		super(name, age);
+		this.stuID = str;
+//		this.name = name;
+//		this.age = age;
+		
+	}
+	
+	String info() {
+		//return "이름: " + name + ", 나이: " + age + ", 학번: " + stuID;
+		return super.info() +" 학번: " + stuID;
+	}
+	
+}
+
+- 생성자의 첫 라인에는 반드시 this(), super()가 있어야 하는데 이를 기술하지 않으면 묵시적으로 super()가 삽입되어 부모클래스의 
+기본 생성자를 자동으로 호출합니다.
+	-즉 생성자 첫라인에 this()를 쓰면 super()를 안쓰고 this()를 안쓰면 자동으로 super()가 묵시적으로 삽입된다.
+
+package super_.person;
+
+public class Teacher extends Person {
+	
+	String subject;
+	
+	Teacher(){	//아래 주석의 teacher가 이놈의 생략형이다.
+		
+	}
+	/*
+	* Teacher(){	
+	*	super(); //이렇게 묵시적으로 super가 삽입되니까 부모의 매개변수가없는 생성자를 호출하는데
+	* }		//Person에서 기본생성자가 없으면 혹은 매개변수가없는 생성자가 없다면 이건 에러이고
+	*			//위에 있는 teacher에도 super가 생략되있는것일뿐이니 위에도 에러가난다.
+	*/
+	
+	String info() {
+		return "이름: " + name + ", 나이: " + age + ", 과목: " + subject;
+	}
+
+
+- 생성자 내부에서 또다른 생성자를 호출할 때는 반드시 생성자 블록 내부의 첫 라인에 기술해야 합
+
+
+
+-----------------------------------------------
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제18)this, super
+
+this_.person패키지에 있는  person student teacher를 가져온다.
+
+아래로 했을때 출력이되도록하라
+-이때 super를 모조리 이용해서하라
+-super로 부모생성자를부르고
+-this로 super대신 사용해라
+	-this를쓰면 super가 쓰여지지않는다.
+	-super로 다양한 매개변수를넣어봐라
+
+package super_.person;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Student hong = new Student("홍길동", 13, "34");	
+		System.out.println(hong.info());
+		
+		Teacher lim = new Teacher("임창정", 50, "음악");
+
+		System.out.println(lim.info());
+	}
+
+}
+
+이름: 홍길동, 나이: 13 학번: null	//부모꺼에서 자식객체 info 호출하여 출력된거
+이름: 홍길동, 나이: 13 학번: 34	//자식꺼에서 지꺼 info 호출하여 출력된거
+이름: 임창정, 나이: 50null		//부모꺼에서 자식객체 info 호출하여 출력된거
+이름: 임창정, 나이: 50음악		//자식꺼에서 지꺼 info 호출하여 출력된거
+######################################################################################################
+
+
+
+
+답:
+
+
+
+package super_.person;
+
+/*
+ * 데이터를 다른 클래스에게 물려주는 클래스를 부모클래스라고 합니다.
+ * 상속을 사용할 시 데이터를 물려받는 클래스에게 부모클래스의 멤버변수,
+ * 메서드가 상속됩니다.
+ * 단, 생성자는 상속되지 않습니다.
+ */
+public class Person {
+	
+	String name;
+	int age;
+	
+	Person(String name, int age){
+		this.name = name;
+		this.age = age;
+		System.out.println(this.info());
+	}
+	Person(String name){	//생성자에서 this를 이용해 생성자호출
+		this(name, 1);
+//		this.name = name;
+//		this.age = 1;
+		//System.out.println(this.info());
+	}
+	Person(){
+		this("이름없음", 1);
+	}
+	
+	String info() {
+		return "이름: " + name + ", 나이: " + age;
+	}
+	
+}
+
+
+
+
+package super_.person;
+
+/*
+ * 다른 클래스로부터 멤버변수와 메서드를 물려받는 클래스를
+ * 자식 클래스라고 부릅니다. 
+ * 자식 클래스의 이름 뒤에 extends라는 키워드를 쓰고 
+ * 물려받을 클래스의 이름을 써줍니다.
+ */
+public class Student extends Person {
+	String stuID;
+	
+	Student(String name, int age, String str){
+		super(name, age);
+		this.stuID = str;
+//		this.name = name;
+//		this.age = age;
+		
+	}
+	Student(){
+		this("이름없음", 1, "학번없음");	//여기는 super()가 없음 어차피 this가면 거기에
+					//결국 super()를 만나기때문
+	}
+	
+	String info() {
+		//return "이름: " + name + ", 나이: " + age + ", 학번: " + stuID;
+		return super.info() +" 학번: " + stuID;
+	}
+	
+}
+
+
+
+package super_.person;
+
+public class Teacher extends Person {
+	
+	String subject;
+	
+	Teacher(String name, int age, String subject){
+		super(name, age);
+		this.subject=subject;
+	}
+	
+	String info() {
+		return super.info() + subject;
+	}
+}
+
+

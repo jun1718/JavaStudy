@@ -1,9 +1,0 @@
-
-public class _3SwitchExample2 {
-	public static void main(String[] args) {
-		String[] foods = {"비빔밥", "사시미", "북경오리", "카레", "똠양꼼"};
-		//index(0~4) 범위 난수 발생
-		int idx = (int)(Math.random() * 5);
-		System.out.println("선택된 음식 : " + foods[idx]);
-	}//end main
-}//end class
