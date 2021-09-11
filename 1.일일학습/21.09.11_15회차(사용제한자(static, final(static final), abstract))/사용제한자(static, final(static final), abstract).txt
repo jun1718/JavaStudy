@@ -1,0 +1,1265 @@
+21.09.11_15회차 
+======================================================================================================
+*사용제한자(static, final(static final), abstract)
+======================================================================================================
+
+
+
+
+
+
+######################################################################################################
+개념정리_사용 제한자(Usage Level modifier)
+
+* static
+
+- static 제한자는 변수, 메서드에 적용되는 자바의 키워드입니다.
+- static 메서드나 변수는 해당 클래스의 객체 없이도 참조할 수 있습니다.
+- static 블록(static 메서드, 정적 초기화자) 안에는 static 변수만 사용해야하고, static 메서드만 호출할  수 있습니다. 
+	즉 static 블록에서 non-static 멤버를 객체 생성 없이 직접 참조할 수 없습니다.
+- static 제한자는 지정된 변수와 메서드를 객체와 무관하게 만들어주기 때문에 this를 가질 수 없습니다.
+- static 메서드는 non-static 메서드로 재정의(Overriding) 될 수 없습니다.
+- 대표적인 static 메서드는 애플리케이션의 main() 메서드입니다.
+- static에 단순히 블록({ })을 사용한 경우에는 정적 초기화자라고 부르며, static 변수를 초기화하는 역할을 가지고 클래스가 로딩될 때 main() 메서드가 있더라도 그보다 앞서 딱 한번 실행됩니다.
+
+
+
+* 정적 변수(static field)
+
+- static 변수는 모든 객체들이 공유하는 공유변수가 됩니다.
+- 그리고 객체 생성 없이 클래스 이름만으로 참조가 가능합니다.
+- 정적 변수는 객체를 만들어 참조할 수도 있지만, 객체를 만들지 않고 클래스 이름만으로도 참조가 가능하기 
+	때문에 이를 "클래스 변수"라고도 부릅니다.
+
+
+
+* 정적 메서드(static method)
+
+- static 메서드는 static 변수와 마찬가지로 해당 클래스의 객체 생성 없이도 참조가 가능하게 해줍니다.
+- static 메서드에서 멤버를 참조할 때 주의해야 할 사항은 "static 메서드 안에서는 non-static 멤버를 객체 생성 없이 직접 참조할 수  
+	없다"는 것입니다.
+- static 메서드 안에서는 static 변수를 선언할 수 없습니다.
+
+
+* 정적 초기화자(static initializer)
+
+- 정적 초기화자는 static 변수들의 초기화에 사용합니다. 
+	일반 멤버변수는 생성자에서 초기화하지만 static 변수는 객체 생성 없이도 사 용해야하므로 생성자를 통해 초기화할 수 없습니다.
+- 그래서 static 변수는 정적초기화자를 통해 초기화를 합니다.
+- 정적 초기화자는 클래스가 로딩될 때 생성자와 main() 메서드에 앞서 오직 단 한번만  실행되기 때문에 애플리케이션 실행 중  
+	반드시  한번만 실행되어야 할 로직이 있다면 이곳에 기술하여 사용할 수 있습니다.
+
+package static_.init;
+
+public class Computer {
+	public static String company = "LG";
+	public static String model = "gram";
+	public static String info;
+	public int price;
+	
+	public Computer() {
+		System.out.println("생성자 호출!");
+		this.price = 1000000;
+		this.info = company + "-" + model;
+		//스태틱변수를 사용할때는 생성자가 생성안될수있으니 생성자로 초기화를하면안된다.
+	}
+	//정적변수의 초기화를 위해서는 정적 초기화자를 이용해야한다.
+	static { // 정적초기화자
+		System.out.println("정적 초기화자 호출!");
+		info = company + "-" + model;
+		//price = 10; //스태틱변수만 사용가능
+		//정적초기화자 생성시기: 클래스를 로딩시킬때 딱 한번 호출됨. 그후엔 호출할수없음
+				//생성자와다르게 호출불가 생성자또한 생성시 1번호출되긴하지만 
+				//그 한번일때 본인들끼리 호출을 할수있다.
+		//클래스 로딩방법: 여러개가있지만 둘중 하나만 있어도 정적초기화자 작동됨
+		//1.객체를 생성
+		//2.클래스이름을 통해 정적멤버에 접근
+	}
+	
+}
+
+
+package static_.init;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Computer com = new Computer();
+		System.out.println(com.info);
+		//System.out.println(Computer.info);
+		//스태틱변수를 사용할때는 생성자가 생성안될수있으니 생성자로 초기화를하면안된다.
+		//정적변수의 초기화를 위해서는 정적 초기화자를 이용해야한다.
+		//객체를 만드는순간 정적초기화자가 가장먼저 호출되고 그다음 생성자
+		
+
+	}
+
+}
+
+
+
+* 싱글톤 패턴(Singleton Pattern)
+
+- 싱글톤 패턴은 어떤 클래스의 객체는 오직 하나임을 보장하며, 이 객체에 접근할 수 있는 전역적인 접촉점을 제공하는 패턴입니다.
+- 클래스 객체를 유일하게 하나만 생성하여 모든 곳에서 하나의 객체에 접근하게 하여, 전역의 개념으로 객체를 사용할 수 있습니다.
+- 싱글톤 패턴은 객체의 생성을 제한하기 위해 사용합니다.
+	-DBA(databaseaccess)같은건 하나의 객체가 연결시키고관리하면되고 더이상 객체가 있을필요없으니 이럴때 사용
+
+
+package static_.singleton;
+
+public class Singleton {
+	/*
+	 -싱글톤 패턴 : 객체의 생성을 1개로 제한하기 위한 디자인 패턴
+	 1.외부에서 이 클래스의 객체를 생성할수 없도록 생성자를 단 1개만 선언하고 private 제한을 붙임
+	 */
+	int a;
+	
+	private Singleton() {}
+	
+	/*
+	 2.자신의 클래스 내부에서 스스로의 객체를 1개 생성
+	 */
+	
+	private static Singleton instance = new Singleton();
+	/*
+	 3.외부에서 이 클래스의 객체 생성을 요구할 경우 2번에서 미리 만들어둔 단 하나의 객체를 공개된 메서드를
+	  통해 제공함
+	 */
+	
+	public static Singleton getInstance() {
+		return instance;
+	}
+	
+	/*
+	4.static화 및 접근제한 
+	 외부에서 만들어진 객체를 사용할수있도록 공개된 메서드를 통해 제공하지만 결국 객체가 안만들어지면
+	 	못만든다. 그래서 static을 붙이면 객체를안만들고도 클래스의 메소드에 접근가능하고 그 메소드에는
+	 	클래스에서 만들어놓은 단 하나의 객체를 참조하는 참조변수가 있으니 그것으로 객체를 사용할수있다.
+	 	하지만 그 반환하는 객체또한 private static으로 해주어야한다.
+	 	static내부에선 static으로만 직접적으로 사용할수있고 간접적으로 사용하려면 내부에 객체를
+	 	만들어서 하는 방법도 있지만 getInstance라는 메소드의 기능적인측면에서 내부에 객체까지 생성
+	 	한다는것은 부자연스러움으로 외부에 따로 생성한다.
+	 	private는 함부러 instance에 접근하지 못하도록 하기위한 조치이다.
+	 */
+}
+
+
+package static_.singleton;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		//Singleton s = new Singleton();
+		
+		Singleton s1 = Singleton.getInstance();
+		Singleton s2 = Singleton.getInstance();
+		
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s1==s2);		
+		
+		s1.a = 45;
+		Singleton.getInstance().a = 4;
+		//Singleton.instance.a = 5; // 불가 
+		
+	}
+
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제20)정적초기화자 
+
+1)아래의 소스코드에서 다른 로직을 추가하여 출력결과를 만들어라.
+
+package static_.init;
+
+public class Computer {
+	public static String company = "LG";
+	public static String model = "gram";
+	public static String info;
+	public int price;
+	
+	public Computer() {
+		System.out.println("생성자 호출!");
+		this.price = 1000000;
+		//this.info = company + "-" + model;
+		//스태틱변수를 사용할때는 생성자가 생성안될수있으니 생성자로 초기화를하면안된다.
+	}
+
+	
+}
+
+
+package static_.init;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Computer com = new Computer();
+		System.out.println(com.info);
+	
+	}
+
+}
+
+
+<출력결과>
+정적 초기화자 호출!
+생성자 호출!
+LG-gram
+
+
+######################################################################################################
+
+
+답:
+
+
+
+package static_.init;
+
+public class Computer {
+	public static String company = "LG";
+	public static String model = "gram";
+	public static String info;
+	public int price;
+	
+	public Computer() {
+		System.out.println("생성자 호출!");
+		this.price = 1000000;
+		this.info = company + "-" + model;
+		//스태틱변수를 사용할때는 생성자가 생성안될수있으니 생성자로 초기화를하면안된다.
+	}
+	//정적변수의 초기화를 위해서는 정적 초기화자를 이용해야한다.
+	static { // 정적초기화자
+		System.out.println("정적 초기화자 호출!");
+		info = company + "-" + model;
+		//price = 10; //스태틱변수만 사용가능
+		//정적초기화자 생성시기: 클래스를 로딩시킬때 딱 한번 호출됨. 그후엔 호출할수없음
+				//생성자와다르게 호출불가 생성자또한 생성시 1번호출되긴하지만 
+				//그 한번일때 본인들끼리 호출을 할수있다.
+		//클래스 로딩방법: 여러개가있지만 둘중 하나만 있어도 정적초기화자 작동됨
+		//1.객체를 생성
+		//2.클래스이름을 통해 정적멤버에 접근
+	}
+	
+}
+
+
+package static_.init;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Computer com = new Computer();
+		System.out.println(com.info);
+		//System.out.println(Computer.info);
+		//스태틱변수를 사용할때는 생성자가 생성안될수있으니 생성자로 초기화를하면안된다.
+		//정적변수의 초기화를 위해서는 정적 초기화자를 이용해야한다.
+		//객체를 만드는순간 정적초기화자가 가장먼저 호출되고 그다음 생성자
+		
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제21)singleton싱글톤
+
+
+1)아래의 출력결과가 나오도록 소스코드작성하라
+	-단, 객체를 하나만 생성할수있는 싱글톤 기법으로 클래스설계하라.
+	-객체를 만들면 해당 주소를 저장하는 참조변수의 명은 instance로 하고 외부에서 접근못하도록 하라.
+
+package static_.singleton;
+
+public class Singleton {
+
+}
+
+
+
+package static_.singleton;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		//Singleton s = new Singleton();
+		
+		Singleton s1 = Singleton.getInstance();
+		Singleton s2 = Singleton.getInstance();
+		
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s1==s2);		
+		
+		s1.a = 45;
+		Singleton.getInstance().a = 4;
+		//Singleton.instance.a = 5; // 불가 
+		
+	}
+
+}
+
+<출력결과>
+static_.singleton.Singleton@7852e922
+static_.singleton.Singleton@7852e922
+true
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+package static_.singleton;
+
+public class Singleton {
+	/*
+	 -싱글톤 패턴 : 객체의 생성을 1개로 제한하기 위한 디자인 패턴
+	 1.외부에서 이 클래스의 객체를 생성할수 없도록 생성자를 단 1개만 선언하고 private 제한을 붙임
+	 */
+	int a;
+	
+	private Singleton() {}
+	
+	/*
+	 2.자신의 클래스 내부에서 스스로의 객체를 1개 생성
+	 */
+	
+	private static Singleton instance = new Singleton();
+	/*
+	 3.외부에서 이 클래스의 객체 생성을 요구할 경우 2번에서 미리 만들어둔 단 하나의 객체를 공개된 메서드를
+	  통해 제공함
+	 */
+	
+	public static Singleton getInstance() {
+		return instance;
+	}
+	
+	/*
+	4.static화 및 접근제한 
+	 외부에서 만들어진 객체를 사용할수있도록 공개된 메서드를 통해 제공하지만 결국 객체가 안만들어지면
+	 	못만든다. 그래서 static을 붙이면 객체를안만들고도 클래스의 메소드에 접근가능하고 그 메소드에는
+	 	클래스에서 만들어놓은 단 하나의 객체를 참조하는 참조변수가 있으니 그것으로 객체를 사용할수있다.
+	 	하지만 그 반환하는 객체또한 private static으로 해주어야한다.
+	 	static내부에선 static으로만 직접적으로 사용할수있고 간접적으로 사용하려면 내부에 객체를
+	 	만들어서 하는 방법도 있지만 getInstance라는 메소드의 기능적인측면에서 내부에 객체까지 생성
+	 	한다는것은 부자연스러움으로 외부에 따로 생성한다.
+	 	private는 함부러 instance에 접근하지 못하도록 하기위한 조치이다.
+	 */
+}
+
+
+
+
+
+
+
+package static_.singleton;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		//Singleton s = new Singleton();
+		
+		Singleton s1 = Singleton.getInstance();
+		Singleton s2 = Singleton.getInstance();
+		
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s1==s2);		
+		
+		s1.a = 45;
+		Singleton.getInstance().a = 4;
+		//Singleton.instance.a = 5; // 불가 
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_final, static final(상수)
+
+* final
+
+- final 키워드는 클래스, 메서드, 변수에 적용되며 abstract와 동시에 사용될 수 없습니다.
+- final 클래스의 경우에는 상속이 안됩니다. 즉 서브클래스를 가질 수 없습니다.
+- final 메서드는 재정의를 할 수 없습니다.
+- final 변수는 값을 변경할 수 없습니다.
+
+
+* final class
+
+- 클래스 선언 시 final을 사용하면 그 클래스는 상속이 불가능해집니다.
+- final 클래스는 자식 클래스를 가질 수 없고, 오직 외부에서 객체 생성을 통해서만 사용할 수 있습니다.
+- final 클래스의 대표적인 예가 String 클래스입니다. 사용자가 임의로  String 클래스를 상속받아  메서드를  재정의하는  것을 방지하기 위한 것입니다.
+- JAVA API DOCUMENT
+--> https://docs.oracle.com/javase/8/docs/api
+
+package final_.cls;
+
+public final class Parent {
+
+}
+package final_.cls;
+
+public class Child extends Parent{ //에러남 Parent에 final 이 붙었기 때문에 상속불가
+
+}
+
+
+
+* final 변수
+
+- final 변수는 한번 값을 할당하면 그 값을 변경할 수 없습니다.
+- final 변수는 선언시에 초기화하는 방법과 생성자를 통하여 초기화하는 방법이 있는데 만약 초기화하지 않고 남겨두면 컴파일 에러가 발생합니다.
+	-private과 final의 차이 : 변경 공간	/ 공통점 : 값이 안정해져있는 상황에서 외부에서 생성자호출시에 초기화가능, 값변경 불가
+		-private: 내부에서는 계속 변경가능	
+			-private는 값이 정해져있어도 외부에서 생성자 호출시에 초기화가능
+		-final : 내부에서도 한번 값이 정해지면 변경불가능
+
+package final_field;
+
+public class Person {
+	public final String nation = "대한민국";
+	public final String name;	//아래 생성자에 name값 초기화 안해주면 이거 에러남
+		//final을 붙이면 값이한번 저장되면 변경할수 없는 변수로 만들어진다.
+		//근데 이녀석은 값을 한번 저장을 안했으니 에러가 나는것
+		//자동으로 null이 되긴 하지만.. 그건 final에선 값을 한번 넣은걸로 안치는 듯
+	//그럼에도불구하고 이렇게 해야하는경우는 객체별로 이름을 따로 관리하고 싶은 경우 등의 상황일텐데
+		//이런경우에는 한번넣겠다고 안심을 시켜주면됨 안심시키는 방법은 생성자를 이용
+
+	/*
+	 -final 변수는 한번 값이 대입되면 값을 변경할수 없는 특징이 있기때문에 선언시 직접초기화하거나
+	  생성자를 통한 초기화 로직을 작성하여 데이터가 반드시 한번 저장될수 있게해야함
+	  #요약
+	   final 변수 사용할때 한번 값넣는 방법 2가지
+	   	-선언과 동시에 초기화
+	   	-선언후 생성자에서 초기화
+	 */
+	
+//	public Person() {
+//		this.name = "안녕";
+//	}
+	public Person(String name) {
+//		this();
+		this.name = name;	//위 주석이 풀리면 에러난다. 왜냐면 안녕이라고 값이 한번 들어갔기
+					//때문이다.
+//		this.name = "hi";	//에러
+//		this.nation = "중국"; //에러
+	}
+	
+	
+}
+
+
+* 상수(static final)
+
+- 자바에서는 불변의 값을 저장하는 필드를 상수(constant)라고 부릅니다.
+- 상수는  객체마다 저장할 필요가 없는 공용성을 가져야 하며, 여러가지 값으로 초기화될 수 없기때문에 static과 final 제한자를 동시   
+  에 붙여 선언합니다.
+- 상수 이름은 모두 대문자로 작성하는 것이 관례입니다. 카멜케이스 적용이 안되기때문에 연결된 단어라면 (_)로 단어들을 연결해줍니다.
+						
+
+#내생각
+-final을 붙이고 선언과 동시에 초기화를했다면 이건 이미 상수화가 된것이다.
+하지만 상수는 객체가 생성될때 만들어진다.
+어떤 객체가 생성이되어도 항상 같은 값이라면 static으로 두어서 객체가 생성되기전에도 존재하도록 두는 것이 낫다.
+그래서 final에 static까지 붙은듯 
+ ex)final붙이고 선언과동시에 초기화하니 모든 객체에서 공용적으로 같은 값을지닌 변수를 사용할수있네?
+   근데 어차피 똑같으면 객체생성전에 만들어서 혹시나 다른곳에서도 쓸수있는 클래스변수로 만들면 안될까?
+	즉, 공용성을 객체뿐아닌 외부로까지 확대하면 안될까?
+   static으로 만들자! 그렇게하면 객체 생성전에도 static final을 한후 선언과 동시에 초기화를 하면 가능하겠네.      
+  이렇게되면 객체를 안만들어도 쓸수 있고 객체를 만들어도 쓸수있으니까 공용성이 확장되었네. 이전엔 공용성이 제한적이었으니까(객체생성유무)
+   그럼 앞으로 final만 붙이고 선언과동시에 초기화한놈은 상수라고 부르지말자! 괜히 헷갈리니까!
+	오케이 그럼 앞으로 상수는 static final을 붙인것만 상수다!
+
+
+package final_.constant;
+
+public class Earth {
+	public static final double EARTH_RADIUS = 6400;
+	public static final double EARTH_SURFACE_AREA;
+	//굳이 상수를 생성과 동시에 초기화 안하겠다면 static 초기화자를 사용할수 있다.
+	//하지만 정말 생성과 동시에 초기화를 안할 필요가 없다. 왜냐면 그냥 final일때는
+	//생성자에서 초기화를할때 객체에 따라 final의 처음저장하는 값이 변경될수 있어서 
+	//선언과 동시에 초기화를 안했다지만 지금 이건 static초기화자를 사용하든 선언과동시에 초기화를
+	//하든 결과가 무조건 같다. 상수가 아닌 final이라면 결과가 달라질수있어서 사용하지만 이건의미없다.
+	static {
+		EARTH_SURFACE_AREA = 
+				4 * EARTH_RADIUS * EARTH_RADIUS * Math.PI; 
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("지구의 반지름 : " + Earth.EARTH_RADIUS + "km");
+		System.out.println("지구의 표면적 : "+ Earth.EARTH_SURFACE_AREA + 
+				"km^2");
+	}
+}
+
+  
+
+* final method
+
+- final 메서드는 자식 클래스에서 부모 클래스의 메서드를 재정의하지 못하게 합니다.
+- 하지만 클래스에 final이 붙지 않는다면 상속은 가능하므로 자식 클래스에서 final 메서드의 참조는 가능합니다.
+		-final 메서드의 참조는 가능하다는 뜻은 부모의 메서드를 사용은 할수있되 재정의만 못할뿐이라는 뜻임 (아래예시)
+- 자식 클래스에서 반드시 부모의 메서드를 기능의 변경없이 사용하도록 강요할 경우에 final 메서드를 선언합니다.
+	-야 딴건 다~~ 괜찮은데 이 메서드만은 재정의하지마라 이미 완벽하다 더만지면 문제생긴다! 이런식의 뜻
+- final 클래스는 자식클래스를 가질 수 없고, 오직 외부에 객체 생성을 통해서만 사용가능
+- final 클래스의 대표적인 예가 String 클래스임. 사용자가 임의로 String 클래스를 상속받아 메서드를 재정의 하는 것을 방지하기 위한 것
+
+
+
+package final_.method;
+
+public class Parent {
+	public void method1() {}
+	public void method2() {}
+	public final void method3() {}
+	//메서드에 final붙으면 재정의 불가
+}
+
+
+
+
+package final_.method;
+
+public class Child extends Parent{
+
+	public void method1() {
+		super.method1();
+		System.out.println("hi재정의완료");
+	}
+
+	public void method2() {
+		super.method2();
+		System.out.println("hi재정의완료");
+	}
+	//public void method3() {}
+	//Parent의 method3는 재정의불가
+	
+	
+	public Child() {
+		method1();
+		method2();
+		method3();
+		//재정의가 불가한거지 상속받은 method3을 얼마든지 사용가능하다.
+	}
+}
+
+
+#참고: 앞으로 api를 어떻게 사용하는지 미래의 방법을 알려주는거
+- JAVA API DOCUMENT : 자바 api에 대한 사용법을 알려주는 문서사이트이다.
+---> https://docs.oracle.com/javase/8/docs/api
+	-구글에 java api 입력 해서 페이지 나오면 packages에 java.lang 클릭->String클릭
+		string 실제 입력방법나옴 실제론 다르게입력해야하는데 new 치고 워낙많이쓰니까 스트링만 대입연산자로 허용을 해준거
+	-그후 Math 패키지에서 random메서드를 찾아라
+
+developer.naver.com : 기업들이 오픈소스로 제공하는 api를 받는방법
+
+실력 : 적재적소에 이런 api를 가지고 집어넣어 개발하는 것
+
+######################################################################################################
+
+
+
+
+
+
+
+######################################################################################################
+예제22)final field
+
+1)파이널 변수를 생성후 
+nation : 국적을 넣는 변수, 값은 대한민국, 선언과 동시에 초기화
+name : 이름을 넣는 변수, 값은 객체에 따라 달라지도록 설계
+	-단, 선언과 동시에 초기화하지말것
+패키지명: final_.field
+클래스명: Person
+실행클래스명: MainClass
+
+
+
+
+package final_.field;
+
+public class MainClass {
+	
+	public static void main(String[] args) {
+
+		
+		Person kim = new Person("김한국");
+		
+//		kim.nation = "미국"; //에러
+//		kim.name = "김마이클"; //에러
+		kim.age = 17;
+		kim.age = 27;
+		System.out.println("국적: "+kim.nation);
+		System.out.println("이름: "+kim.name);
+		System.out.println("나이: "+kim.age);
+		
+		Person park = new Person("박중국");
+		park.age = 30;
+		System.out.println("국적: "+park.nation);
+		System.out.println("이름: "+park.name);
+		System.out.println("나이: "+park.age);
+		
+	}
+}
+
+
+<출력결과>
+
+국적: 대한민국
+이름: 김한국
+나이: 27
+국적: 대한민국
+이름: 박중국
+나이: 30
+
+######################################################################################################
+
+
+답:
+
+package final_.field;
+
+public class Person {
+	public int age;
+	public final String nation = "대한민국";
+	public final String name;	//아래 생성자에 name값 초기화 안해주면 이거 에러남
+		//final을 붙이면 값이한번 저장되면 변경할수 없는 변수로 만들어진다.
+		//근데 이녀석은 값을 한번 저장을 안했으니 에러가 나는것
+		//자동으로 null이 되긴 하지만.. 그건 final에선 값을 한번 넣은걸로 안치는 듯
+	//그럼에도불구하고 이렇게 해야하는경우는 객체별로 이름을 따로 관리하고 싶은 경우 등의 상황일텐데
+		//이런경우에는 한번넣겠다고 안심을 시켜주면됨 안심시키는 방법은 생성자를 이용
+
+	/*
+	 -final 변수는 한번 값이 대입되면 값을 변경할수 없는 특징이 있기때문에 선언시 직접초기화하거나
+	  생성자를 통한 초기화 로직을 작성하여 데이터가 반드시 한번 저장될수 있게해야함
+	  #요약
+	   final 변수 사용할때 한번 값넣는 방법 2가지
+	   	-선언과 동시에 초기화
+	   	-선언후 생성자에서 초기화
+	 */
+	
+//	public Person() {
+//		this.name = "안녕";
+//	}
+	public Person(String name) {
+//		this();
+		this.name = name;	//위 주석이 풀리면 에러난다. 왜냐면 안녕이라고 값이 한번 들어갔기
+					//때문이다.
+//		this.name = "hi";	//에러
+//		this.nation = "중국"; //에러
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제23)final 클래스 & method
+
+1)파이널 클래스
+Parent 및 Child 만들고 
+Parent를 final 클래스로 변경한후
+Child클래스가 Parent 클래스를 상속받도록하여 에러가 발생함을 확인하라
+내부정의필요없고 안된다는것을 확인하는것이 궁극적 목적
+	-클래스는 완벽하다 바꾸지마라~ 라는 뜻
+
+
+
+2)파이널 메서드
+부모클래스명: Parent
+자식클래스명: Child
+
+Child
+-부모클래스 3개다 재정의(불가능한게 있는지 확인)
+-부모클래스의 재정의가 안되는것확인하고 그것이 사용은 되는지 또 확인
+	-확인은 생성자만들어서하던가 다른 메소드 만들어서하던가~~ 알아서
+
+package final_.method;
+
+public class Parent {
+	public void method1() {}
+	public void method2() {}
+	//final 메서드인 method3선언(구현부는 블록만두고 아무것도넣지말고 위의형식과같이한다.
+}
+
+######################################################################################################
+
+
+답:
+
+
+
+
+2)파이널 메서드
+
+package final_.method;
+
+public class Parent {
+	public void method1() {}
+	public void method2() {}
+	public final void method3() {}
+	//메서드에 final붙으면 재정의 불가
+}
+
+
+package final_.method;
+
+public class Child extends Parent{
+
+	public void method1() {
+		super.method1();
+		System.out.println("hi재정의완료");
+	}
+
+	public void method2() {
+		super.method2();
+		System.out.println("hi재정의완료");
+	}
+	//public void method3() {}
+	//Parent의 method3는 재정의불가
+	
+	
+	public Child() {
+		method1();
+		method2();
+		method3();
+		//재정의가 불가한거지 상속받은 method3을 얼마든지 사용가능하다.
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제24)final을 이용한 상수화 => static final
+
+클래스명 Earth
+심폴릭상수명(public) : EARTH_RADIUS, EARTH_SURFACE_AREA
+	-상수는 무조건 대문자로 적어야함. 카멜케이스안되니 단어연결시엔 언더바이용
+EARTH_RADIUS는 6400으로 선언과동시에 초기화하라, EARTH_SURFACE_AREA는 선언 후 다른방식을이용하여 초기화(자동초기화는 초기화로안침)
+						값: 4 * EARTH_RADIUS * EARTH_RADIUS * Math.PI
+
+Earth 클래스에 main함수 넣어라. 아래처럼.(MainClass만들기 귀찮으니까 이렇게한듯)  
+
+	public static void main(String[] args) {
+		System.out.println("지구의 반지름 : " + Earth.EARTH_RADIUS + "km");
+		System.out.println("지구의 표면적 : "+ Earth.EARTH_SURFACE_AREA + 
+				"km^2");
+	}
+
+<출력결과>
+지구의 반지름 : 6400.0km
+지구의 표면적 : 5.147185403641517E8km^2
+######################################################################################################
+
+
+답:
+
+
+
+
+package final_.constant;
+
+public class Earth {
+	public static final double EARTH_RADIUS = 6400;
+	public static final double EARTH_SURFACE_AREA;
+	//굳이 상수를 생성과 동시에 초기화 안하겠다면 static 초기화자를 사용할수 있다.
+	//하지만 정말 생성과 동시에 초기화를 안할 필요가 없다. 왜냐면 그냥 final일때는
+	//생성자에서 초기화를할때 객체에 따라 final의 처음저장하는 값이 변경될수 있어서 
+	//선언과 동시에 초기화를 안했다지만 지금 이건 static초기화자를 사용하든 선언과동시에 초기화를
+	//하든 결과가 무조건 같다. 상수가 아닌 final이라면 결과가 달라질수있어서 사용하지만 이건의미없다.
+	static {
+		EARTH_SURFACE_AREA = 
+				4 * EARTH_RADIUS * EARTH_RADIUS * Math.PI; 
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("지구의 반지름 : " + Earth.EARTH_RADIUS + "km");
+		System.out.println("지구의 표면적 : "+ Earth.EARTH_SURFACE_AREA + 
+				"km^2");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_abstract
+
+* abstract
+
+- abstract 키워드는 클래스와 메서드에 적용됩니다.
+- 추상(abstract) 클래스는 실체 클래스들의 멤버변수와 메서드들의 이름을 통일할 목적으로 사용합니다.
+	- 반드시 상속을 받아서 사용하도록 한다.
+- 추상(abstract) 메서드가 있는 클래스는 반드시 추상 클래스여야 합니다.
+- 그러나 추상 클래스에 반드시 추상 메서드만 선언할 필요는 없고 일반 메서드도 선언할 수 있습니다.
+
+
+
+* 추상 클래스
+
+- 추상 클래스는 new 키워드를 이용해서 객체를 만들지 못하고 오직 상속을 통해서 자식 클래스로 구체화 시켜야 합니다.
+- 추상 클래스도 일반 클래스와 마찬가지로 멤버변수, 생성자, 메서드를 선언할 수 있습니다.
+- new를 사용하여 직접 생성자를 호출할 수는 없지만 자식 객체가 생성될 때 super()를 호출하여 
+	추상 클래스 객체를 생성하므로 추상 클래스도 생성자가 반드시 있어야 합니다.
+
+* 추상 메서드
+
+- 추상 메서드는 추상 클래스 내에서만 선언할 수 있습니다.
+- 추상 메서드는 메서드의 선언부만 있고 메서드 실행 내용이 들어가는 중괄호 {}가 없는 메서드를 말합니다.
+	-메서드의 구현부분이 없다.
+- 추상 클래스를 설계할 때 자식 클래스가 반드시 실행 내용을 채우도록 강요하고 싶은 메서드가 있을 경우, 해당 메서드를 추상 메서 드로 선언합니다.
+	-cpp에서 순수가상함수랑 비슷한듯?
+- 자식 클래스에서 반드시 부모 추상클래스의 추상 메서드를 재정의하여 실행 내용을 작성해야  합니다.  그렇지  않으면  컴파일  에러가 납니다.
+-추상메서드를 하나라도 포함하는 클래스는 추상클래스가 되어야한다.
+ 그러나 추상클래스가 반드시 추상메서드를 가질 필요는 없다.
+ 
+
+본사에서 과일주문이 들어왔을때 가격을 보여주는 프로그램을 틀을 짜서 줬다.
+하지만 지사마다 가격이 다달라서 가격은 지사 개발팀에서 상속받아서 재정의를 해서 가격을 넣어주어야한다.
+
+package abs.badcase;
+
+public class HeadStore {
+	public void orderApple() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderBanana() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderGrape() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderMelon() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	
+}
+
+package abs.badcase;
+
+public class Store extends HeadStore{
+	public void orderApple() {
+		System.out.println("사과 쥬스의 가격은 3000원입니다.");
+	}
+	public void orderBanana() {
+		System.out.println("바나나 쥬스의 가격은 2800원입니다.");
+	}
+	public void orderGrape() {
+		System.out.println("포도 쥬스의 가격은 3200원입니다.");
+	}
+	/*
+	public void orderMelon() {
+		System.out.println("멜론 쥬스의 가격은 4000원입니다.");
+	}
+	*/
+}
+
+package abs.badcase;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Store s = new Store();
+		s.orderApple();
+		s.orderBanana();
+		s.orderGrape();
+		s.orderMelon();
+		
+	}
+}
+
+위처럼된이유 : 사장이 깜빡하고 메론의 정보를 입력안함
+
+위처럼되면 main에서 실행했을때 melon의 가격은 0원으로 나온다.
+그럼 손님은 가격확인용 포스기에서 0원으로 봤으니 메론을 받고 그냥 가려고한다.(가격만 볼수있는 포스기)
+사장이 막는다. 왜 오천원안주세요? 손님: 포스기에 0원이라 뜨길래 주문을한거다. 행사인줄알았다. 행사아닌줄 알았으면 안시켰다 하고 감
+사장이 본사에 연락함.
+왜 이거 입력안되면 주문 프로그램자체가 에러나게 제한을 안걸어주냐?
+그대로 나오면 사장들이 실수로 입력안하면 0원나올거아냐 .
+그냥 안되게 하던가 ㅡㅡ 
+
+본사: 하 .. 이렇게까진 안하려했는데 .. 그럼 하나라도 입력안하면 무조건 에러나게 해드릴게요.
+	(추상클래스와 추상메서드를 통해 오버라이딩을 강제화시켜야겠다. 오버라이딩(가격재설정)안하면 에러나도록.)
+
+package abs.goodcase;
+
+public abstract class HeadStore {
+	
+	/*
+	 1.메서드에 abstract를 붙이면 해당 메서드는 추상메서드가 되며 이 메서드는 상속을 통해 자식 클래스에서
+	 반드시 오버라이딩을 해야함. 그렇지 않으면 에러가 발생함
+	 2.추상메서드는 실체가 존재하지 않는 메서드의 틀 역할을 하기때문에 메서드의 바디부분 {}이 없고 세미클론
+	 으로 선언을 마감함.
+	 3.일반 클래스에서는 추상메서드를 선언할수 없음 추상메서드가 하나라도 존재하는
+	 	클래스는 반드시 추상클래스가 되어야함
+	 4.추상클래스 내부에서는 추상메서드만을 선언할 필요는 없습니다.
+	 	일반메서드도 모두 선언할수 있습니다.
+	 */
+	public abstract void orederApple();
+	public abstract void orederBanana();
+	public abstract void orederGrape();
+	public abstract void orederMelon();//가격 재정의 안하면 에러
+	
+	public void orderWaterMelon() {//가격 재정의 안해도 에러안남
+		System.out.println("수박 쥬스의 가격은 4000원입니다.");
+	}
+	public final void orderPeach() {//가격재정의 불가
+		System.out.println("복숭아의 가격은 2000원입니다.");
+	}
+}
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_abstract
+
+
+추상클래스 및 추상메서드 용도
+1)재정의 누락 방지
+	-강제오버라이딩하도록하여 오버라이딩 안하면 프로그램실행안되도록하여 초기값입력 실수를 방지하기위함
+2)메서드 이름오타 방지
+	-회사에서 클래스를 만들때 메서드 이름을 문서로 전달하면 오타우려가있는데 추상클래스를 만들고 거기에
+	 추상 메서드들을 입력하여 추상클래스를 뿌린후 상속받아 사용하면 반드시 해당이름으로 오타없이(있더라도 에러가나니까 고친다) 
+	 메서드 입력 가능
+
+
+#제한자
+-접근제한자
+	-public, package friendly, private, protected
+-사용제한자
+	-abstract, final, static
+
+#클래스에 적용가능한 제한자
+-접근제한자
+	-public, package friendly
+-사용제한자
+	-abstract, final
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제25)클래스 및 메소드 추상화(강제오버라이딩)
+
+
+아래의 코드는 지점주인이 본사에 항의하는 코드이다.
+실수로 지점주인이 오버라이딩을 안했을시 실행자체가 안해달라는 요구가 있다.
+1)강제 오버라이딩 하도록 소스코드를 수정하라.
+2)본사클래스에서 WaterMelon이라는 메소드와 Peach라는 메소드를 추가한다.(가격은 자유롭게/수박쥬스,복숭아)
+	단, WM은 지점주인의 마음에따라 물가를 바꿀수있도록하고 
+	Peach는 지점주인이 가격을 바꾸고싶어도 절대못바꾸도록 하라
+
+package abs.badcase;
+
+public class HeadStore {
+	
+	
+	public void orderApple() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderBanana() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderGrape() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	public void orderMelon() {
+		System.out.println("0원입니다. 가게에서 가격을 정해주세요.");
+	}
+	
+}
+
+package abs.badcase;
+
+public class Store extends HeadStore{
+	public void orderApple() {
+		System.out.println("사과 쥬스의 가격은 3000원입니다.");
+	}
+	public void orderBanana() {
+		System.out.println("바나나 쥬스의 가격은 2800원입니다.");
+	}
+	public void orderGrape() {
+		System.out.println("포도 쥬스의 가격은 3200원입니다.");
+	}
+	/*
+	public void orderMelon() {
+		System.out.println("멜론 쥬스의 가격은 4000원입니다.");
+	}
+	*/
+}
+
+
+package abs.badcase;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Store s = new Store();
+		s.orderApple();
+		s.orderBanana();
+		s.orderGrape();
+		s.orderMelon();
+		
+	}
+}
+
+
+#제한자
+-접근제한자
+	-public, package friendly, private, protected
+-사용제한자
+	-abstract, final, static
+
+#클래스에 적용가능한 제한자
+-접근제한자
+	-public, package friendly
+-사용제한자
+	-abstract, final
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+
+
+
+
+package abs.goodcase;
+
+public abstract class HeadStore {
+	HeadStore(){
+		System.out.println("HEADStore생성자호출!");
+	}
+	/*
+	 1.메서드에 abstract를 붙이면 해당 메서드는 추상메서드가 되며 이 메서드는 상속을 통해 자식 클래스에서
+	 반드시 오버라이딩을 해야함. 그렇지 않으면 에러가 발생함
+	 2.추상메서드는 실체가 존재하지 않는 메서드의 틀 역할을 하기때문에 메서드의 바디부분 {}이 없고 세미클론
+	 으로 선언을 마감함.
+	 3.일반 클래스에서는 추상메서드를 선언할수 없음 추상메서드가 하나라도 존재하는
+	 	클래스는 반드시 추상클래스가 되어야함
+	 4.추상클래스 내부에서는 추상메서드만을 선언할 필요는 없습니다.
+	 	일반메서드도 모두 선언할수 있습니다.
+	 */
+	public abstract void orderApple();
+	public abstract void orderBanana();
+	public abstract void orderGrape();
+	public abstract void orderMelon();//가격 재정의 안하면 에러
+	
+	public void orderWaterMelon() {//가격 재정의 안해도 에러안남
+		System.out.println("수박 쥬스의 가격은 4000원입니다.");
+	}
+	public final void orderPeach() {//가격재정의 불가
+		System.out.println("복숭아의 가격은 2000원입니다.");
+	}
+}
+
+
+
+package abs.goodcase;
+
+public class Store extends HeadStore{
+//	
+//	Store(){
+//		super();	//자식클래스의 생성자는 항상 부모클래스의 생성자를 호출할수있다.
+//					//통상적으로 마지막으로 호출되는 생성자에는 반드시 super()가 있다.
+//					//그럼 추상클래스의 자식이라하더라도 부모의 생성자를호출한다.
+//					//그럼으로 부모의 생성자를 부모클래스에서 설계해야한다.
+//	}
+//	
+	public void orderApple() {
+		System.out.println("사과 쥬스의 가격은 2800원입니다.");
+	}
+	public void orderBanana() {
+		System.out.println("바나나 쥬스의 가격은 2800원입니다.");
+	}
+	public void orderGrape() {
+		System.out.println("포도 쥬스의 가격은 2800원입니다.");
+	}
+	public void orderMelon() {
+		System.out.println("멜론 쥬스의 가격은 2800원입니다.");
+	}
+	
+	@Override
+	public void orderWaterMelon() {
+		// TODO Auto-generated method stub
+		super.orderWaterMelon();
+	}
+//	public void orderPeach() { //에러남 final 메서드이기때문임
+//		// TODO Auto-generated method stub
+//		super.orderWaterMelon();
+//	}
+	
+
+}
+
+
+
+
+
+package abs.goodcase;
+
+public class MainClass {
+	public static void main(String[] args) {
+		//HeadStore h = new HeadStore();//HeadStore타입으로 객체를 구체화불가하다
+									//는 문구와 함꼐 에러남 -> 추상클래스이니까^^
+		//추상클래스는 스스로 객체생성불가(꿈을 객체로 만들지못함)
+		//반드시 상속을통해 클래스를 구체화시켜야함(설계가 안끝났는데 어떻게 객체를 만들겠냐~)
+//		Store s = new Store();
+		HeadStore s = new Store();
+		s.orderApple();
+		s.orderWaterMelon();
+		s.orderPeach();
+		//다형성기능 사용가능, 객체를 만드는것만 불가능하지 추상클래스로 다형성기능인 프로모션가능
+		
+	}
+}
+
+
+
+
+
+
+
+
+

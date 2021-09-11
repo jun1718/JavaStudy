@@ -42,8 +42,8 @@
 		<item value="679" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="605" key="DIALOG_HEIGHT"/>
-		<item value="270" key="DIALOG_X_ORIGIN"/>
-		<item value="251" key="DIALOG_Y_ORIGIN"/>
+		<item value="1379" key="DIALOG_X_ORIGIN"/>
+		<item value="374" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="681" key="DIALOG_WIDTH"/>
