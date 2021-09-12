@@ -1,0 +1,1407 @@
+21.09.12_16회차
+======================================================================================================
+*복습
+======================================================================================================
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_인터페이스
+
+* 인터페이스(Interface)
+	-상속을해야 다형성구현이가능한데 관계없는녀석들끼리 다형성구현이 필요한경우 이때도 굳이 상속을해야하나? 이런생각으로 시작되어 생성
+	-다형성과 추상클래스개념이 섞여있데
+
+- 자바의 인터페이스는 객체의 사용 방법을 정의한 타입으로 객체의 교환성을 높여주기 때문에 다형성을 구현하는 매우 중요한 역할을 합니다.
+- 인터페이스를 선언할 때는 interface 키워드를 사용하며, 클래스에서 인터페이스를 구현할 때는 
+	클래스 이름 뒤에 implements 키워드를 사용하여 구현합니다.
+- 클래스는 멤버변수, 생성자, 메서드를 구성 멤버로 가지지만 인터페이스는 상수와 추상메서드만을 구성멤버로 가집니다.
+- 인터페이스는 데이터를 저장할 수 없기 때문에 데이터를 저장할 객체 또는 정적 변수를 선언할 수 없습니다.
+- 따라서 인터페이스 선언된 변수는 public static final을 생략하더라도 컴파일 과정에서 자동으로 붙게 됩니다.
+- 인터페이스의 메서드를 추상메서드 형식으로 선언하면 abstract를 붙이지 않더라도 자동으로 컴파일 과정에서 붙게 됩니다.
+- 클래스가 상속 가능한 것처럼 인터페이스도 extends 키워드를 사용하여 인터페이스 간의 상속을 구현할 수 있으며. 
+	다중 상속도 표현 할 수 있습니다.
+
+
+//interface의 이름을 만들때는 앞에 I를 붙인다
+	-자바든 클래스이든 .java로 확장자가 같기때문에 구분할게 있어야함
+
+#자바에서 다형성을 가지기위한방법
+-상속 : 자식(본인)객체가 부모클래스의 타입을 물려받을수있다.
+-interface : 본인객체가 interface의 타입을 물려받을수 있다.
+
+
+package inter.basic;
+
+public interface Inter2 {
+	int ABC = 10;
+	void method2();
+	
+}
+
+package inter.basic;
+
+/*
+ * 1.인터페이스를 사용하려면 클래스에서 해당 인터페이스를 구현해야 함.
+ * 2.인터페이스를 구현하는 키워드는 implements임
+ * 3.인터페이스를 상속과 달리 여러 인터페이스들을 동시에 다중구현할수있음
+ * 4.인터페이스를 구현할때 인터페이스 내부에 선언된 추상메서드들을 반드시 전부 재정의해야함
+ */
+
+
+
+#interface특징
+-단일상속으로 표현할수 없는 부분을 인터페이스로 채워넣을수 있다.
+-인터페이스의 메서드는 추상메서드여야함
+-인터페이스의 변수는 자동으로 상수가 됨
+-인터페이스를 구현할때는 implements
+-인터페이스를 여러개 implements할수 있다.
+-인터페이스는 다른 인터페이스를 여러개 extends할수 있다.
+	-인터페이스끼리 상속이 가능하다.
+		-다중상속가능
+-강제오버라이딩을 통해 기능의 명세를 위해 사용
+######################################################################################################
+
+
+
+
+<예시코드>
+
+
+package inter.basic;
+
+public interface Inter1 {
+	//인터페이스에 변수를 서언하면 자동으로 상수 취급한다.
+	//디폴트값이 상수라는 뜻
+	public static final double INCH = 2.54;
+//	double HI = 3.4;
+	
+	//인터페이스에 메서드를 선언하면 추상메서드로 취급됨
+	//즉 객체를 만들수없다. 다형성을 만들기위한 거기때문에 그럼
+	abstract void method1();
+//	void method2();
+}
+
+
+
+package inter.basic;
+
+public interface Inter2 {
+	int ABC = 10;
+	void method2();
+	
+}
+
+
+public class InterClass implements Inter1, Inter2{
+	public void method1() {
+		System.out.println("Inter1의 메서드구현");
+	}
+	public void method2() {
+		System.out.println("Inter2의 메서드구현");
+	}
+	public void method3() {
+		System.out.println("클래스의 메서드호출!");
+	}
+}
+
+
+package inter.basic;
+
+public class MainClass {
+
+//	public static final int a = 4;
+	public static void main(String[] args) {
+		//인터페이스는 객체를 생성할 수 없음
+//		Inter1 i = new Inter1();
+		InterClass ic = new InterClass();
+		
+		System.out.println(Inter1.INCH);
+		System.out.println(Inter2.ABC);
+//		System.out.println(ic.INCH);	//객체로도 접근가능하지만 저둘은 상수처리되었으니
+//		System.out.println(ic.ABC); 	//객체가없어도 만들수있음으로 공용성있게 inter
+										//face를 이용해서 호출한다.
+										//즉 상수들을 모아놓고 사용할때 유용하게 취급됨
+		System.out.println(ic.INCH);
+		//ic.INCH; 이렇게 sys없이 선언만 해두면 에러남 상수특징인가?> 실험해보니 특징인듯(a)
+		
+//		System.out.println("a");
+		
+		ic.method1();
+		ic.method2();
+		ic.method3();
+
+		/*
+		 * -인터페이스 이름도 하나의 타입으로 취급가능
+		 * -인터페이스를 통해 상속 없이도 다형성 구현 가능
+		 * 	원래다형성 뜻 : 부모클래스의 타입을 자식객체가 사용할수있다.
+		 */
+		
+		Inter1 i1 = ic;
+		Inter2 i2 = new InterClass();
+		
+		
+		i1.method1();
+//		i1.INCH;
+		i2.method2();
+//		i2.ABC;
+		
+//		i2.method1();
+//		i2.method3();
+//		i2.INCH;
+		
+		
+		InterClass icc = (InterClass)i1;
+		InterClass icc2 = (InterClass)i2;
+		
+		icc.method1();
+		icc.method2();
+		icc.method3();
+		icc2.method1();
+		icc2.method2();
+		icc2.method3();
+		
+		
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제26)interface를 구현하고 상속을 이용해서 java의 단일상속의 부족한부분을 보완하기
+
+
+pacage : inter.pet
+
+1)class: Animal 
+추상메서드 void eat 선언
+
+2)class: Fish
+추상메서드 void swim 선언
+
+3)interface: Ipet
+추상메서드 void play 선언
+
+4)Animal을 상속받고 interface인 Ipet을 구현하는 클래스 : Dog, Cat
+	-Animal만 상속받는 클래스 : Tiger(Ipet 구현 x)
+-Dog
+	-play(밖)와 eat(사료) 재정의
+-Cat
+	-play(방)와 eat(생선) 재정의
+-Tiger
+	-eat(고기) 재정의
+
+5)Fish를 상속받고 interface인 Ipet을 구현하는 클래스 : GoldFish
+	-Fish만 상속받는 클래스 : Shark(Ipet 구현 x)
+
+-GoldFish
+	-play(어항), swim(강)
+-Shark
+	-swim(바다) 
+
+6)IPet interface를 구현한 클래스로 만들어진 객체에 대해 돌본다는 메세지를 출력하는 기능 하나만 가진 class: PetShop
+	-메서드명 : void carePat
+
+
+7)MainClass 
+-Dog 객체 baduk 생성
+-Cat 객체 nabi 생성
+-Tiger 객체 hodol 생성
+
+-다형성적용하여 이종모음 배열변수 animals 선언, 공간생성, 동시에 주소값 초기화
+-향상된 포문을 이용해서 animals에 있는 객체들이 뭘 먹는지 각각 출력
+-System.out.println("---------------------------"); 출력
+
+-interface IPet배열타입 변수 pets 선언 및 공간생성(IPet공간 3개로 이루어진 공간)
+-기본값으로 들어가있는 곳에 3개다 animals의 값들로 값 초기화 (안되는거 하나 확인)
+-GoldFish() 공간만들고 안됐던 칸에 공간의 주소를 저장
+-IPet 배열변수 pets가 저장하는 배열의 주소들을 참조하여 해당 객체들이 뭘하고 노는지 확인
+
+-System.out.println("--------------------------");
+
+-PetShop 객체 생성 후 내부 메서드 carePet의 매개변수를 이용한 다형성적용으로 baduk, nabi, GoldPish를 그대로 넣어도 이상없이
+	뭘돌보는지 출력하도록 할것
+	-그이후 nabi를 선언부로 올라가서 Animal으로 참조변수의 타입을 변경함으로 다형성 적용후 carePet메서드 정상작동되도록 해봐라
+		-한마디로 upcasting 됐던거를 다시 downcasting 해보라는거임 downcasting을 안하면 carePet이 에러나니까.
+
+
+
+package inter.pet;
+
+public abstract class Animal {
+	public abstract void eat();
+}
+
+
+
+package inter.pet;
+
+public class Cat extends Animal implements IPet{
+	public void eat() {
+		System.out.println("고양이는 생선을 먹습니다.");
+	}
+	public void play() {
+		System.out.println("고양이는 밖에서 놉니다.");
+	}
+}
+
+package inter.pet;
+
+public class Dog extends Animal implements IPet{
+	public void eat() {
+		System.out.println("개는 사료를 먹습니다.");
+	}
+	public void play() {
+		System.out.println("개는 집에서 놉니다.");
+	}
+}
+
+package inter.pet;
+
+public abstract class Fish {
+	public abstract void swim();
+}
+
+package inter.pet;
+
+public class GoldFish extends Fish implements IPet{
+	public void swim() {
+		System.out.println("금붕어는 수족관에서 수영합니다.");
+	}
+	public void play() {
+		System.out.println("금붕어는 강에서 놉니다.");
+	}
+}
+
+package inter.pet;
+
+public interface IPet {
+	public abstract void play();
+}
+
+package inter.pet;
+
+public class PetShop {
+	public void carePet(IPet pet) {
+		if(pet instanceof Dog) {
+			System.out.println("개를 돌봐줍니다.");
+			return;
+		}
+		if(pet instanceof Cat) {
+			System.out.println("고양이를 돌봐줍니다.");
+			return;
+		}
+		if(pet instanceof GoldFish) {
+			System.out.println("금붕어를 돌봐줍니다.");
+			return;
+		}		
+	}
+}
+
+
+package inter.pet;
+
+public class Shark extends Fish {
+	public void swim() {
+		System.out.println("상어는 바다에서 수영합니다.");
+	}
+}
+package inter.pet;
+
+public class Tiger extends Animal{
+	public void eat() {
+		System.out.println("호랑이는 못먹는게 없습니다.");
+	}
+}
+
+
+
+package inter.pet;
+
+public class MainClass {
+	public static void main(String[] args) {
+		Dog baduk = new Dog();
+		Animal nabi = new Cat();
+		Tiger hodol = new Tiger();
+		
+		Animal[] animals = {baduk, nabi, hodol};
+		for(Animal animal : animals) {
+			animal.eat();
+		}
+		
+		System.out.println("---------------------------");
+		
+		IPet[] pets = new IPet[3];
+		pets[0] = baduk;
+		pets[1] = (Cat)nabi;
+//		pets[2] = hodol;
+		
+		GoldFish g = new GoldFish();
+		pets[2] = g;
+		
+		for(IPet pet : pets) {
+			pet.play();
+		}
+		
+		System.out.println("---------------------------");
+		
+		PetShop shop = new PetShop();
+		
+		for(IPet pet : pets) {
+			shop.carePet(pet);			
+		}
+	}
+}
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+
+package inter.pet;
+
+public interface IPet {
+	public abstract void play();
+}
+
+
+
+
+package inter.pet;
+
+public abstract class Animal {
+	public abstract void eat();
+}
+
+
+package inter.pet;
+
+public class Cat extends Animal implements IPet {
+
+	public void play() {
+		System.out.println("고양이는 방에서 놀아요~");
+	}
+	public void eat() {
+		System.out.println("고양이는 생선을 먹어요~");
+	}
+
+}
+
+package inter.pet;
+
+public class Dog extends Animal implements IPet {
+	
+	public void play() {
+		System.out.println("강아지는 밖에서 놀아요~");
+	}
+	public void eat() {
+		System.out.println("강아지는 사료를 먹어요~");		
+	}
+	
+
+}
+
+package inter.pet;
+
+public class Tiger extends Animal {
+
+	public void eat() {
+		System.out.println("호랑이는 고기를 먹어요.");
+	}
+
+}
+
+
+
+package inter.pet;
+
+public abstract class Fish {
+	public abstract void swim();
+}
+
+package inter.pet;
+
+public class GoldFish extends Fish implements IPet {
+
+	
+	public void play() {
+		System.out.println("금붕어는 어항에서 놀아요~");
+
+	}
+
+	
+	public void swim() {
+		System.out.println("금붕어는 강에서 헤엄쳐요~");
+
+	}
+
+}
+
+
+package inter.pet;
+
+public class Shark extends Fish {
+	public void swim() {
+		System.out.println("상어는 바다에서 헤엄쳐요~");
+	}
+
+}
+
+
+
+package inter.pet;
+
+public class PetShop {
+	public void carePet(IPet pet) {
+		if(pet instanceof Dog) {
+			System.out.println("강아지를 돌봅니다.");
+		} else if (pet instanceof Cat) {
+			System.out.println("고양이를 돌봅니다.");
+		} else if (pet instanceof GoldFish) {
+			System.out.println("금붕어를 돌봅니다.");
+		}
+	}
+}
+
+
+
+
+package inter.pet;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Dog baduk = new Dog();
+		Animal nabi = new Cat(); //여기는 상관없지만 아래 pets[1]에서 에러남
+			/*
+			 * animal과 ipet은 상관이 없기때문에 아래에서 ipet이 animal부분을 담을수없음
+			 * 애초에  nabi가 Cat으로 만들어지면 interface의 상수와 메소드부분을 가지고,
+			 * 부모의 멤버와 생성자를 가진다. 그러다가 다형성으로 Cat이 Animal이 되면
+			 * Animal클래스가 가진 멤버와 생성자밖에 못쓰고 Cat의 고유한 멤버는 사용할수없다.
+			 * 이는 interface도 마찬가지다. 
+			 */
+		//위에 Animal nabi했을때 아래에서 에러안나게하려면 강제형변환해주면됨
+		
+		//Cat nabi = new Cat();
+		
+		Tiger hodol = new Tiger();
+		
+		Animal[] animals = {baduk, nabi, hodol};
+		
+		for(Animal a : animals) {
+			a.eat();
+		}
+		System.out.println("---------------------------");
+		IPet[] pets = new IPet[3];
+		
+		pets[0] = baduk;
+//		pets[1] = nabi;
+//		pets[1] = (Cat)nabi;
+		pets[1] = (IPet)nabi;
+		
+		
+//		pets[2] = hodol; //Tiger 클래스는 interpace로 IPet을 상속받지 않았다.그래서
+			//다형성불가
+//		pets[2] = (IPet)hodol;	//컴파일에러는 안뜨지만 런타임에러가 뜸
+						//hodol이는 interpace가 구현되지 않았기 때문임
+		
+		//pets[2] = new Shark();
+		
+		pets[2] = new GoldFish();
+		
+		for(IPet pet: pets) {
+			pet.play();
+		}
+		
+		System.out.println("--------------------------");
+		
+		PetShop shop = new PetShop();
+		shop.carePet(baduk);
+		System.out.println("--------------------------");
+		shop.carePet((IPet)nabi);
+		shop.carePet(pets[2]);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_예외처리
+
+#error 종류
+-serious error
+	-컴퓨터사항이 낮은걸로 돌려서나는 에러라든지 프로그램의 문제가 아닌것으로 나는 오류
+-mild error
+	-프로그램의 문제
+	-checked exception(대부분이 문법적에러, 컴파일에러라고도 한다)
+	-unchecked exception(컴파일에는 문제없는데 실행하다가 오류가난경우, runtime 에러라한다)
+	-위 2가지를 예외라한다.
+
+-예외클래스
+	object(클래스)
+
+	Throwable(클래스)
+
+error(클래스)	exception(클래스)
+serious에대한	unchecked exception(runtimeException(클래스))
+에러를 담고있는클래스	checked exception(컴파일에러와 관련된것을 담고있는 클래스들이 있음)
+
+
+* 예외 처리(Exception)
+	
+- 에러에는 심각한 에러(serious error)와 가벼운 에러(mild error)가 있습니다. 
+	심각한 에러는 시스템 상의 문제로 인한 에러로 개발자가 처리할 수 없는 에러를 말합니다. 
+	가벼운 에러는 개발자가 코드를 통해 처리할 수 있는 에러를 말하며 이 방식을 예외처리라고 합니다.
+- 예외에는 컴파일러 체크 예외와 실행 예외(Runtime Exception)가 있습니다.
+- 컴파일러 체크 예외는 자바 소스를 컴파일하는 과정에서 예외 처리 코드를  검사하여 예외 처리 코드가 없다면 컴파일 오류가 발생합니다.
+- 실행 예외는 컴파일하는 과정에서 예외처리 코드를 검사하지 않는 예외를 말합니다.
+- 예외 처리는 컴파일 예외와 실행 예외에 대한 대처방법입니다.
+- 예외 처리는 시스템 스스로 오류를 복구하는 것이 아니고 오류 발생 가능성이 있는 부분에 대한 처리를 미리 프로그래밍 해주는 것입니다.
+- 프로그램에서 문제가 될만한 부분을 예상하여 사전에 "문제가 발생하면 이렇게 처리하라" 라고 프로그래밍 하는 것을 예외 처리라고합니다.
+
+
+
+#예외처리 문법
+	-사용가능 위치 : 생성자 내부 혹은 메서드 내부만 가능
+		-클래스 내부에 직접적으로 사용 불가
+
+try{
+	예외발생 가능성이 있는 코드
+} catch(Exception e){
+	예외 발생시 실행할 코드
+}
+
+예외가 발생하면 트라이 종료 후 catch실행
+예외가 발생안하면 케치실행안하고 트라이블록 실행
+
+package exception.trycatch;
+
+public class TryCatchExample1 {
+	public static void main(String[] args) {
+		
+		int i = 10;
+		int j = 0;	//0이면 반드시 에러남 즉 에러가능성이있는코드라서 예외 가능성이있다고함			
+		
+		System.out.println(i*j);
+		try {
+			System.out.println(i/j);
+			//예외가 발생한곳에서 바로 catch로 가기때문에 아래 코드 실행안됨
+			System.out.println("예외 발생시 이 텍스트는 출력되지 않음");
+		}catch(Exception e) {
+			System.out.println("0으로 나눌 수 없습니다.");
+		}
+		System.out.println(i+j);
+		System.out.println(i-j);
+	}
+}
+
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_runtime exception
+
+
+* 실행 예외(Runtime Exception)
+
+- 실행 예외는 컴파일러가 예외 처리 코드를 체크하지 않기 때문에 오로지 개발자의 경험에 의해서 예외 처리 코드를 삽입해야 합니다.
+- 만약 개발자가 실행 예외에 대해 예외처리 코드를 넣지 않았을 경우 해당 예외가 발생하면 프로그램은 곧바로 종료됩니다.
+	-0으로 나누면 에러나는거같은걸 말하는거다. 실행중에 발생하는 예외
+- 주요 실행 예외
+
+1. NullPointerException
+- 객체 참조가 없는 상태, 즉 null 값을 갖는 참조 변수로 객체 접근 연산자인 dot(.)를 사용했을 때 발생합니다.
+
+2. ArrayIndexOutOfBoundsException
+- 배열에서 인덱스 범위를 초과하여 사용할 경우 발생합니다.
+	-배열의 범위를 넘어선 참조
+
+3. NumberFormatException
+- 문자열로 되어 있는 데이터를 숫자로 변경하는 경우에 발생합니다.
+
+4. ClassCastException
+- 형 변환은 부모 클래스와 자식 클래스간에 발생하고 구현 클래스와 인터페이스 간에도 발생합니다. 이러한 관계가 아니라면 다른 클     래스로 타입을 변환할 수 없습니다.
+- 상속관계나 인터페이스 관계가 없는 클래스들을 억지로 형 변환 할 경우 발생합니다.
+
+5. ArithmeticException
+-0으로 나누는경우 발생
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제27)기본적인 RunTimeException case 
+
+
+
+1. NullPointerException
+- 객체 참조가 없는 상태, 즉 null 값을 갖는 참조 변수로 객체 접근 연산자인 dot(.)를 사용했을 때 발생합니다.
+
+
+package exception.runtime_exception;
+
+public class NullPointerExample {
+	public static void main(String[] args) {
+		String a = "15";
+		String b = "13";
+		
+		System.out.println(a+b);
+		
+		//문자열 수치변환
+		//str -> int 변환
+		//Integer.parseInt(문자열) 메서드 이용
+		
+		int i = Integer.parseInt(a);
+		int j = Integer.parseInt(b);
+		System.out.println(i+j);
+	
+		
+		//parseInt는 문자열 내부에 순수한 정수가 들어있어야만 변환을 실행하며  정수값이 아닐
+		//경우 NumberFortmatException이 발생함
+		
+		String str = "hello";
+//		int e = Integer.parseInt(str);	//에러
+		
+		
+	}
+}
+
+
+
+2. ArrayIndexOutOfBoundsException
+- 배열에서 인덱스 범위를 초과하여 사용할 경우 발생합니다.
+	-배열의 범위를 넘어선 참조
+
+package exception.runtime_exception;
+
+public class ArrayIndexOutOfBoundsException {
+
+	public static void main(String[] args) {
+		int[] arr = {3, 6, 9};
+		System.out.println(arr[2]);
+//		System.out.println(arr[3]); //분명 없는 인덱스를 []에 넣었는데도 checked
+			//exception이 발생안함. 즉 컴파일에러가 안뜸 근데 이건 돌리면에러가남
+		//이게바로 runtime error이면서 unchecked exception
+	}
+
+}
+
+
+
+
+3. NumberFormatException
+- 문자열로 되어 있는 데이터를 숫자로 변경하는 경우에 발생합니다.
+
+
+
+package exception.runtime_exception;
+
+public class NumberFormatExample{
+	public static void main(String[] args) {
+		String a = "15";
+		String b = "13";
+		
+		System.out.println(a+b);
+		
+		//문자열 수치변환
+		//str -> int 변환
+		//Integer.parseInt(문자열) 메서드 이용
+		
+		int i = Integer.parseInt(a);
+		int j = Integer.parseInt(b);
+		System.out.println(i+j);
+	
+		
+		//parseInt는 문자열 내부에 순수한 정수가 들어있어야만 변환을 실행하며  정수값이 아닐
+		//경우 NumberFortmatException이 발생함
+		
+		String str = "hello";
+//		int e = Integer.parseInt(str);	//에러
+		
+		
+	}
+}
+
+
+
+
+
+
+4. ClassCastException
+- 형 변환은 부모 클래스와 자식 클래스간에 발생하고 구현 클래스와 인터페이스 간에도 발생합니다. 이러한 관계가 아니라면 다른 클래스로 
+	타입을 변환할 수 없습니다.
+- 상속관계나 인터페이스 관계가 없는 클래스들을 억지로 형 변환 할 경우 발생합니다.
+	-upcasting된 부모타입객체의 원객체(자식객체)가 아닌데 타 자식객체가 부모타입객체를 다시 downcating한 경우
+		-부모가 같은 자식 a,b 객체중에 b객체참조변수에 부모로 upcasting한 주소 저장
+		-b객체참조변수가 참조하는 객체를 a로 downcasting할때 이런 경우가 일어남 b에는 b와 부모꺼만있는데 a껄하면 당연히안되지
+	-근데 착각하는경우: 다형성에서 upcasinting이 되기전에 downcasting될수는 없다.(부모객체로 만들고 자식타입으로 다형성구현불가)
+			이건 문법으로 정해진것이다. up되기전에 down이 되면 다른검사없이 바로 컴파일에러를띠운다.
+			그래서 이경우는 컴파일이 뜬다. 컴파일이뜨니까 어뭐야 이럼 실행예외가 아니잖아? 라고 생각하지 않길 바란다.
+
+
+package exception.runtime_exception;
+
+class Animal {}
+class Dog extends Animal {}
+class Cat extends Animal {}
+
+public class ClassCastException{
+	public static void main(String[] args) {
+		Dog d = new Dog();
+		Animal da = d;
+		d = (Dog)da;
+		System.out.println("타입변환 성공!");
+		
+		Animal c = new Cat();
+	//	Cat c = new Cat();
+//		Dog d2 = (Dog)c; 이건 컴파일에러가 잡아냄
+		Dog d2 = (Dog)c;	//이건 컴파일에러가 안잡힘 animal이라는 동일부모 공통점이있어서
+							//그런건가? 한번 업캐스팅이 된녀석을
+							//다운캐스팅하는거니까 업캐스팅된게 Dog였는줄아는건가
+						//Cat c를 하면 upcasting이 안일어났는데 downcasting
+		//하려고해서 컴파일이 이건 잡는거고 두번째는 up후 down이고 부모가 같아서 그거까진
+		//못잡아내나봄 컴파일이?
+		System.out.println("타입변환");
+		
+	}
+}
+
+
+
+
+5.ArithmeticException
+- 0으로 나누는경우 발생
+
+
+package exception.trycatch;
+
+public class TryCatchExample1 {
+	public static void main(String[] args) {
+		
+		int i = 10;
+		int j = 0;	//0이면 반드시 에러남 즉 에러가능성이있는코드라서 예외 가능성이있다고함			
+		
+		System.out.println(i*j);
+		try {
+			System.out.println(i/j);
+			//예외가 발생한곳에서 바로 catch로 가기때문에 아래 코드 실행안됨
+			System.out.println("예외 발생시 이 텍스트는 출력되지 않음");
+		}catch(Exception e) {
+			System.out.println("0으로 나눌 수 없습니다.");
+		}
+		System.out.println(i+j);
+		System.out.println(i-j);
+	}
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+1. NullPointerException
+- 객체 참조가 없는 상태, 즉 null 값을 갖는 참조 변수로 객체 접근 연산자인 dot(.)를 사용했을 때 발생합니다.
+
+2. ArrayIndexOutOfBoundsException
+- 배열에서 인덱스 범위를 초과하여 사용할 경우 발생합니다.
+	-배열의 범위를 넘어선 참조
+
+3. NumberFormatException
+- 문자열로 되어 있는 데이터를 숫자로 변경하는 경우에 발생합니다.
+
+4. ClassCastException
+- 형 변환은 부모 클래스와 자식 클래스간에 발생하고 구현 클래스와 인터페이스 간에도 발생합니다. 이러한 관계가 아니라면 다른 클래스로 
+	타입을 변환할 수 없습니다.
+- 상속관계나 인터페이스 관계가 없는 클래스들을 억지로 형 변환 할 경우 발생합니다.
+
+5. ArithmeticException
+-0으로 나누는경우 발생
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_finally
+
+try{
+}catch(){
+
+}finally{
+
+}
+
+finally 
+-예외 발생여부와 관계없이 항상 실행할 코드
+-입력후 객체반납 
+
+
+
+* try~ catch~ finally
+	
+- 프로그램에서 예외가 발생했을 경우 프로그램의 갑작스러운 종료를 막고, 정상 실행을 유지할 수 있도록 처리하는 코드를 예외 처리  코드라고 합니다.
+- try~ catch ~ finally 블록은 생성자 내부나 메서드 내부에서  작성되어 컴파일  예외와 실행  예외가 발생할 경우에  예외  처리를  할 수  있게 해줍니다.
+- try 블록에는 예외 발생 가능성이 있는 코드를 작성합니다. try 블록의 코드가 예외 발생 없이 정상 실행되면 catch 블록은 실행되지 않습니다.
+- try 내부에서 예외가 발생하면 즉시 실행을 멈추고 catch 블록으로 이동하여 예외 처리 코드를 실행합니다.
+- 예외 발생 여부와 상관없이 항상 실행할 내용이 있다면 finally 블록 내부에 실행 내용을 작성합니다.
+
+
+
+
+* finally 구문이 실행되지 않는 경우
+
+1. finally 구문 이전에 System.exit() 구문을 호출했을 시
+1. 컴퓨터가 꺼져서 시스템이 멈추었을 시
+1. finally 블록 내부에서 예외가 발생했을 시(내부에 try catch를 넣어줌)
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제28)try~catch~finally
+
+1)아래의 코드에서 예외처리하라
+	-단, System.out.println("이문장은 항상 실행됨^_^"); 코드는 실행예외의 여부와 관계없이 실행되도록 하라
+
+package exception.trycatch;
+
+public class TryCatchExample2 {
+	public static void main(String[] args) {
+		String[] greetings = {"안녕", "헬로", "니하오"};
+		int i =0;
+		while(i<4) {
+			System.out.println(greetings[i]);
+			i++;
+		}
+		System.out.println("프로그램 정상실행종료!");
+	}
+}
+
+
+
+* finally 구문이 실행되지 않는 경우
+
+1. finally 구문 이전에 System.exit() 구문을 호출했을 시
+1. 컴퓨터가 꺼져서 시스템이 멈추었을 시
+1. finally 블록 내부에서 예외가 발생했을 시(내부에 try catch를 넣어줌)
+
+
+
+package exception.trycatch;
+
+
+public class TryCatchExample2 {
+	public static void main(String[] args) {
+		String[] greetings = {"안녕", "헬로", "니하오"};
+		int i =0;
+		while(i<4) {
+			try {
+				System.out.println(greetings[i]);				
+			} catch(Exception e) {
+				System.out.println("인덱스범위를 초과했습니다.");
+			} finally {
+				System.out.println("이문장은 항상 실행됨^_^");
+			}
+			
+			i++;
+		}
+		System.out.println("프로그램 정상실행종료!");
+	}
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+package exception.trycatch;
+
+public class TryCatchExample2 {
+	public static void main(String[] args) {
+		String[] greetings = {"안녕", "헬로", "니하오"};
+		int i =0;
+		while(i<3) {
+			try {
+				System.out.println(greetings[i]);				
+			} catch(Exception e) {
+				System.out.println("배열의 참조범위를 벗어남");
+			} finally {
+				System.out.println("이문장은 항상 실행됨^_^");
+			}
+			System.out.println("이문장도 항상 실행되지않나?");
+			i++;
+		}
+		System.out.println("프로그램 정상실행종료!");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_MultiCatchException
+
+* 다중 catch
+
+- try 블록 내부는 다양한 종류의 예외가 발생할 수 있습니다. 예외가 여러 가지 발생한다면 다중 catch 블록을 작성하여 예외들을 처리합니다.
+- 다중 catch 블록을 작성할 때 주의할 점은 상위 예외 클래스가 하위 예외 클래스보다 아래쪽에 위치해야 합니다.
+- catch 블록은 위에서부터 차례대로 검색되므로 상위 예외 클래스의 catch 블록이 위에 있다면 하위 예외 클래스의 catch블록은 실행되지 않습니다.
+- 자바 7 버전부터 하나의 catch 블록에서 여러 개의 예외를 처리할 수 있도록 기능이 추가되었습니다.
+- catch() 괄호 안에 동일하게 처리하고 싶은 예외를 | 로 연결하면 됩니다. 이 방식을 사용할 때는 두 예외가 상속 관계가 있으면 안됩 니다.
+
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제29)MultiCatchExample
+
+
+0)멤버변수선언
+String data1, data2;
+int val1, val2;
+int result;
+Scanner sc;
+
+1)데이터입력
+"1번째 데이터 : "
+"2번째 데이터 : "
+
+위 형식으로 숫자로만 구성된 문자열 데이터 입력받아서 1번째 데이터는 data1, 2번째 데이터는 data2에 저장
+
+2)데이터타입변경하여 숫자로 만들기
+-위에 입력받은 데이터들을 각각 반환하여 int형 데이터로 변경한 후 아래의 관계로 val1, val2에 저장
+
+data1 -> val1
+data2 -> val2
+
+3)사칙연산수행
+-val1을 val2로 나누어 몫을 반환
+-반환된값을 result에 저장
+
+4)출력
+-"val1 / val2 = result"의 형태로 출력
+	-val1,val2,result의 자리는 실제 변수에서 반환된 값이 들어가야함
+
+5)예외처리
+ㄱ.예외발생 가능성 있는 구간 : 1), 3)
+-1) : NumberFormatException
+-3) : ArithmeticException
+
+ㄴ.예외발생시 처리
+-1) : "데이터를 숫자만 넣어주세요." 출력 후 다음 영역실행
+-3) : "0으로 나눌 수 없습니다." 출력 후 다음 영역실행
+-추가로 예기치 못한 에러발생시 :
+
+ㄷ.반드시 수행해야할 것
+-입력할때 사용한 객체자원 반환
+-그밖의 자원반납
+
++예기치못한에러는 위에꺼 다실행하고 아래의 테스트코드 넣어서 실험해본다.(NullPointerException)
+
+위치 : 3)아래에 넣음
+String str = null;
+str.charAt(0);
+
+package exception.multicatchExample;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MultiCatch {
+	
+	
+	public static void main(String[] args) {
+		String data1, data2;
+		int val1, val2;
+		int result;
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("1번째 데이터 : ");
+		data1 = sc.next();
+		System.out.print("2번째 데이터 : ");
+		data2 = sc.next();
+		
+		try {
+			val1 = Integer.parseInt(data1);
+			val2 = Integer.parseInt(data2);			
+		
+			result = val1 / val2;
+			System.out.println(result);
+		} catch(Exception e) {
+			System.out.println("데이터는 순수한 정수형만 넣으셔야합니다.");
+			System.out.println("0으로 나눌 수 없습니다.");
+		} finally {
+			sc.close();
+		}
+		
+		System.out.println("프로그램 정상종료!");
+	}//main
+}//class
+
+
+
+package exception.multicatchExample;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MultiCatch {
+	
+	
+	public static void main(String[] args) {
+		String data1, data2;
+		int val1, val2;
+		int result;
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("1번째 데이터 : ");
+		data1 = sc.next();
+		System.out.print("2번째 데이터 : ");
+		data2 = sc.next();
+		
+		try {
+			val1 = Integer.parseInt(data1);
+			val2 = Integer.parseInt(data2);			
+		
+			result = val1 / val2;
+			String str = null;
+			str.charAt(0);
+			
+			System.out.println(result);
+		} catch(NumberFormatException e) {
+			System.out.println("데이터는 순수한 정수형만 넣으셔야합니다.");
+		} catch(ArithmeticException e) {
+			System.out.println("0으로 나눌 수 없습니다.");			
+		} catch(Exception e){
+			System.out.println("예기치 못한 오류 발생! 오류 이름 : " + e);
+			System.out.println("신속!!!정확!!!!히 처리하겠습니다. 충성!");
+		} finally {
+			sc.close();
+		}
+		
+		System.out.println("프로그램 정상종료!");
+	}//main
+}//class
+
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+
+
+
+
+
+package exception.multy;
+
+import java.util.Scanner;
+
+public class MultiCatchExample {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			System.out.print("1번째 데이터: ");
+			String data1 = sc.next();
+			System.out.print("2번째 데이터: ");
+			String data2 = sc.next();
+			
+			
+			//NumberFormat 발생가능
+			int val1 = Integer.parseInt(data1);
+			int val2 = Integer.parseInt(data2);
+			
+			//Arithmetic 발생가능
+			int result = val1/val2;
+			System.out.println(val1 + " / " + val2 + " = " + result);
+			
+			//exception 클래스는 모든 예외를 일괄처리할 수 있음 다형성임
+			//그래서 모든녀석 Exception이라해도되는데 다중처리를 할때는 자식클래스명칭을
+			//명확하게 적어야함
+		} catch(NumberFormatException e) {
+			System.out.println("데이터를 숫자만 넣어주세요.");
+		} catch(ArithmeticException e) {
+			System.out.println("0으로 나눌 수 없습니다.");			
+		} finally {
+			sc.close();
+		}
+	}
+}
+
+
+
+
+
+
+
+
+

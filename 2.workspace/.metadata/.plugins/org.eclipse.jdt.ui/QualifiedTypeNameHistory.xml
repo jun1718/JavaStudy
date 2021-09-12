@@ -4,9 +4,9 @@
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="fruit.Apple"/>
 <fullyQualifiedTypeName name="hello.bye.Bye"/>
-<fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="inherit.phone.MainClass"/>
 <fullyQualifiedTypeName name="overriding.Parent"/>
 <fullyQualifiedTypeName name="overriding.Child"/>
 <fullyQualifiedTypeName name="modi.member.pac1.A"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
 </qualifiedTypeNameHistroy>
