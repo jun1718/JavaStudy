@@ -1,0 +1,940 @@
+21.09.13_17회차 
+======================================================================================================
+*throw-throws, 사용자정의예외클래스, 표준API(lang패키지 기본 클래스)
+======================================================================================================
+
+
+
+
+
+
+######################################################################################################
+개념정리_throws
+
+package exception.throws_;
+
+public class ThrowsExample1 {
+	public static String[] greetings = {"안녕", "니하오", "헬로"};
+	public static void main(String[] args) {
+		/*
+		 * thorws가 붙어 있는 메서드나 생성자를 호출할때는 반드시 try블록 내부에서 호출하여
+		 * 예외처리를 진행해야함
+		 * 또는 다시 throws하여 예외처리를 다시 한 번 떠넘길수 있음
+		 */
+		try {			
+			greet(3);
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("안녕");
+			/*
+			 * printStackTrace()는 예외발생 경로를 추적하는 메시지를 출력함
+			 * 주로 개발과정에서 예외의 원인을 찾을때 유용하게 사용함
+			 */
+		}
+		
+		System.out.println("프로그램 정상종료!!");
+		
+		
+	}
+	/*
+	 * 예외의 원인이 메서드 선언부가 아닌 호출부에 있을 경우 예외 처리를 메서드
+	 * 호출자에게 떠넘기는 방식을 throws라 함
+	 * 메서드나 생성자 호출 시 예외처리를 강요하고 싶을 때 사용합니다.
+	 */
+	public static void greet(int index) throws Exception{
+		//내부에서 에러가나면 내가 잘못한게아니고 호출부에서 잘못이 있는거니까 
+		//너 무조건 try해라  try안하면 나못쓴다. 
+		//난 호출부의 상황에 따라 에러가 날 가능성이 높다. 그러니 안전하게 try안하면 안시켜준다.
+//		try {
+//			System.out.println(greetings[index]);
+//		} catch(Exception e) {
+//			System.out.println("배열의 참조범위를 벗어남!");
+//		}
+		System.out.println(greetings[index]);	
+	}
+}
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제30)throws 떠넘기기
+
+1)아래의 에러코드를 메인에서 최종적으로 해결하는 형태로 만드시오
+
+package exception.throws_;
+
+public class ThrowsExample2 {
+	public void aaa(int n) throws Exception{
+		System.out.println("aaa 호출!");
+		int i = 10 / n;
+		System.out.println("계산결과: "+i);
+		System.out.println("aaa 실행종료!");
+	}
+	
+
+	public void bbb() Exception{
+		System.out.println("bbb 호출!");
+		aaa(0);
+		System.out.println("bbb 실행 종료!");
+	}
+	
+	public void ccc() Exception{
+		System.out.println("cccc 호출!");
+		bbb();
+		System.out.println("cccc 실행종료!");
+	}
+	
+	public ThrowsExample2() Exception{
+		System.out.println("생성자 호출!!");
+		ccc();
+		System.out.println("생성자 종료!!");
+	}
+	
+	public static void main(String[] args) {		
+		ThrowsExample2 te = new ThrowsExample2();
+		e.printStackTrace();
+		System.out.println("hihi");
+	}
+}
+
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+package exception.throws_;
+
+public class ThrowsExample2 {
+	public void aaa(int n) throws Exception{
+		System.out.println("aaa 호출!");
+		int i = 10 / n;
+		System.out.println("계산결과: "+i);
+		System.out.println("aaa 실행종료!");
+	}
+	
+
+	public void bbb() throws Exception{
+		System.out.println("bbb 호출!");
+		aaa(0);
+		System.out.println("bbb 실행 종료!");
+	}
+	
+	public void ccc() throws Exception{
+		System.out.println("cccc 호출!");
+		bbb();
+		System.out.println("cccc 실행종료!");
+	}
+	
+	public ThrowsExample2() throws Exception{
+		System.out.println("생성자 호출!!");
+		ccc();
+		System.out.println("생성자 종료!!");
+	}
+	
+	public static void main(String[] args) {
+		try {			
+			ThrowsExample2 te = new ThrowsExample2();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("hihi");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+개념정리_throw-throws, 사용자정의 예외
+
+
+
+
+* 예외 강제 발생시키기(throw)
+
+- 사용자가 직접 선언한 예외 클래스나 자바가 제공하는 예외 API에서 예외를 강제 발생시키려면 throw라는 키워드를 이용합니다.
+
+
+
+
+package exception.throw_;
+
+public class ThrowExample {
+	public static int calcSum(int n) throws Exception{
+	/*
+	 * 프로그램이 throw구문을 만나는 순간 즉시 예외를 강제로 발생시키게 되며
+	 * 해당 예외를 처리해줄 catch블록을 검색합니다.	
+	 * throw가 메서드 내에 포함되는 순간 반드시 해당 메서드는 throws를 붙여야한다.
+	 * 의식흐름: 야 이건 우리안에서 에러를 발생시키는건데 만약에 밖에서 try처리를 안해주면
+	 * 우리때매 프로그램터지잖아!! 그러니까 안전빵으로 밖에서 try안하면 우리 사용도못하도록
+	 * throws붙이자 안붙였다가 징계먹을수도있어!
+	 */
+		if(n<=0) {
+//			System.out.println("매개값을 양수로 전해주세요");
+			throw new Exception(); // 프로그램은 에러라생각하지않지만 개발자는에러라고
+			//생각하는 상황에서 개발자가 강제로 에러를 발생시키는 것이 throw다.
+		}
+		int sum = 0;
+		for (int i=1;i<=n;i++) {
+			sum+=i;
+		}
+		return sum;
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		try {
+			int a = 2;
+			System.out.println("성공!");
+		} catch(Exception e) {
+			System.out.println("에러가발생할수있는코드라했는데 발생하지 않는코드가 문제는 안생기네");
+		}
+		
+		try {
+			int result1 = calcSum(100);
+			System.out.println("1~100까지의 누적합 : " + result1);
+			
+			int result2 = calcSum(-100);	//음수가 나오면안되는데 나와서 값이 0이됨
+			//설계자의의도 n은 양수만와야함
+			System.out.println("1~100까지의 누적합 : " + result2);			
+		} catch(Exception e) {
+			System.out.println("매개값을 양수로 전달해주세요.");
+		}
+		
+	}
+}
+
+
+
+package exception.throw_;
+
+public class Account {
+	private long balance;
+	public long getBalance() {
+		return balance;
+	}
+	
+	public void deposit(int money) {
+		balance += money;
+	}
+	
+	public void withDraw(int money) throws Exception{
+		if(balance<money) {
+			throw new Exception(); //잔액이 출금액보다 작으면 음수로처리하면되잖아?
+							//즉 이블록에는 에러가 없어! 라고 얘기해서 해당 조건식만으로는
+						//에러가안난다. 하지만 우리가 볼때 세상에 음수인돈은 없다.
+			//그래서 개발자가 강제로 throw를 이용하여 에러를 발생시킨다. 그리고 해당되는것은
+			//호출부에서 try로 받아야한다.
+		}
+		balance -= money;
+	}
+}
+
+
+
+
+
+
+
+* 사용자 정의 예외
+
+- 프로그램을 개발하다보면 자바 표준 API에서 제공하는 예외 클래스만으로 다양한 종류의 예외를 표현할 수 없습니다.
+- 개발자가 만든 어플리케이션에서 자체적으로 생길 수 있는 예외는 개발자가 직접 예외 클래스를 정의해서 만들어야 합니다.
+- 사용자 정의 예외 클래스는 일반 예외로 선언할 경우 Exception 클래스를 상속하여 사용하고, 
+	실행 예외로 선언할 경우  RuntimeException 클래스를 상속하면 됩니다.
+- 사용자 정의 예외 클래스의 이름은 Exception으로 끝나는 것이 좋습니다.
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제31)throw - throws
+
+1)아래의 상황에서 n은 음수가 못들어오도록 하라
+	-return으로 종료할수없는 상황이니 강제로 에러를 발생시켜야한다.
+
+package exception.throw_;
+
+public class ThrowExample {
+	public static int calcSum(int n) {
+		int sum = 0;
+		for (int i=1;i<=n;i++) {
+			sum+=i;
+		}
+		return sum;
+	}
+	public static void main(String[] args) {
+		
+		int result1 = calcSum(100);
+		System.out.println("1~100까지의 누적합 : " + result1);
+
+		int result2 = calcSum(-100);	//음수가 나오면안되는데 나와서 값이 0이됨
+		System.out.println("1~100까지의 누적합 : " + result2);
+		
+	}
+}
+
+######################################################################################################
+
+
+
+
+
+
+답:
+
+
+
+package exception.throw_;
+
+public class ThrowExample {
+	public static int calcSum(int n) throws Exception{
+	/*
+	 * 프로그램이 throw구문을 만나는 순간 즉시 예외를 강제로 발생시키게 되며
+	 * 해당 예외를 처리해줄 catch블록을 검색합니다.	
+	 * throw가 메서드 내에 포함되는 순간 반드시 해당 메서드는 throws를 붙여야한다.
+	 * 의식흐름: 야 이건 우리안에서 에러를 발생시키는건데 만약에 밖에서 try처리를 안해주면
+	 * 우리때매 프로그램터지잖아!! 그러니까 안전빵으로 밖에서 try안하면 우리 사용도못하도록
+	 * throws붙이자 안붙였다가 징계먹을수도있어!
+	 */
+		if(n<=0) {
+//			System.out.println("매개값을 양수로 전해주세요");
+			throw new Exception(); // 프로그램은 에러라생각하지않지만 개발자는에러라고
+			//생각하는 상황에서 개발자가 강제로 에러를 발생시키는 것이 throw다.
+		}
+		int sum = 0;
+		for (int i=1;i<=n;i++) {
+			sum+=i;
+		}
+		return sum;
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		try {
+			int a = 2;
+			System.out.println("성공!");
+		} catch(Exception e) {
+			System.out.println("에러가발생할수있는코드라했는데 발생하지 않는코드가 문제는 안생기네");
+		}
+		
+		try {
+			int result1 = calcSum(100);
+			System.out.println("1~100까지의 누적합 : " + result1);
+			
+			int result2 = calcSum(-100);	//음수가 나오면안되는데 나와서 값이 0이됨
+			//설계자의의도 n은 양수만와야함
+			System.out.println("1~100까지의 누적합 : " + result2);			
+		} catch(Exception e) {
+			System.out.println("매개값을 양수로 전달해주세요.");
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+######################################################################################################
+예제32) throw - throws 2
+
+1)아래 코드에서 출금액이 계좌액보다 클경우 강제로 에러를 발생시키시오.
+mainclass나 main메서드 없이 메서드내에서 구현만 하면됨
+
+
+
+package exception.throw_;
+
+public class Account1 {
+	private long balance;
+	public long getBalance() {
+		return balance;
+	}
+	
+	public void deposit(int money) {
+		balance += money;
+	}
+	
+	public void withDraw(int money) throws Exception{
+		balance -= money;
+	}
+}
+
+
+
+######################################################################################################
+
+
+답:
+
+
+package exception.throw_;
+
+public class Account1 {
+	private long balance;
+	public long getBalance() {
+		return balance;
+	}
+	
+	public void deposit(int money) {
+		balance += money;
+	}
+	
+	public void withDraw(int money) throws Exception{
+		if(balance<money) {
+			throw new Exception(); //잔액이 출금액보다 작으면 음수로처리하면되잖아?
+							//즉 이블록에는 에러가 없어! 라고 얘기해서 해당 조건식만으로는
+						//에러가안난다. 하지만 우리가 볼때 세상에 음수인돈은 없다.
+			//그래서 개발자가 강제로 throw를 이용하여 에러를 발생시킨다. 그리고 해당되는것은
+			//호출부에서 try로 받아야한다.
+		}
+		balance -= money;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제33)사용자정의 예외클래스를 만들어 특정프로그램에서 날수있는 에러를 제어하기(개발자가 규정한 에러, 런타임에러는 아님 그래서 예외클래스가없음)
+
+1)위 문제의 것을 복사하여 Account2를 만들고 위와같이 기본 에러만 발생시키는것이아니라 
+ 사용자정의 예외클래스를 만들어서 특정 메서드를(printStackTrace말고, 이것도해보긴해라) 통해 세부적인 규정한 에러의 내용을 볼수있도록 하라
+-사용자정의 예외클래스로 객체를만들때 message를 직접넣는 생성자로 해보고
+ 기본생성자로 해라. 출력결과는 같게 하라.
+
+######################################################################################################
+
+
+답:
+
+
+package exception.throw_;
+/*
+ * 사용자정의 예외클래스를 만들려면 Exception클래스나 RUntimeException 클래스를
+ * 상속해야한다.
+ */
+public class BalanceInsufficientException extends Exception{
+	/*
+	 * 일반적으로 사용자 정의 예외 클래스를 만들때는 
+	 * 기본 생성자와 예외 원인 메시지를 매개값으로 받는 생성자를
+	 * 선언함 
+	 * 매개값은 Exception의 생성자로 보내야함
+	 */
+	public BalanceInsufficientException() {
+		super("잔고가 부족합니다.기본생성자");
+	}
+	public BalanceInsufficientException(String message) {
+		super(message);
+	}
+}
+
+
+package exception.throw_;
+/*
+ * account1에서 exception으로 throwthrows를 이용해 강제에러를 발생시켰는데
+ * 개발자가 더 완벽하게 에러를 띄우고 싶다.
+ */
+public class Account2 {
+	private long balance;
+	public long getBalance() {
+		return balance;
+	}
+	
+	public void deposit(int money) {
+		balance += money;
+	}
+	
+	public void withDraw(int money) throws BalanceInsufficientException{
+		if(balance<money) {
+			//throw new BalanceInsufficientException("잔고가 부족합니다.");
+			throw new BalanceInsufficientException();
+		}
+		balance -= money;
+	}
+}
+
+package exception.throw_;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Account2 acc = new Account2();
+		
+		acc.deposit(10000);
+		System.out.printf("입금 후 잔액: %d원\n", acc.getBalance());
+		
+		try {			
+			acc.withDraw(70000);
+		} catch(BalanceInsufficientException e) {
+			//e.printStackTrace();
+			/*
+			 * -예외 클래스가 제공하는 getMessage() 메서드는 예외의 원인 메시지를 String 
+			 * 타입으로 리턴함.
+			 * 자바 표준 API에서 제공하는 다양한 예외클래스들은 각각의 예외 원인 메시지가
+			 * 기본적으로 객체안에 저장되어있음(기본생성자안에 super로보낼 메세지에 기본값으로
+			 * 정해두는 거임 
+			 */
+			System.out.println(e.getMessage());
+		}
+		System.out.printf("출금 후 잔액 :  %d원\n", acc.getBalance());
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_API
+
+
+* JAVA API(Application Programming Interface)
+
+- API는 라이브러리라고 부르며 프로그램 개발에 자주 사용되는 클래스 및 인터페이스의 모음을 말합니다.
+- 자바 표준 API 문서 주소: https://docs.oracle.com/javase/8/docs/api
+	-구글에 java api라 검색하면나옴
+
+* java.lang 패키지
+
+- java.lang 패키지는 자바 프로그램의 기본적인 클래스들을 담고 있는 패키지입니다. 
+	그렇기 때문에 java.lang 패키지에 있는 클래스와 인터페이스는 import 구문 없이 사용할 수 있습니다.
+
+- java.lang 패키지 주요 클래스
+
+1. Object: 자바 클래스의 최상위 클래스
+2. System: 표준 입력장치(키보드)로부터 데이터를 입력받거나 표준 출력장치(모니터)로 출력하기 위해 사용
+3. Class: 클래스를 메모리에 로딩할 때 사용
+4. String: 문자열을 저장하고 문자열의 여러 가지 정보를 얻을 때 사용
+5. StringBuffer, StringBuilder: 문자열을 저장하고 내부 문자열을 조작할 때 사용
+6. Math: 수학 함수를 이용할 때 사용
+7. Wrapper(Byte, Short, Integer, Long, Float, Double, Boolean, Character)
+	: 기본 데이터 타입의 객체를 만들 때 사용
+
+* Object 클래스
+
+- 클래스를 선언할 때 extends 키워드로 다른 클래스를 상속하지 않으면 묵시적으로 Object 클래스를 상속하게  됩니다.  
+	따라서 모든 자바의 클래스는 Object 클래스의 자식이거나 자손클래스입니다.
+- 모든 클래스가 Object를 상속하기 때문에 Object의 메서드는 모든 클래스에서 사용이 가능합니다.
+
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제34) 자바 표준api인 lang 라이브러리의 대표 클래스
+
+
+1. : 자바 클래스의 최상위 클래스
+2. : 표준 입력장치(키보드)로부터 데이터를 입력받거나 표준 출력장치(모니터)로 출력하기 위해 사용
+3. : 클래스를 메모리에 로딩할 때 사용
+4. : 문자열을 저장하고 문자열의 여러 가지 정보를 얻을 때 사용
+5. , : 문자열을 저장하고 내부 문자열을 조작할 때 사용
+6. : 수학 함수를 이용할 때 사용
+7. (Byte, Short, Integer, Long, Float, Double, Boolean, Character)
+	: 기본 데이터 타입의 객체를 만들 때 사용
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+1. Object: 자바 클래스의 최상위 클래스
+2. System: 표준 입력장치(키보드)로부터 데이터를 입력받거나 표준 출력장치(모니터)로 출력하기 위해 사용
+3. Class: 클래스를 메모리에 로딩할 때 사용
+4. String: 문자열을 저장하고 문자열의 여러 가지 정보를 얻을 때 사용
+5. StringBuffer, StringBuilder: 문자열을 저장하고 내부 문자열을 조작할 때 사용
+6. Math: 수학 함수를 이용할 때 사용
+7. Wrapper(Byte, Short, Integer, Long, Float, Double, Boolean, Character)
+	: 기본 데이터 타입의 객체를 만들 때 사용
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_API_system
+
+
+
+
+
+* System 클래스
+
+- 자바 프로그램은 운영체제상에서 바로 실행되는 것이 아니라 JVM  위에서  실행됩니다. 
+	따라서 운영체제의 모든 기능을 자바 코드로 직접 접근하기는 어렵습니다.
+- 하지만 System 클래스를 이용하면 운영체제의 일부 기능을 이용할 수 있습니다. 
+	프로그램 종료, 키보드로 입력, 모니터로 출력, 메모 리 정리, 현재 시간 읽기 등이 가능합니다.
+- System 클래스의 모든 멤버는 static으로 구성되어 있어 클래스 이름으로 바로 접근이 가능합니다.
+
+- System 클래스 주요 메서드
+1. exit(): 현재 실행하고 있는 프로세스를 강제 종료시킵니다. 정상 종료일경우 매개값으로 0을  주고, 비정상 종료인경우 0 이외에
+ 다른 값을 줍니다.
+
+2. currentTimeMillis(), nanoTime()
+: 컴퓨터의 시계로부터 현재 시간을 읽어서 밀리세컨드(1/1000초) 단위와 나노세컨드(1/10^9초)단위의 long값을 리턴합니다. 
+주로 프 로그램의 실행 소요 시간 측정으로 성능을 테스트할 때 사용합니다.
+
+package api.lang.system;
+
+public class SystemTime {
+
+	public static void main(String[] args) {
+		/*
+		 * currentTimeMillis()와 nanoTime() 메서드는 1970년 1월 1일
+		 * 자정부터 현재까지의 시간을 초로 변환한
+		 * 에폭시간을 각각 long타입의 밀리초(1/1000), 나노초(1/10^9)로 리턴함
+		 */
+		
+		long start = System.currentTimeMillis();
+		long sum =0;
+		for(long i=1;i<1000000L;i++) {
+			sum += i;
+		}
+		long end = System.currentTimeMillis();
+		
+		System.out.println("계산에 소요된 시간 : "+(end-start)*0.001+"초");
+		
+	}
+
+}
+
+
+3. getProperty(): JVM이 시작할 때 자동 설정되는 시스템의 속성값을 구합니다.
+	-표준 자바 api문서에서 찾아봐라 키값확인
+
+4. gc(): Garbage Collector를 실행시킵니다. (좀더 메모리해제를 빨리 하기 위한 것)
+자바는 c처럼 포인터를 사용자가 사용불가(객체데이터를 메모리에서 지워버릴 수 없음 기다려야함) 
+힙영역의 쓰레기 영역 데이터를 빨리 지우라고 독촉할 수 있음(c처럼 즉시 안됨)
+	-과거 안드로이드일때는 자바로 코딩할때 계속 독촉함. 하드웨어가 소프트웨어를 못버티니 계속 메모리에 자원을 반납해야함
+	-지금은 이정도아님
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제35) lang 라이브러리 시간측정
+
+
+1)표준 라이브러리 lang의 클래스 2개를 이용해서 1에서부터 1000까지의 누적합계를 구하는 연산속도를 측정하시오.
+	-출력할때는 초단위로 출력하시오
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+package api.lang.system;
+
+public class SystemTime {
+
+	public static void main(String[] args) {
+		/*
+		 * currentTimeMillis()와 nanoTime() 메서드는 1970년 1월 1일
+		 * 자정부터 현재까지의 시간을 초로 변환한
+		 * 에폭시간을 각각 long타입의 밀리초(1/1000), 나노초(1/10^9)로 리턴함
+		 */
+		
+		long start = System.currentTimeMillis();
+		long sum =0;
+		for(long i=1;i<1000000L;i++) {
+			sum += i;
+		}
+		long end = System.currentTimeMillis();
+		
+		System.out.println("계산에 소요된 시간 : "+(end-start)*0.001+"초");
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_API_String
+
+
+* String 클래스
+
+- String은 생성자를 사용해서 객체를 만들 필요 없이 기초 데이터를 사용할 때처럼 바로 초기화해서 사용할 수 있습니다.
+- String 클래스의 주요 메서드
+
+1. charAt(): 특정 인덱스의 글자를 리턴.
+2. indexOf(): 문자열에서 특정문자의 시작 인덱스 값을 반환합니다. 만약 주어진 문자열이 포함되어 있지 않으면 -1을 리턴합니다.
+3. length(): 문자열의 길이를 알려줍니다.
+package api.lang.string;
+
+public class StringIndexOf {
+	public static void main(String[] args) {
+		String sbj = "자바 프로그래밍"; //8글자
+		//문자열의 문자개수(길이)를 리턴하는 length()
+		
+		System.out.println("sbj의 길이: "+ sbj.length());
+		
+		//문자열의 특정 인덱스 문자를 추출하는 charAt()
+		System.out.println(sbj.charAt(6));
+		
+		//문자열의 특정 문자의 인덱스 번호를 리턴하는 indexOf()
+		int location = sbj.indexOf("프");
+		System.out.println("프의 인덱스번호 : "+location);
+
+	}
+}
+
+
+4. replace(): 특정 문자열을 변경합니다.
+package api.lang.string;
+
+public class StringReplace {
+	public static void main(String[] args) {
+		String str1 = "자바는 객체지향 언어입니다. 자바는 풍부한 API를 지향합니다.";
+		String str2 = str1.replace("자바는 ", "JAVA");
+		System.out.println(str1);
+		System.out.println(str2);
+	}
+}
+
+
+5. substring(): 인덱스를 기준으로 그 앞의 문자열을 잘라줍니다. 만약 매개값으로 인덱스를 2개 주면 처음 매개값 이상 두 번째 매개    
+      값 미만의 문자열을 제외하고 나머지를 삭제합니다.
+
+package api.lang.string;
+
+public class StringSubstring {
+	/*부분문자*/
+	//단일문자 : charAt();
+	
+	public static void main(String[] args) {
+		String ssn = "040404-3412343";
+		System.out.println(ssn);
+		
+		
+		/*
+		 * substring() 메서드에 매개값으로 인덱스를 1개 지정하면
+		 * 해당 인덱스부터 끝까지의 문자를 추출함
+		 */
+		String last = ssn.substring(7);
+		System.out.println(last);
+		
+		
+		/*
+		 * substring()메서드에 2개를 입력하면 1번째 매개변수부터 2번째매개변수 미만의 범위까지
+		 * 문자를 출력해라는 거임
+		 */
+		String first = ssn.substring(0, 6); //0번인덱스 이상 6번인덱스 미만
+		System.out.println(first);
+		
+	}
+}
+
+
+
+6. toUpperCase():  문자열을  대문자로 치환합니다.
+7. toLowerCase():  문자열을  소문자로 치환합니다.
+8. trim(): 문자열의 앞, 뒤 공백을 제거합니다.
+9. equals(): 문자열의 값을 비교합니다.
+10. valueOf(): 기본 데이터 타입의 값들을 문자열로 변환합니다.
+package api.lang.string;
+
+public class StringValueOf {
+	public static void main(String[] args) {
+		int a = 10;
+		double b = 8.79;
+		System.out.println(a+b);
+		
+		String str1 = String.valueOf(a);
+		String str2 = String.valueOf(b);
+		System.out.println(str1+str2);
+		//String.valueof(정수형데이터) 반대관계
+		//Integer.perseInt(문자열)
+	}
+}
+
+
+
+
+* String 클래스의 단점
+
+- String 클래스는 아주 많이 쓰이고 좋은 기능들을 많이 가지고 있지만 메모리를 과소비한다는 문제점이 있습니다.
+- String 객체는 처음 초기화된 데이터에 변화가 생기면 기존 객체를 재활용하지 않고 새로운 객체를 생성합니다.
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제36) String 메서드
+
+api.lang.string 패키지를 만들고 아래 클래스를만들어서 내부에 들어갈 함수들을 분류하고 뜻을적은 뒤 해당 메서드들을 사용해봐라
+
+1)StringIndexOf
+2)StringReplace
+3)StringSubstring
+4)StringValueOf
+
+그밖에 써볼 메서드
+toUpperCase
+toLowerCase
+equals : 문자열비교
+trim : 문자열의 앞뒤 공백제거
+
+######################################################################################################
+
+
+답:
+
+
+1)StringIndexOf
+	charAt() : 특정인덱스의 문자반환
+	indexOf() : 문자열에서 특정 문자의 인덱스값을 반환
+	length() : 문자열의 길이를 반환
+2)StringReplace
+	replace() : 문자열의 부분 또는 전체 문자열에 해당하는 부분을 다른 문자열로 변경가능
+3)StringSubstring
+	substring() : 특정 인덱스 앞의 문자열을 모두 자른 후 남은걸 반환함, 
+			전달인덱스가 2개인경우 1번째인자이상 2번째인자미만인덱스까지 잘라서 반환함
+4)StringValue
+	valueOf() : 기본타입의 값들을 문자열로 바꿈
+
+
