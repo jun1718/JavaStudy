@@ -1,0 +1,1421 @@
+21.09.14_18회차  
+======================================================================================================
+*lang(String,StringBuilder,Wrapper),util(arrays,date,calender,random)
+======================================================================================================
+
+
+
+
+################################################################################################
+개념정리_StringBuilder
+
+
+
+* String 클래스의 단점
+
+- String 클래스는 아주 많이 쓰이고 좋은 기능들을 많이 가지고 있지만 메모리를 과소비한다는 문제점이 있습니다.
+	-내용을바꿀때마다 새로 공간을만들고 버려지는 공간이 생기기때문에 자주 바꿀수록 과소비가 크다.
+		-이걸 보완하는게 stringbuilder,stringbuffer이다.
+- String 객체는 처음 초기화된 데이터에 변화가 생기면 기존 객체를 재활용하지 않고 새로운 객체를 생성합니다.
+*  StringBuilder, StringBuffer
+
+- String 클래스의 단점인 새로운 객체를 생성하는 문제로 인해 속도가 느려지는 현상이 발생하기 때문에 이 문제를 해결하기 위해 
+	속도적인 측면에서 개선된 StringBuffer와 StringBuilder를 사용합니다.
+
+- StringBuilder 클래스의 주요 메서드
+
+1. append(): 기존 문자열의 뒤에 문자열을 추가합니다.
+2. insert(): 특정 위치에 문자열을 추가합니다.
+3. delete(): 문자열을 삭제합니다.
+4. deleteCharAt():  특정 인덱스의 문자 하나를   삭제합니다.
+5. replace():  문자열의  일부분을  다른  문자열로 대체합니다.
+6. setCharAt(): 문자열에서 주어진 index의 문자를 다른 문자로 대체합니다.
+7. toString(): StringBuilder 객체의 값을 문자열로 반환합니다.
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제37) String객체와 StringBuilder객체의 속도차이 확인
+1)아래에 String 클래스의 함수를 나열하고 그 아래에는 Builder함수의 뜻에 대칭되는 메서드들을 나열하라.
+	-그후 BUilder의 메서드를 한번식 수행해봐라
+
+String
+
+
+String Builder
+1. : 기존 문자열의 뒤에 문자열을 추가합니다.
+2. : 특정 위치에 문자열을 추가합니다.
+3. : 문자열을 삭제합니다.
+4. :  특정 인덱스의 문자 하나를   삭제합니다.
+5. :  문자열의  일부분을  다른  문자열로 대체합니다.
+6. : 문자열에서 주어진 index의 문자를 다른 문자로 대체합니다.
+7. : StringBuilder 객체의 값을 문자열로 반환합니다.
+######################################################################################################
+
+
+답:
+
+
+1. append(): 기존 문자열의 뒤에 문자열을 추가합니다.
+2. insert(): 특정 위치에 문자열을 추가합니다.
+3. delete(): 문자열을 삭제합니다.
+4. deleteCharAt():  특정 인덱스의 문자 하나를   삭제합니다.
+5. replace():  문자열의  일부분을  다른  문자열로 대체합니다.
+6. setCharAt(): 문자열에서 주어진 index의 문자를 다른 문자로 대체합니다.
+7. toString(): StringBuilder 객체의 값을 문자열로 반환합니다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제38) String객체와 StringBuilder객체의 속도차이 확인
+
+1)A가 초기화된 문자열 2개(타입은 각각 String, SB로 만들고) 십만번동안 A를 추가했을때 누가더 빠른가?
+초단위로 나타낼것
+
+######################################################################################################
+
+
+답:
+
+
+
+package api.lang.stringB;
+
+public class StringTest {
+	
+	public static void main(String[] args) {
+		String str = "A";
+		
+		long start = System.currentTimeMillis();
+		
+		for(int i=0;i<100000;i++) {
+			str+='A';
+		}
+		long end = System.currentTimeMillis();
+		
+		System.out.println("String 객체의 속도측정: " + (end-start)*0.001);
+		
+		
+		StringBuilder sb = new StringBuilder("A");
+		
+		start = System.currentTimeMillis();
+		for(int i=0;i<100000;i++) {
+			sb.insert(i+1, 'A');
+		}
+		end = System.currentTimeMillis();
+		
+		System.out.println("StringBuilder 객체의 속도측정: " + (end-start)*0.001);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_java.lang 패키지_Math, wrapper
+
+
+
+
+* Math 클래스
+
+- Math 클래스는 수학 계산에 사용할 수 있는 메서드들을 제공합니다.
+- Math 클래스가 제공하는 메서드는 모두 정적 메서드이므로 Math 클래스 이름으로 바로 사용이 가능합니다.
+- Math 클래스 주요 메서드
+	-공식문서에 훨씬많은 메서드가 있다.
+
+1. abs(): 절대값을 구함.
+2. ceil(): 올림값을 구함.
+3. floor(): 내림값을 구함.
+4. max(): 수를 비교하여 최대값을 구함.
+5. min(): 수를 비교하여 최소값을 구함.
+6. random(): 랜덤값을 구함(0.0 <= 값 < 1.0)
+7. rint(): 현재 수에서 가까운 정수를 실수형태로 구함.
+8. round(): 반올림값을 구함.
+
+
+
+
+* Wrapper 클래스
+	-객체지향언어는 원래 기본타입이없다고한다.
+	-근데 자바는 c처럼 원시타입이있다.
+	-메모리에 포장해서 관리하는게아니라 stack영역에 바로 저장하는것을 뜻한다고 하네
+	-그래서 완벽한, 순수한 객체지향이 아니라고 한다.
+	-기본데이터타입 8개를 클래스로 안만들어놨기때문에 상속해서 다형성을 구현할수없다.
+		-객체로 다형성적용해서 업케스팅하는걸 기본타입은 불가능하다는 것 
+		-만약 얘도 클래스로 만들었으면 Object로 상속하면되는데 그게 불가능
+	-그래서 기본 데이터타입을 wrapper클래스로 포장했다.
+		-이렇게하면 완벽한 다형성구현이 된다. 완벽한 객체지향
+
+- 자바는 기본 타입의 값을 갖는 객체를 생성할 수 있습니다.
+- 이러한 객체를 포장(Wrapper) 객체라고 하는데 그 이유는 기본 타입의 값을 객체 내부에 두고 포장하기 때문입니다.
+- 포장 객체의 특징은 포장하고 있는 기본 타입의 값은 외부에서 변경할 수 없습니다. 만약 변경하고 싶으면 새로운 포장 객체를 생성 해야 합니다.
+- 기본 타입의 값을 포장 객체로 만드는 과정을 박싱(Boxing)이라 하며 포장 객체에서 
+	기본 타입의 값을 얻어내는 과정을 언박싱 (Unboxing)이라 합니다.
+- 포장 클래스의 주요 용도는 기본 타입의 값을 박싱해서 포장 객체로 만드는 것이지만, 
+	문자열을 기본 타입 값으로 변환할 때도 많이 사용합니다. 대부분의 포장 클래스는 
+	"parse+기본타입" 명으로 되어있는 정적 메서드를 제공합니다.
+- Byte, Short, Integer, Long, Float, Double, Boolean, Character
+
+package api.lang.wrapper;
+
+import java.util.Arrays;
+
+public class Boxing {
+	public static void main(String[] args) {
+		int a = 100;
+		double b = 3.51;
+		char c = 'H';
+		boolean d = false;
+		
+		//Boxing: 기본타입의 데이터를 객체타입으로 변환
+		Integer val1 = new Integer(a);
+		Double val2 = new Double(b);
+		Character val3 = new Character(c);
+		Boolean val4 = new Boolean(d);
+		Byte val5 = new Byte((byte)75);
+		String val6 = new String("hello");
+		
+		Object[] arr = {val1,val2,val3,val4,val5,val6};
+		//object에 int,double,char,boolean을 다 정의해 놓았단 말인가?
+		//그렇지않으면 val1은 object의 메서드와 변수는 쓸수있어도 본인의 변수는쓰지못한다.
+		//이론상 object에 기본형타입으로 변수를 만들어놓았고 그녀석을 super를이용해서 자식객체
+		//를 만들때 들어온 인자값을 부모클래스에게 보내서 부모클래스의 변수가 찼다고 보는게 맞는듯
+		//그래서 객체 하나당 하나의 값밖에 가질수 없고 String은 내부에서 char를 많이 받을수있게
+		//char형 배열을 만들어놓은것으로 추측됨
+		
+		System.out.println(Arrays.toString(arr));
+		
+		//unboxing: 포장된 데이터를 다시 기본타입으로 변환
+		//포장클래스가 제공하는 기본타입이름+value()메서드를 이용
+		int i = val1.intValue();
+		double j = val2.intValue();
+		char k = val3.charValue();
+		boolean x = val4.booleanValue();
+		byte y = val5.byteValue();
+		
+		
+		
+	}
+}
+
+
+
+package api.lang.wrapper;
+
+import java.util.Arrays;
+
+public class AutoBoxing {
+	
+	
+	public static void main(String[] args) {
+		//AutoBoxing: 기본 타입 데이터를 자동으로 객체로 변환
+		//자바10부터는 오토박싱기능만을 사용하도록 권고하고 있음
+		int a = 100;
+		Integer val1 = a;
+		Double val2 = 3.1415;
+		
+		Object[] arr = {56,3.154, "안녕", 99,200.12};
+		System.out.println(Arrays.toString(arr));
+		
+		
+		int x = val1;
+		double y = val2+5.3; // +연산자를만나면 val2를 언박싱한다음에 5.3과더함 
+				//이건 다형성이아니라 그냥 연산자기능임
+		//parsing: 문자열 데이터를 기본타입으로 변환
+		String s1 = "10";
+		String s2 = "5.43";
+		
+		int i = Integer.parseInt(s1);
+		//과정이 우측의 s1을 먼저 integer에 있는 메소드 parseInt가 연산을통해 int로바꾼후
+		//int값을 반환한다. 그리고 i가 받는다. 아마 객체를 생성한게아니니까 멤버변수에저장은
+		//못할거임 
+		double j = Double.parseDouble(s2);
+		boolean k = Boolean.parseBoolean("true");
+		
+		System.out.println(i*j);
+		
+	}
+
+}
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제39) java.lang.math
+
+아래 빈칸을 채워놓고 연습삼아 뚝딱뚝딱해봐라
+
+1. (): 절대값을 구함.
+2. ceil(): 올림값을 구함.
+3. (): 내림값을 구함.
+4. (): 수를 비교하여 최대값을 구함.
+5. (): 수를 비교하여 최소값을 구함.
+6. (): 랜덤값을 구함(0.0 <= 값 < 1.0)
+7. rint(): 현재 수에서 가까운 정수를 실수형태로 구함.
+8. (): 반올림값을 구함.
+
+######################################################################################################
+
+
+답:
+
+1. abs(): 절대값을 구함.
+2. ceil(): 올림값을 구함.
+3. floor(): 내림값을 구함.
+4. max(): 수를 비교하여 최대값을 구함.
+5. min(): 수를 비교하여 최소값을 구함.
+6. random(): 랜덤값을 구함(0.0 <= 값 < 1.0)
+7. rint(): 현재 수에서 가까운 정수를 실수형태로 구함.
+8. round(): 반올림값을 구함.
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제40) java.lang.wrapper : 기본타입의 값을 갖는 객체를 포장객체라 한다.
+
+1)아래 abcd를 하나의 배열에 담아라.
+	-힌트: 박싱 
+	-박싱끝나면 언박싱도 해라
+
+package api.lang.wrapper;
+
+public class Boxing {
+	public static void main(String[] args) {
+		int a = 100;
+		double b = 3.51;
+		char c = 'H';
+		boolean d = false;
+		
+		
+	}
+}
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+package api.lang.wrapper;
+
+import java.util.Arrays;
+
+public class Boxing {
+	public static void main(String[] args) {
+		int a = 100;
+		double b = 3.51;
+		char c = 'H';
+		boolean d = false;
+		
+		//Boxing: 기본타입의 데이터를 객체타입으로 변환
+		Integer val1 = new Integer(a);
+		Double val2 = new Double(b);
+		Character val3 = new Character(c);
+		Boolean val4 = new Boolean(d);
+		Byte val5 = new Byte((byte)75);
+		String val6 = new String("hello");
+		
+		Object[] arr = {val1,val2,val3,val4,val5,val6};
+		//object에 int,double,char,boolean을 다 정의해 놓았단 말인가?
+		//그렇지않으면 val1은 object의 메서드와 변수는 쓸수있어도 본인의 변수는쓰지못한다.
+		//이론상 object에 기본형타입으로 변수를 만들어놓았고 그녀석을 super를이용해서 자식객체
+		//를 만들때 들어온 인자값을 부모클래스에게 보내서 부모클래스의 변수가 찼다고 보는게 맞는듯
+		//그래서 객체 하나당 하나의 값밖에 가질수 없고 String은 내부에서 char를 많이 받을수있게
+		//char형 배열을 만들어놓은것으로 추측됨
+		
+		System.out.println(Arrays.toString(arr));
+		
+		//unboxing: 포장된 데이터를 다시 기본타입으로 변환
+		//포장클래스가 제공하는 기본타입이름+value()메서드를 이용
+		int i = val1.intValue();
+		double j = val2.intValue();
+		char k = val3.charValue();
+		boolean x = val4.booleanValue();
+		byte y = val5.byteValue();
+		
+		
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제41) java.lang.wrapper 오토박싱언박싱
+
+1)아래 abcd를 하나의 배열에 담아라.
+	-힌트: 박싱 
+	-박싱끝나면 언박싱도 해라
+
+
+
+
+
+
+package api.lang.wrapper;
+
+import java.util.Arrays;
+
+public class AutoBoxing {
+	
+	
+	public static void main(String[] args) {
+		//AutoBoxing: 기본 타입 데이터를 자동으로 객체로 변환
+		//자바10부터는 오토박싱기능만을 사용하도록 권고하고 있음
+		int a = 100;
+		
+//자동박싱
+//a를 자동박싱 변수이름 val1 뒤에거는다 1식추가
+
+//3.1415를 자동박싱
+
+
+//56, 3.14, "안녕", 99, 200.12를 하나의 배열로만들어라(오토박싱으로)		배열명 : arr
+
+
+//자동언박싱		
+//val1을 정수형 x에 언박싱하라
+//박싱된 val2와 5.3을 더한 값을 y에 저장하라(원리를 이해해야함. 박싱된 val2의 값이 언박싱되어 반환된디 덧셈을하는거임
+
+//parsing:문자열데이터를 변경가능한 데이터타입으로 변경 모든 래퍼클래스에 정적 메서드로 있음
+//아래 박싱된 s1,s2를 문자열타입에서 본질에 맞는 타입으로 변경하라(정수,실수)(래퍼클래스를사용해야함)
+
+		String s1 = "10";
+		String s2 = "5.43";
+		
+//boolean k를 선언하고 "true"라는 const char*를 본질에 맞는 boolean 으로 변경하라
+		
+		
+		System.out.println(i*j);
+		
+	}
+
+}
+
+
+
+
+######################################################################################################
+
+
+
+
+
+
+
+
+답:
+
+
+
+
+
+
+
+
+
+
+package api.lang.wrapper;
+
+import java.util.Arrays;
+
+public class AutoBoxing {
+	
+	
+	public static void main(String[] args) {
+		//AutoBoxing: 기본 타입 데이터를 자동으로 객체로 변환
+		//자바10부터는 오토박싱기능만을 사용하도록 권고하고 있음
+		int a = 100;
+		Integer val1 = a;
+		Double val2 = 3.1415;
+		
+		Object[] arr = {56,3.154, "안녕", 99,200.12};
+		System.out.println(Arrays.toString(arr));
+		
+		
+		int x = val1;
+		double y = val2+5.3; // +연산자를만나면 val2를 언박싱한다음에 5.3과더함 
+				//이건 다형성이아니라 그냥 연산자기능임
+		//parsing: 문자열 데이터를 기본타입으로 변환
+		String s1 = "10";
+		String s2 = "5.43";
+		
+		int i = Integer.parseInt(s1);
+		//과정이 우측의 s1을 먼저 integer에 있는 메소드 parseInt가 연산을통해 int로바꾼후
+		//int값을 반환한다. 그리고 i가 받는다. 아마 객체를 생성한게아니니까 멤버변수에저장은
+		//못할거임 
+		double j = Double.parseDouble(s2);
+		boolean k = Boolean.parseBoolean("true");
+		
+		System.out.println(i*j);
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_ java.util 패키지(Arrays, Date, Calendar, Random)
+
+* java.util 패키지
+
+- java.util 패키지는 자바 프로그램 개발에 보조 역할을 하는 클래스들을 담고 있습니다. 주로 컬렉션 관련 클래스들을 담고 있습니다.
+- java.util 패키지 주요 클래스
+
+1. Arrays: 배열을 조작할 때 사용.
+2. Date: 날짜와 시간 정보를 저장하는 클래스
+3. Calendar: 운영체제의 날짜와 시간을 얻을 때 사용
+4. Random: 난수를 얻을 때 사용.
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. copyOf(원본배열, 복사할길이): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 인덱스까지 복사한 배열을 리턴.미만아님
+1. copyOfRange(원본배열, 시작인덱스, 끝인덱스): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. sort(배열): 배열의 전체 항목을 오름차순으로 정렬.
+1. toString(배열): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. equals(배열1, 배열2): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy() 메서드를 이용할 수도 있습니다
+
+ex) System.arraycopy(원본 배열, 원본시작인덱스, 복사할 타겟배열, 복사할 타겟배열 시작인덱스, 복사할 길이)
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArrayCopy {
+
+	public static void main(String[] args) {
+		char[] arr1 = {'J', 'A', 'V', 'A'};
+//		char[] arr2 = arr1;
+//		
+//		char[] arr3 = new char[4];
+//		arr3[0] = arr1[0];
+//		arr3[1] = arr1[1];
+//		arr3[2] = arr1[2];
+//		arr3[3] = arr1[3];
+//		
+//		
+//		System.out.println(Arrays.toString(arr1));
+//		System.out.println(Arrays.toString(arr2));
+//		System.out.println(Arrays.toString(arr3));
+//		
+//		arr1[0] = 'B';
+//
+//		System.out.println(Arrays.toString(arr1));
+//		System.out.println(Arrays.toString(arr2));
+//		System.out.println(Arrays.toString(arr3));
+		//copyof: 0번인덱스부터 해당하는 인덱스까지(미만아님) 복사하라
+		char[] arr2 = Arrays.copyOf(arr1,  arr1.length);
+		//char[] arr2 = Arrays.copyOf(arr1,  5);
+		//char[] arr2 = Arrays.copyOf(arr1,  7); 이러면 공간을 더 만들고 널값초기화
+		
+		System.out.println(Arrays.toString(arr1));
+		System.out.println(Arrays.toString(arr2));
+		
+		arr1[0] = 'D';
+		System.out.println(Arrays.toString(arr1));
+		System.out.println(Arrays.toString(arr2));	//깊은복사가 완료됨의 증거
+		
+		//copyOfRange: 첫인덱스이상 둘인덱스 미만까지를 카피하라
+		char[] arr3 = Arrays.copyOfRange(arr1, 1, 3);
+		System.out.println(Arrays.toString(arr3));
+		
+		int[] arr4 = {10,20,30,40,50,60,70,80};
+		//20~60까지 카피
+		int[] arr5 = Arrays.copyOfRange(arr4, 1,6);
+		
+		System.out.println(Arrays.toString(arr5));
+		
+	}
+}
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArrayEqual {
+	public static void main(String[] args) {
+		//배열비교 equals(배열1, 배열2)
+		int[] arr1 = {1,3,5,7,9,10};
+		int[] arr2 = {1,3,5,7,9};
+		
+//		if(arr1 == arr2) {
+//			System.out.println("배열의 각 항목이 일치함");
+//		} else {
+//			System.out.println("배열의 각 항목중 다른것이 있거나 모두 다름");
+//		}
+		if(Arrays.equals(arr1, arr2)) {
+			System.out.println("배열의 각 항목이 일치함");
+		} else {
+			System.out.println("배열의 각 항목중 다른것이 있거나 모두 다름");
+		}
+	}
+}
+
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArraySearch {
+	public static void main(String[] args) {
+		int[] scores = {75,47,23,56,89};
+		int[] scores2 = Arrays.copyOf(scores,  scores.length);
+		
+		//배열의 데이터를 오름차순으로 정렬하는 메서드 sort()
+		Arrays.sort(scores2);
+		System.out.println(Arrays.toString(scores));
+		System.out.println(Arrays.toString(scores2));
+		
+		//배열내부데이터의 인덱스번호를 탐색하는 메서드 binarySearch()
+		int index = Arrays.binarySearch(scores2,  75);
+		System.out.println("75가 저장된 인덱스: "+index);
+		
+		
+		
+		
+		
+	}
+}
+
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+package api.util.date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DatyeExample {
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(date);
+		
+		SimpleDateFormat sdf = 
+				new SimpleDateFormat("YYYY년 MM월 dd일 HH시 MM분 SS초");
+		System.out.println(sdf.format(date));
+		
+		/*
+		 * 예제) java 표준 api 공식문서를 보고 아래처럼 출력하시오.  
+		 * 19-02-11 오전 10:50:23
+		 * 오늘은 월요일입니다. 오늘은 1년중 42번째 날입니다.
+		 */
+		
+		SimpleDateFormat sdf1 = 
+				new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
+		System.out.println(sdf1.format(date));
+		SimpleDateFormat sdf2 = 
+				new SimpleDateFormat("오늘은 E요일입니다. 오늘은 1년중 D번째날입니다.");
+		System.out.println(sdf2.format(date));
+	}
+}
+
+
+#Calendar 클래스
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+		
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1; //0~11까지있고 1월이 0이다.
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(day);
+		System.out.println(week);
+		System.out.println(hour);
+		System.out.println(min);
+		String strWeek = null;
+		
+		switch(week) {
+		case 1:
+			strWeek = "일";
+			System.out.println("일요일입니다.");
+			break;
+		case 2:
+			strWeek = "월";
+			System.out.println("월요일입니다.");
+			break;
+		case 3:
+			strWeek = "화";
+			System.out.println("화요일입니다.");
+			break;
+		case 4:
+			strWeek = "수";
+			System.out.println("수요일입니다.");
+			break;
+		case 5:
+			strWeek = "목";
+			System.out.println("목요일입니다.");
+			break;
+		case 6:
+			strWeek = "금";
+			System.out.println("금요일입니다.");
+			break;
+		case 7:
+			strWeek = "토";
+			System.out.println("토요일입니다.");
+			break;
+		}
+		
+	}
+}
+
+
+#Random 클래스
+
+package api.util.random;
+
+import java.util.Random;
+
+public class RandomExample {
+	
+	
+	public static void main(String[] args) {
+		
+		//0.0이상 1.0미만의 실수 난수를리턴(Math.random()이랑 같은거임)
+		Random r = new Random();
+		double d = r.nextDouble();
+		System.out.println("실수 랜덤값: "+d);
+		//사실 이것만쓰려면 메스보다 복잡함. 메스는 스태틱메서드로 random을 가지니까 
+		//객체를 안만들어도 됨
+		
+		//논리랜덤값을 리턴하는 nextBoolean()
+		boolean b = r.nextBoolean();
+		System.out.println("논리 랜덤값: "+b);
+		
+		//정수 랜덤값(매개변수 넣거나 안넣거나)
+		//정수 int가 저장할수 있는 모든범위에서 난수를발생 -21억 ~ +21억
+		int i = r.nextInt();
+		System.out.println("정수 랜덤값: "+i);
+		
+		//전달인자로 10넣으면 0~10미만으로 출력함 즉 0~9
+		i = r.nextInt(10);		
+		System.out.println("0~9 랜덤값: "+i);
+		System.out.println("1~10 랜덤값: "+(i+1));
+	
+	}
+	
+}
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제42)Arrays 클래스
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+
+1)아래것들 빈칸채우고 한번식 해봐라
+
+
+
+1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. (): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
+1. (): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. (): 배열의 전체 항목을 오름차순으로 정렬.
+1. (): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. (): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 ????????????? 메서드를 이용할 수도 있습니다
+
+
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. copyOf(원본배열, 복사할길이): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
+1. copyOfRange(원본배열, 시작인덱스, 끝인덱스): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. sort(배열): 배열의 전체 항목을 오름차순으로 정렬.
+1. toString(배열): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. equals(배열1, 배열2): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy() 메서드를 이용할 수도 있습니다
+
+ex) System.arraycopy(원본 배열, 원본시작인덱스, 복사할 타겟배열, 복사할 타겟배열 시작인덱스, 복사할 길이)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제43)Date
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+
+
+1)아래 출력양식이 되도록 Date 클래스를 이용해서 만들어라
+
+(요일날짜 등은 푸는 날에 맞춰서)
+Tue Sep 14 21:09:13 KST 2021
+2021년 09월 14일 21시 09분 887초 
+21-09-14 오후 09:09:13
+오늘은 화요일입니다. 오늘은 1년중 257번째날입니다.
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+
+
+
+
+
+
+package api.util.date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DatyeExample {
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(date);
+		
+		SimpleDateFormat sdf = 
+				new SimpleDateFormat("YYYY년 MM월 dd일 HH시 MM분 SS초");
+		System.out.println(sdf.format(date));
+		
+		/*
+		 * 예제) java 표준 api 공식문서를 보고 아래처럼 출력하시오.  
+		 * 19-02-11 오전 10:50:23
+		 * 오늘은 월요일입니다. 오늘은 1년중 42번째 날입니다.
+		 */
+		
+		SimpleDateFormat sdf1 = 
+				new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
+		System.out.println(sdf1.format(date));
+		SimpleDateFormat sdf2 = 
+				new SimpleDateFormat("오늘은 E요일입니다. 오늘은 1년중 D번째날입니다.");
+		System.out.println(sdf2.format(date));
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제44)#Calendar 클래스
+
+
+
+1)아래 주석의 요구대로 하라
+
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+		
+//연,월,한달중 몇번째 일, 일주일중 몇번째날, 시간, 분 을 
+//year,month,day,week,hour,min에 저장후 출력하라
+
+		
+//일주일중 몇번째날인지(week)와 switch~case를 이용하여 각번째 날에 맞춰 무슨요일인지 출력하도록 하라		
+	
+	}
+}
+
+######################################################################################################
+
+
+답:
+
+
+
+
+#Calendar 클래스
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+		
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1; //0~11까지있고 1월이 0이다.
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(day);
+		System.out.println(week);
+		System.out.println(hour);
+		System.out.println(min);
+		String strWeek = null;
+		
+		switch(week) {
+		case 1:
+			strWeek = "일";
+			System.out.println("일요일입니다.");
+			break;
+		case 2:
+			strWeek = "월";
+			System.out.println("월요일입니다.");
+			break;
+		case 3:
+			strWeek = "화";
+			System.out.println("화요일입니다.");
+			break;
+		case 4:
+			strWeek = "수";
+			System.out.println("수요일입니다.");
+			break;
+		case 5:
+			strWeek = "목";
+			System.out.println("목요일입니다.");
+			break;
+		case 6:
+			strWeek = "금";
+			System.out.println("금요일입니다.");
+			break;
+		case 7:
+			strWeek = "토";
+			System.out.println("토요일입니다.");
+			break;
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제45) java.util.Random
+
+<로또번호 출력하기> 
+1.생성: 로또번호 6개를 담을 배열을 생성하세요
+2.저장: 정수 1~45 범위의 난수를 6개 발생시켜 배열에 담으세요
+	-단, 중복되는 수는 저장될수 없다.
+3.정렬: Arrays.sort(배열이름) 메서드를 이용하여 배열을 오름차순으로 정돈하세요.
+
+
+######################################################################################################
+
+
+강사님 답:
+
+
+package api.util.random;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class Lotto3 {
+	public static void main(String[] args) {
+		Random r = new Random();
+		int[] win = new int[6];
+		
+		int count = 0;
+		
+		while(true) {
+			int rn = r.nextInt(45)+1;
+			boolean check = true;
+			for(int j=0;j<count;j++) {//count가 0개있을때는 비교할필요가없다. 1개있을때는 1번비교 2개잇을때는
+				if(rn == win[j]) {//2번비교
+					check=false;
+					break;
+				}
+			}
+			if(check) {
+				win[i] = rn;
+				count++;
+			}
+			
+			if(count==6) break;
+		}
+		
+		Arrays.sort(win);
+		System.out.println(Arrays.toString(win));
+	}//main
+}//class
+
+
+
+
+
+
+내 답(시간복잡도가 쓰레기임):
+
+package api.util.random;
+
+import java.util.Random;
+import java.util.Arrays;
+
+public class Lotto2 {
+	public static void main(String[] args) {
+		int[] arr = new int[6];
+				
+		Random r = new Random();
+		int num;
+		
+		for(int i=0;i<6;i++) {
+			while(true) {
+				int j=0;
+				num = r.nextInt(45)+1;
+				while(j<6 && num!=arr[j]) {
+					j++;
+				}
+				if(j==6) {
+					arr[i] = num;
+					break;
+				}//if
+			}//while
+		}//for
+		
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
+	}//main
+}//class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제46) java.util.Random 로또게임(보너스게임)
+
+
+#아래 출력결과가 노오도록 Random클래스를 이용해서(lang 패키지의 Math사용금지) 
+	-최대한 메서드를 최소단위로 쪼개라(생각하는 연습)
+
+1)bonusgame이 실패한경우
+
+가슴이~~ 두근두근!! 로또 자동입력 시작!
+
+고객님의 로또번호 자동입력이 완료되었습니다.
+고객님의  인생역전 번호 : [2, 4, 22, 23, 29, 45]
+
+이번주 로또번호 추첨시작!
+이번주 로또번호 결과 : [1, 9, 13, 15, 22, 25]
+
+*****!!보너스게임 시작!!*****
+bonus number : 39
+보너스게임 실패하셨네요!
+
+<결과 발표! 두구두구두구~~!!!>
+
+맞춘갯수 : 1개
+꽝! 그냥 꽝! 역전은 무슨! 꽝!!!
+
+
+2)bonusgame이 성공한경우
+
+가슴이~~ 두근두근!! 로또 자동입력 시작!
+
+고객님의 로또번호 자동입력이 완료되었습니다.
+고객님의  인생역전 번호 : [2, 3, 17, 26, 27, 34]
+
+이번주 로또번호 추첨시작!
+이번주 로또번호 결과 : [2, 5, 14, 18, 27, 37]
+
+*****!!보너스게임 시작!!*****
+bonus number : 26
+보너스게임은 승리하셨네요! 과연 5개를 맞추셨을까요?
+맞추셨다면 2등! 못맞췄다면 무쓸모!
+
+<결과 발표! 두구두구두구~~!!!>
+
+맞춘갯수 : 2개
+꽝! 그냥 꽝! 역전은 무슨! 꽝!!!
+ 
+######################################################################################################
+
+
+답:
+
+
+
+
+package api.util.random;
+
+import java.util.Random;
+import java.util.Arrays;
+
+public class Lotto4 {
+	
+	
+	public static int randomNumber() {
+		Random r = new Random();
+		int num = r.nextInt(45)+1;
+		
+		return num;
+	}
+	
+	
+	public static int[] createLotto() {
+		int[] lotto = new int[6];
+		int count = 0;
+	
+		while(true) {
+			int num = randomNumber();
+			boolean check = true;
+			for(int i=0;i<count;i++) {				
+				if(num==lotto[i]) {
+					check = false; 
+					break;
+				}
+			}
+			if(check) {
+				lotto[count] = num;
+				count++;
+			}
+			
+			if(count==6) break;
+		}
+		
+		Arrays.sort(lotto);
+		
+		return lotto;
+	}
+	
+	
+	public static boolean bonusCheck(int[] myLotto, int bonusNumber) {		
+		for(int j=0;j<myLotto.length;j++) {				
+			if(myLotto[j] == bonusNumber) {
+				System.out.println("보너스게임은 승리하셨네요! 과연 5개를 맞추셨을까요?\n맞추셨다면 2등! 못맞췄다면 무쓸모!");
+				return true;
+			}
+		}
+		System.out.println("보너스게임 실패하셨네요!");
+		return false;
+	}
+	
+	
+	public static boolean bonusGame(int[] myLotto, int[] win) {
+		System.out.println("\n*****!!보너스게임 시작!!*****");
+		int i=0;
+		int bonusNumber;
+		
+		while(true) {
+			bonusNumber = randomNumber();
+			while(i<win.length && bonusNumber != win[i]) {
+				i++;
+			}
+			if(i==6) break;
+		}			
+		
+		System.out.println("bonus number : "+bonusNumber);
+		return bonusCheck(myLotto, bonusNumber);
+	}
+	
+	public static int firstCheck(int[] myLotto, int[] win) {			
+		int count = 0;
+		
+		for(int i=0;i<myLotto.length;i++) {
+			for(int j=0;j<win.length;j++) {
+				if(myLotto[i]==win[j]) count++;
+			}
+		}
+		
+		return count;
+	}
+
+	
+	public static void disp(int count, boolean bonusGameResult) {
+		System.out.println("\n<결과 발표! 두구두구두구~~!!!>");
+		System.out.println("\n맞춘갯수 : "+count+"개");
+		if(count==6) {
+			System.out.println("당첨 1등입니다! 100억원");
+			return;
+		}
+		if(count==5 && bonusGameResult) {
+			System.out.println("2등입니다. 20억원");
+			return;
+		}
+		if(count==5) {
+			System.out.println("3등입니다. 1억원");
+			return;
+		}
+		if(count==4) {
+			System.out.println("4등입니다. 1천만원");
+			return;
+		}
+		if(count==3) {
+			System.out.println("5등입니다. 5천원");
+			return;
+		}	
+		if(count<=2) {
+			System.out.println("꽝! 그냥 꽝! 역전은 무슨! 꽝!!!");
+			return;
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		System.out.println("가슴이~~ 두근두근!! 로또 자동입력 시작!");
+		int[] myLotto = createLotto();
+		System.out.println("\n고객님의 로또번호 자동입력이 완료되었습니다.");
+		System.out.println("고객님의  인생역전 번호 : "+ Arrays.toString(myLotto));
+		
+		
+		System.out.println("\n이번주 로또번호 추첨시작!");
+		int[] win = createLotto();
+		System.out.println("이번주 로또번호 결과 : "+Arrays.toString(win));
+
+		
+		//System.out.println(myLotto.equals(win)); // 이게 true면 당첨임
+		
+		int count = firstCheck(myLotto, win);
+		boolean bonusGameResult = bonusGame(myLotto, win);
+		disp(count, bonusGameResult);		
+		
+	}//main
+}//class
