@@ -1,0 +1,898 @@
+21.09.15_19회차
+======================================================================================================
+*collection(List, ArrayList, 학생성적관리프로그램)
+======================================================================================================
+
+
+
+################################################################################################
+개념정리_collection개념과 List 컬렉션
+
+
+list : 순차형 집합
+map : 비정형 집합
+set : 중복을 허용 x, 순서x
+
+
+* Collection(배열의 단점인 고정적 크기(이미터블) 같은 문제를 좀 해결함)
+
+- 자바 프로그램에서 객체를 객체들의 모음 형식으로 관리할 수 있는 방법을 제공하는 클래스들을 컬렉션이라고 부릅니다.
+- 컬렉션은 배열과 유사하지만 데이터를  저장/조회/수정/삭제하는 작업을 쉽게 처리할  수 있으며, 동적인 크기를 갖는다는 장점이  있습  니다.
+- 컬렉션 계열은 Set/List/Map 등의 인터페이스가 있으며 이를 구현한 클래스를 이용하면 객체들을 모음저장할 수 있습니다.
+
+
+* List 컬렉션
+	-컬렉션의 계열은 setlistmap 3가지의 인터페이스로 나누고, 해당 인터페이스가 구현하여 컬렉션을(객체들 저장 가능 클래스) 만든다.
+	-이 과정을통해 만들어진 컬렉션의 인터페이스가 list라면 list컬렉션이라한다.
+	-즉 진짜 컬렉션이라고한다면 ArrayList가 진짜 컬렉션인거다.
+
+- List 컬렉션은 객체를 인덱스로 관리하기 때문에 객체를 저장하면 자동으로 인덱스 번호가 부여되고 인덱스를 통해 객체를 검색, 삭제할 수 
+	있는 기능을 제공합니다.
+- List 는 객체를 순서대로 저장하며 동일한 객체를 중복 저장할 수 있습니다.
+1.데이터가 순서대로 저장된다
+2.같은주소를 가진 문자열이 들어간다 => 중복데이터를 저장가능
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+1. add(E e): 주어진 객체를 List의 맨 끝부분에 추가.
+1. add(int index, E e): 주어진 인덱스에 객체를 추가.
+1. set(int index, E e): 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+
+
+- 객체 검색 기능
+1. contains(Object o): 주어진 객체가 저장되어있는지의 여부를 판단.
+1. get(int index): 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 판단.
+1. size(): 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. clear(): 저장된 모든 객체를 삭제.
+1. remove(int index): 주어진 인덱스에 저장된 객체를 삭제.
+1. remove(Object o): 주어진 객체를 삭제.
+
+
+* ArrayList
+
+- ArrayList 클래스는 List 인터페이스의 구현 클래스로 ArrayList에 객체를 추가하면 객체가 인덱스로 관리됩니다.
+- 일반 배열과 ArrayList는  인덱스로 객체를  관리한다는 점에서는 유사하지만 배열은 생성될 때 크기가 고정되고, 사용 중에 크기를 
+	변경할 수 없지만 ArrayList는 저장 용량을 초과한 객체들이 들어오면 자동으로 저장 용량을 증가시킵니다.
+- 기본 생성자로 ArrayList 객체를 생성하면 내부에 10개의 객체를 저장할 수 있는 초기 용량을 가지게 되며 저장되는 
+	객체 수가 증가하면 용량이 자동적으로 증가합니다.
+- ArrayList에 특정 인덱스의 객체를 제거하면 자동으로 바로 뒤 인덱스부터 마지막 인덱스까지 모두 앞으로 1칸씩 당겨집니다.
+################################################################################################
+
+
+
+
+
+
+package collection.list;
+
+import java.util.*;
+
+public class ArrayListExample {
+	public static void main(String[] args) {
+		//ArrayList 객체 생성
+		//ArrayList list = new ArrayList();
+		//List list = new ArrayList();
+		//ArrayList의 부모가 list이기때문에 list라고 많이씀
+		
+		//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는
+		//타입을 일치시키는 방법
+		//그냥 list라고만하면 모든 자료형을 다 오면 오히려 관리가 힘들어서 이랬단다
+		
+		List<String> list = new ArrayList<String>();
+		
+		String str1 = "Java";
+		String str2 = "JSP";
+		
+		System.out.println(list);
+		
+		//list에 객체를 저장하는 메서드 add(): 데이터를 맨 끝에 추가
+		list.add(str1);
+		list.add(str2);
+		list.add("DataBase");
+		list.add("JDBC");
+		list.add("JSP"); //리스트는 객체의 중복저장을 허용
+		
+		System.out.println(list);
+		
+		//list에 저장된 총 객체수 얻기size()
+		
+		int size = list.size();
+		System.out.println("list에 저장된 총 객체 수: "+size);
+		
+		//list에 객체 삽입 add(index, 객체) : 데이터를 해당 인덱스에 삽입
+		list.add(2, "Oracle");
+		
+		System.out.println(list);
+		
+		//list 객체 수정
+//		list[3] = "MySQL"; list는 객체들을 모으는 객체일뿐이지 그렇다고 배열은아니다.
+		//배열처럼 순차적으로 모이긴하는데 괄호에 인덱스로 접근하는건 컬렉션의 arrayList에는
+		//존재하지 않는 연산자기능이다.
+		
+		//이방법을 씀 : list 데이터수정 set(index, 객체)
+		
+		list.set(3,  "MySQL");
+		
+		System.out.println(list);
+		
+		//list 내부 객체 가져오기 get(index)
+//		System.out.println(list[3]); 이것도 마찬가지. 배열과는다름 괄호는 컬렉션에없다.
+		String s = list.get(2);
+		System.out.println("2번인덱스 객체: "+s);
+		
+		//list에 저장된 객체의 인덱스번호 확인하기 indexOf(객체)
+		int idx = list.indexOf("MySQL");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+		
+		//indexOf는 객체를 검색하지 못했을 경우 -1을 리턴함
+		idx = list.indexOf("안녕~~~");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+
+		//list에서 객체데이터 삭제 remove(index), remove(obj)
+				//삭제시 자동으로 공간도 없어짐
+		list.remove(5); //특정인덱스의 공간을 삭제
+		
+		System.out.println(list);
+		
+		list.remove(str1);	//특정 객체를 삭제
+		System.out.println(list);
+		
+		//list 내부에 저장된 객체의 유무확인 contains() boolean 반환
+		System.out.println(list.contains("JSP"));
+		System.out.println(list.contains(str1));
+		System.out.println(list.contains(str2));
+		System.out.println(list.contains("바붕이"));
+		
+		//list의 반복문 처리
+		System.out.println("--------------------");
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		System.out.println("--------------------");
+		
+		for(String str : list) {
+			System.out.println(str);
+		}
+		System.out.println("--------------------");
+		
+		//list내부 데이터가 전부 비었는지 확인하는 메서드 isEmpty() is면보통 의무문으로
+				//해석하는방식. 비어있니? 이러니까 값이 보통 불리언으로 반환됨
+		//비었으면 true 비지 않았으면 false
+		
+		if(list.isEmpty()) {
+			System.out.println("list가 비어있음");
+		} else {
+			System.out.println("list가 비어있지 않음");
+		}
+		
+		//list 내부 객체 전체 삭제 clear()
+		
+		list.clear();
+		System.out.println(list);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제47) collection
+collection의 계열 3가지(list, map, set)
+list 구현된 클래스를 통해 객체생성
+
+
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+1. : 주어진 객체를 List의 맨 끝부분에 추가.
+1. : 주어진 인덱스에 객체를 추가.
+1. : 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+- 객체 검색 기능
+1. : 주어진 객체가 저장되어있는지의 여부를 판단.
+1. : 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. : 컬렉션이 비어있는지의 여부를 판단.
+1. : 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. : 저장된 모든 객체를 삭제.
+1. : 주어진 인덱스에 저장된 객체를 삭제.
+1. : 주어진 객체를 삭제.
+
+
+
+1)list가 구현된 ArrayList를 이용해서 객체를 생성한후 List타입 참조변수 list에 업케스팅하시오(interface와 객체간의 다형성)
+	-단 generic을 적용하여 만드시오. ArrayList 객체에 저장할 객체들의 동일타입  :String
+	//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는 객체들의
+		//타입을 일치시키는 방법  
+
+2)아래 두 문자열을 만들고 위에서 만든 List타입 변수를 이용하여 ArrayList 객체(list)를 참조함으로 str1,str2를 객체 내부에
+	하나 하나식 각각 순차적으로 넣어라.
+	-그 후 "DataBase", "JDBC", "JSP"를 넣어라
+		-순차적으로 저장된다는 것과 중복정보도 저장된다는 것을 확인
+String str1 = "JAVA";
+String str2 = "JSP";
+
+3)List 타입 참조변수 list를 이용하여 ArrayList 객체의 내부 객체들을 출력하라.
+	-list가 가리키는 곳에 객체삽입
+		-이걸 줄여서 list에 객체삽입 이라고도 표현하나봄? 강사님보니까
+
+4)list가 가리키는 객체의 내부 객체 수정
+	list가 가진 주소를 참조하여 해당 객체의 3번인덱스 위치의 객체를 넣는 공간에
+	 "MySQL"이라는 문자열을 String 객체로 만들어서 객체 삽입
+
+5)list 객체의 내부 객체 주소 가져오기
+	-list타입 객체가 가진 객체중 2번인덱스의 주소를 반환한 후 그 값을 String s에 집어 넣은 후 
+	 s의 문자열을 출력하라.
+
+6)list 객체에 저장된 String객체중 내부 값 "MySQL"을 가지는 String객체의 인덱스번호를 반환하라
+	-내부 String객체중 그어느 객체에도 내부값으로 가지고 있지않은 값으로 메서드 적용해보고 이럴땐 뭘 봔환하는지 확인하라
+		- '-1'반환함
+
+7)객체를 참조하는 list변수의 값인 주소를 참조하여 5번째 인덱스 공간을 삭제하라(4번,3번해서 당겨지는지도확인)
+  그리고 객체인 str1이 있는 공간을 삭제하라(특정 인덱스의 공간, 특정 객체의 공간)
+	-이때 가르키는도 참조하는 이라고 사용할수있는가..
+	참조는 멤버참조연산자 등을 이용하여 직접적으로 사용할대를 참조한다고하는지
+	아니면 참조변수에 담고있는 가리키고 있는것도 참조라하는지 궁금
+		패시브적으로 주소를 가지고있는것도 참조? 엑티브적으로 직접 위치로 이동했을때를 참조?
+
+8)객체참조변수 list를 이용하여 ArrayList타입 객체의 내부객체들중에 "JSP", str1, str2, "아무거나" 라는 객체들이 있는지
+	확인하고 boolean으로 반환시켜라
+
+9)list를 이용하여 ArrayList타입 객체의 내부 모든 객체의 문자열 값들을 출력하라.
+	-일반 포문, 향상된 포문
+
+10)list 객체변수를 이용하여 객체변수가 가리키는 객체 내부가 모두 비어서 아무 객체가 없는지 확인하라
+if else를 사용해서 출력하라
+	System.out.println("list가 비어있지 않음");
+	System.out.println("list가 비어있음");
+
+11)list 객체변수를 이용하여 내부 객체 전체를 삭제하라
+
+
+
+
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+1. add(E e): 주어진 객체를 List의 맨 끝부분에 추가.
+1. add(int index, E e): 주어진 인덱스에 객체를 추가.
+1. set(int index, E e): 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+
+
+- 객체 검색 기능
+1. contains(Object o): 주어진 객체가 저장되어있는지의 여부를 판단.
+1. get(int index): 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 판단.
+1. size(): 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. clear(): 저장된 모든 객체를 삭제.
+1. remove(int index): 주어진 인덱스에 저장된 객체를 삭제.
+1. remove(Object o): 주어진 객체를 삭제.
+
+
+
+
+
+
+
+package collection.list;
+
+import java.util.*;
+
+public class ArrayListExample {
+	public static void main(String[] args) {
+		//ArrayList 객체 생성
+		//ArrayList list = new ArrayList();
+		//List list = new ArrayList();
+		//ArrayList의 부모가 list이기때문에 list라고 많이씀
+		
+		//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는
+		//타입을 일치시키는 방법
+		//그냥 list라고만하면 모든 자료형을 다 오면 오히려 관리가 힘들어서 이랬단다
+		
+		List<String> list = new ArrayList<String>();
+		
+		String str1 = "Java";
+		String str2 = "JSP";
+		
+		
+		
+		
+		
+		System.out.println(list);
+		
+		//list에 객체를 저장하는 메서드 add(): 데이터를 맨 끝에 추가
+		list.add(str1);
+		list.add(str2);
+		list.add("DataBase");
+		list.add("JDBC");
+		list.add("JSP"); //리스트는 객체의 중복저장을 허용
+		
+		System.out.println(list);
+		
+		//list에 저장된 총 객체수 얻기size()
+		
+		int size = list.size();
+		System.out.println("list에 저장된 총 객체 수: "+size);
+		
+		//list에 객체 삽입 add(index, 객체) : 데이터를 해당 인덱스에 삽입
+		list.add(2, "Oracle");
+		
+		System.out.println(list);
+		
+		//list 객체 수정
+//		list[3] = "MySQL"; list는 객체들을 모으는 객체일뿐이지 그렇다고 배열은아니다.
+		//배열처럼 순차적으로 모이긴하는데 괄호에 인덱스로 접근하는건 컬렉션의 arrayList에는
+		//존재하지 않는 연산자기능이다.
+		
+		//이방법을 씀 : list 데이터수정 set(index, 객체)
+		
+		list.set(3,  "MySQL");
+		
+		System.out.println(list);
+		
+		//list 내부 객체 가져오기 get(index)
+//		System.out.println(list[3]); 이것도 마찬가지. 배열과는다름 괄호는 컬렉션에없다.
+		String s = list.get(2);
+		System.out.println("2번인덱스 객체: "+s);
+		
+		//list에 저장된 객체의 인덱스번호 확인하기 indexOf(객체)
+		int idx = list.indexOf("MySQL");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+		
+		//indexOf는 객체를 검색하지 못했을 경우 -1을 리턴함
+		idx = list.indexOf("안녕~~~");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+
+		//list에서 객체데이터 삭제 remove(index), remove(obj)
+				//삭제시 자동으로 공간도 없어짐
+		list.remove(5); //특정인덱스의 공간을 삭제
+		
+		System.out.println(list);
+		
+		list.remove(str1);	//특정 객체를 삭제
+		System.out.println(list);
+		
+		//list 내부에 저장된 객체의 유무확인 contains() boolean 반환
+		System.out.println(list.contains("JSP"));
+		System.out.println(list.contains(str1));
+		System.out.println(list.contains(str2));
+		System.out.println(list.contains("바붕이"));
+		
+		//list의 반복문 처리
+		System.out.println("--------------------");
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		System.out.println("--------------------");
+		
+		for(String str : list) {
+			System.out.println(str);
+		}
+		System.out.println("--------------------");
+		
+		//list내부 데이터가 전부 비었는지 확인하는 메서드 isEmpty() is면보통 의무문으로
+				//해석하는방식. 비어있니? 이러니까 값이 보통 불리언으로 반환됨
+		//비었으면 true 비지 않았으면 false
+		
+		if(list.isEmpty()) {
+			System.out.println("list가 비어있음");
+		} else {
+			System.out.println("list가 비어있지 않음");
+		}
+		
+		//list 내부 객체 전체 삭제 clear()
+		
+		list.clear();
+		System.out.println(list);
+		
+		String s1 = "hi";
+		String s2 = "hi";
+		
+		System.out.println(s1==s2);
+		s2 += "bye";
+		System.out.println(s1 == s2);
+		System.out.println(s1);
+		System.out.println(s2);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제48) 학생정보를 저장하는 클래스 복습
+
+
+1)아래의 메서드들을 만들어라
+
+//학생정보를 입력받는 메서드
+//public void inputStuInfo()
+
+//총점, 평균, 학점을 계산할 메서드
+//public void calcTotAvgGrade()
+
+//학생의 성적정보를 출력하는 메서드
+//public void outputStuInfo()
+
+//getter setter
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Student {
+	private String stuId;
+	private String name;
+	private int kor, eng, math, tot;
+	private double avg;
+	private char grade;
+	
+
+}
+
+######################################################################################################
+
+
+답:
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Student {
+	private String stuId;
+	private String name;
+	private int kor, eng, math, tot;
+	private double avg;
+	private char grade;
+	
+	private Scanner sc = new Scanner(System.in);
+	
+	//학생정보를 입력받는 메서드
+	public void inputStuInfo() {
+		System.out.println("# 성적정보 입력을 시작합니다. ");
+		System.out.print("학번: ");
+		this.stuId = sc.next();
+		System.out.print("이름: ");
+		this.name = sc.next();
+		
+		while(true) {
+			try {
+				System.out.print("국어: ");
+				this.kor = sc.nextInt();
+				System.out.print("영어: ");
+				this.eng = sc.nextInt();
+				System.out.print("수학: ");
+				this.math = sc.nextInt();
+				break;
+			}catch(Exception e) {
+				System.out.println("점수는 숫자로만 입력하세요.");
+				sc.nextLine(); //nextInt()는 자동으로엔터를 입력하기때문에
+				//입력창을 고정하기 위함 //이게없으면 무한루프가 일어난다네?
+			}
+		}
+	}
+	
+	//총점, 평균, 학점을 계산할 메서드
+	public void calcTotAvgGrade() {
+		this.tot = this.kor + this.eng + this.math;
+		this.avg = this.tot / 3.0;
+		
+		if(avg>=90) {
+			this.grade = 'A';
+		} else if(avg >= 80) {
+			this.grade = 'B';
+			
+		} else if(avg >= 70) {
+			this.grade = 'C';
+			
+		} else if(avg >= 60) {
+			this.grade = 'D';
+			
+		} else {
+			this.grade = 'E';
+		}
+	}
+	
+	//학생의 성적정보를 출력하는 메서드
+	public void outputStuInfo() {
+		System.out.printf("%4s  %3s  %3d  %3d  %3d  %3d  %3.2f  %3s\n",
+				this.stuId, this.name, this.kor, this.eng, this.math,
+				this.tot, this.avg, this.grade);
+	}
+	
+	public String getStuId() {
+		return stuId;
+	}
+	public void setStuId(String stuId) {
+		this.stuId = stuId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getKor() {
+		return kor;
+	}
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+	public int getEng() {
+		return eng;
+	}
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+	public int getMath() {
+		return math;
+	}
+	public void setMath(int math) {
+		this.math = math;
+	}
+	public int getTot() {
+		return tot;
+	}
+	public void setTot(int tot) {
+		this.tot = tot;
+	}
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public char getGrade() {
+		return grade;
+	}
+	public void setGrade(char grade) {
+		this.grade = grade;
+	}
+	
+
+}
+
+
+
+
+
+
+
+######################################################################################################
+예제49) collection
+
+
+1)아래의 주석에 맞게 메인클래스가 정상작동하도록 하시오 
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Point {
+	public static Scanner sc = new Scanner(System.in);
+	
+	public static void showPointUI() {
+		System.out.println("             *** 성적표 ***");
+		System.out.println("=======================================");
+		System.out.println("학번         이름          국어          수학    총점     평균     학점");
+		System.out.println("=======================================");
+	}
+	
+	//학생의 성적정보를 입력할 메서드
+	public static void inputPoints(List<Student> students) {
+		/*
+	    1. 학생의 객체를 1개 생성합니다.
+	    2. 학생의 객체에 속성값을 설정하는 메서드들을 호출!
+	    3. 정보저장이 완료된 객체를 리스트에 추가!
+	    4. 저장완료 메세지를 출력하세요.
+	      ex) XXX님의 성적 정보가 정상적으로 입력되었습니다.
+		 */
+	}
+	
+	//전체 학생들의 성적정보를 출력할 메서드
+	public static void showAllPoints(List<Student> students) {
+		/*
+	    1. 리스트 안에 들어있는 학생객체들의 정보를 
+	       반복문을 통해 전체 출력하세요.
+	    2. 우리반의 전체평균을 가장 아랫부분에 출력하세요.
+		 */
+	}
+	
+	//개별 학생의 성적정보를 출력할 메서드
+	public static void searchPoints(List<Student> students) {
+		/*
+	    1. 해당 학번과 일치하는 학생객체를 리스트에서 찾아내서
+	     그 학생의 정보만 출력하세요.
+	    2. 찾는 학번이 없을시 검색하지 못했다는 메시지를 출력
+	     하세요.
+	    */
+	}
+	
+	//개별 학생의 성적정보를 수정할 메서드
+	public static void modifyPoints(List<Student> students) {
+			
+	}
+	
+	//개별 학생의 성적정보를 삭제할 메서드
+	public static void deletePoints(List<Student> students) {
+		
+	}
+	
+	//프로그램 메뉴정보를 보여줄 메서드
+	public static void menuInfo() {
+		System.out.println("\n***성적관리 프로그램***");
+		System.out.println("1. 성적정보 입력");
+		System.out.println("2. 전체성적 조회");
+		System.out.println("3. 개별성적 조회");
+		System.out.println("4. 성적정보 수정");
+		System.out.println("5. 성적정보 삭제");
+		System.out.println("6. 프로그램 종료");
+		System.out.println("*****************************");
+	}
+}
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class MainClass2 {
+
+	public static void main(String[] args) {
+
+		List<Student> students = new ArrayList<>();
+		Scanner sc = new Scanner(System.in);
+
+		while(true) {
+
+			Point.menuInfo();
+			int menu = 0;
+			try {
+				System.out.print("메뉴: ");
+				menu = sc.nextInt();				
+			}catch(Exception e) {
+				System.out.println("숫자로만 입력하세요.");
+				sc.nextLine();				
+			}
+
+			switch(menu) {
+
+			case 1:
+				Point.inputPoints(students);
+				break;
+			case 2:
+				if (students.size() == 0) {
+					System.out.println("등록된 학생 정보가 없습니다.");
+				}else {
+					Point.showAllPoints(students);
+				}
+				break;
+			case 3:
+				Point.searchPoints(students);
+				break;
+			case 4:
+				Point.modifyPoints(students);
+				break;
+			case 5:
+				Point.deletePoints(students);
+				break;
+			case 6:
+				System.out.println("프로그램을 종료합니다.");
+				sc.close();
+				System.exit(0);
+				break;
+			default:
+				System.out.println("메뉴를 잘못 입력했습니다.");
+			}
+
+		}
+
+	}
+
+}
+
+
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Point {
+	public static Scanner sc = new Scanner(System.in);
+	
+	public static void showPointUI() {
+		System.out.println("             *** 성적표 ***");
+		System.out.println("=======================================");
+		System.out.println("학번         이름          국어          수학    총점     평균     학점");
+		System.out.println("=======================================");
+	}
+	
+	//학생의 성적정보를 입력할 메서드
+	public static void inputPoints(List<Student> students) {
+		/*
+	    1. 학생의 객체를 1개 생성합니다.
+	    2. 학생의 객체에 속성값을 설정하는 메서드들을 호출!
+	    3. 정보저장이 완료된 객체를 리스트에 추가!
+	    4. 저장완료 메세지를 출력하세요.
+	      ex) XXX님의 성적 정보가 정상적으로 입력되었습니다.
+		 */
+		
+		Student stu = new Student();
+		stu.inputStuInfo();
+		stu.calcTotAvgGrade();
+		students.add(stu);
+		System.out.println(stu.getName()+"님의 성적정보가 정상적으로 입력되었습니다.");
+		
+	}
+	
+	//전체 학생들의 성적정보를 출력할 메서드
+	public static void showAllPoints(List<Student> students) {
+		/*
+	    1. 리스트 안에 들어있는 학생객체들의 정보를 
+	       반복문을 통해 전체 출력하세요.
+	    2. 우리반의 전체평균을 가장 아랫부분에 출력하세요.
+		 */
+		showPointUI();
+		double classAvg = 0;
+		for(int i=0;i<students.size();i++) {
+			students.get(i).outputStuInfo();
+			classAvg += students.get(i).getAvg();
+		}
+		
+		System.out.printf("우리반 전체평균 : %.2f점", classAvg);
+	}
+	
+	//개별 학생의 성적정보를 출력할 메서드
+	public static void searchPoints(List<Student> students) {
+		/*
+	    1. 해당 학번과 일치하는 학생객체를 리스트에서 찾아내서
+	     그 학생의 정보만 출력하세요.
+	    2. 찾는 학번이 없을시 검색하지 못했다는 메시지를 출력
+	     하세요.
+	    */
+		
+		System.out.print("학번입력 : ");	
+		String number = sc.next();
+		for(int i=0;i<students.size();i++) {			
+			if(number.equals(students.get(i).getStuId())) {
+				showPointUI();
+				students.get(i).outputStuInfo();
+				break;
+			}
+			else {
+				System.out.println("해당하는 학번이 없음 ㅋ");
+			}
+		}
+	}
+	
+	//개별 학생의 성적정보를 수정할 메서드
+	public static void modifyPoints(List<Student> students) {
+		
+	}
+	
+	//개별 학생의 성적정보를 삭제할 메서드
+	public static void deletePoints(List<Student> students) {
+		
+	}
+	
+	//프로그램 메뉴정보를 보여줄 메서드
+	public static void menuInfo() {
+		System.out.println("\n***성적관리 프로그램***");
+		System.out.println("1. 성적정보 입력");
+		System.out.println("2. 전체성적 조회");
+		System.out.println("3. 개별성적 조회");
+		System.out.println("4. 성적정보 수정");
+		System.out.println("5. 성적정보 삭제");
+		System.out.println("6. 프로그램 종료");
+		System.out.println("*****************************");
+	}
+}
