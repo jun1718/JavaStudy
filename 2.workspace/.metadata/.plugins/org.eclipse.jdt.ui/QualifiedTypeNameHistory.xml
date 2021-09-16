@@ -8,5 +8,6 @@
 <fullyQualifiedTypeName name="overriding.Child"/>
 <fullyQualifiedTypeName name="modi.member.pac1.A"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 </qualifiedTypeNameHistroy>
