@@ -1,0 +1,1037 @@
+21.09.16_20회차
+======================================================================================================
+*학생성적정보관리(List), Set, Map(로그인,회원가입)
+======================================================================================================
+
+
+
+
+
+######################################################################################################
+예제49) collection
+
+
+1)아래의 주석에 맞게 메인클래스가 정상작동하도록 하시오 
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Point {
+	public static Scanner sc = new Scanner(System.in);
+	
+	public static void showPointUI() {
+		System.out.println("             *** 성적표 ***");
+		System.out.println("=======================================");
+		System.out.println("학번         이름          국어          수학    총점     평균     학점");
+		System.out.println("=======================================");
+	}
+	
+	//학생의 성적정보를 입력할 메서드
+	public static void inputPoints(List<Student> students) {
+		/*
+	    1. 학생의 객체를 1개 생성합니다.
+	    2. 학생의 객체에 속성값을 설정하는 메서드들을 호출!
+	    3. 정보저장이 완료된 객체를 리스트에 추가!
+	    4. 저장완료 메세지를 출력하세요.
+	      ex) XXX님의 성적 정보가 정상적으로 입력되었습니다.
+		 */
+	}
+	
+	//전체 학생들의 성적정보를 출력할 메서드
+	public static void showAllPoints(List<Student> students) {
+		/*
+	    1. 리스트 안에 들어있는 학생객체들의 정보를 
+	       반복문을 통해 전체 출력하세요.
+	    2. 우리반의 전체평균을 가장 아랫부분에 출력하세요.
+		 */
+	}
+	
+	//개별 학생의 성적정보를 출력할 메서드
+	public static void searchPoints(List<Student> students) {
+		/*
+	    1. 해당 학번과 일치하는 학생객체를 리스트에서 찾아내서
+	     그 학생의 정보만 출력하세요.
+	    2. 찾는 학번이 없을시 검색하지 못했다는 메시지를 출력
+	     하세요.
+	    */
+	}
+	
+	//개별 학생의 성적정보를 수정할 메서드
+		//이름,학번은 그대로두고 성적정보에 관련된것만 바뀌어야 함
+	public static void modifyPoints(List<Student> students) {
+			
+	}
+	
+	//개별 학생의 성적정보를 삭제할 메서드
+		//삭제시 학번으로 묻고 맞으면삭제아니면 없다고 출력. 
+		//학번이 있다면 y/n로 물어봐라 다시한번 중요한거니까 y가 문자열 제일앞에 들어가면 무조건삭제
+		//y외에 다른게 온다면 n이 아니더라도 무조건 취소
+
+	public static void deletePoints(List<Student> students) {
+		
+	}
+	
+	//프로그램 메뉴정보를 보여줄 메서드
+	public static void menuInfo() {
+		System.out.println("\n***성적관리 프로그램***");
+		System.out.println("1. 성적정보 입력");
+		System.out.println("2. 전체성적 조회");
+		System.out.println("3. 개별성적 조회");
+		System.out.println("4. 성적정보 수정");
+		System.out.println("5. 성적정보 삭제");
+		System.out.println("6. 프로그램 종료");
+		System.out.println("*****************************");
+	}
+}
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class MainClass2 {
+
+	public static void main(String[] args) {
+
+		List<Student> students = new ArrayList<>();
+		Scanner sc = new Scanner(System.in);
+
+		while(true) {
+
+			Point.menuInfo();
+			int menu = 0;
+			try {
+				System.out.print("메뉴: ");
+				menu = sc.nextInt();				
+			}catch(Exception e) {
+				System.out.println("숫자로만 입력하세요.");
+				sc.nextLine();				
+			}
+
+			switch(menu) {
+
+			case 1:
+				Point.inputPoints(students);
+				break;
+			case 2:
+				if (students.size() == 0) {
+					System.out.println("등록된 학생 정보가 없습니다.");
+				}else {
+					Point.showAllPoints(students);
+				}
+				break;
+			case 3:
+				Point.searchPoints(students);
+				break;
+			case 4:
+				Point.modifyPoints(students);
+				break;
+			case 5:
+				Point.deletePoints(students);
+				break;
+			case 6:
+				System.out.println("프로그램을 종료합니다.");
+				sc.close();
+				System.exit(0);
+				break;
+			default:
+				System.out.println("메뉴를 잘못 입력했습니다.");
+			}
+
+		}
+
+	}
+
+}
+
+
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Point {
+	public static Scanner sc = new Scanner(System.in);
+	
+	public static void showPointUI() {
+		System.out.println("             *** 성적표 ***");
+		System.out.println("=======================================");
+		System.out.println("학번         이름          국어          수학    총점     평균     학점");
+		System.out.println("=======================================");
+	}
+	
+	//학생의 성적정보를 입력할 메서드
+	public static void inputPoints(List<Student> students) {
+		/*
+	    1. 학생의 객체를 1개 생성합니다.
+	    2. 학생의 객체에 속성값을 설정하는 메서드들을 호출!
+	    3. 정보저장이 완료된 객체를 리스트에 추가!
+	    4. 저장완료 메세지를 출력하세요.
+	      ex) XXX님의 성적 정보가 정상적으로 입력되었습니다.
+		 */
+		
+		Student stu = new Student();
+		stu.inputStuInfo();
+		stu.calcTotAvgGrade();
+		students.add(stu);
+		System.out.println(stu.getName()+"님의 성적정보가 정상적으로 입력되었습니다.");
+		
+	}
+	
+	//전체 학생들의 성적정보를 출력할 메서드
+	public static void showAllPoints(List<Student> students) {
+		/*
+	    1. 리스트 안에 들어있는 학생객체들의 정보를 
+	       반복문을 통해 전체 출력하세요.
+	    2. 우리반의 전체평균을 가장 아랫부분에 출력하세요.
+		 */
+		showPointUI();
+		double classAvg = 0;
+		for(int i=0;i<students.size();i++) {
+			students.get(i).outputStuInfo();
+			classAvg += students.get(i).getAvg();
+		}
+		classAvg /= students.size();
+		System.out.printf("우리반 전체평균 : %.2f점", classAvg);
+	}
+	
+	//개별 학생의 성적정보를 출력할 메서드
+	public static void searchPoints(List<Student> students) {
+		/*
+	    1. 해당 학번과 일치하는 학생객체를 리스트에서 찾아내서
+	     그 학생의 정보만 출력하세요.
+	    2. 찾는 학번이 없을시 검색하지 못했다는 메시지를 출력
+	     하세요.
+	    */
+		
+		System.out.print("학번입력 : ");	
+		String stuNum = sc.next();
+		for(int i=0;i<students.size();i++) {			
+			if(stuNum.equals(students.get(i).getStuId())) {
+				showPointUI();
+				students.get(i).outputStuInfo();
+				return;
+			}
+		}
+		System.out.println("해당하는 학번이 없음 ㅋ");
+	}
+	
+	//개별 학생의 성적정보를 수정할 메서드
+		//성적정보만 바껴야함, 이름, 학번은 그대로
+	public static void modifyPoints(List<Student> students) {
+		System.out.println("성적을 수정할 학생의 학번을 입력하세요.");
+		System.out.print("=> ");
+		String stuNum = sc.next(); 
+		boolean check = false;
+		
+		for(int i=0;i<students.size();i++) {			
+			if(stuNum.equals(students.get(i).getStuId())) {
+				Student s = students.get(i);
+				System.out.println(s.getName()+"님의 성적정보를 수정합니다.");
+				
+				System.out.print("변경할 국어점수 : ");
+				s.setKor(sc.nextInt());
+				
+				System.out.print("변경할 영어점수 : ");
+				s.setEng(sc.nextInt());
+				
+				System.out.print("변경할 수학점수 : ");
+				s.setMath(sc.nextInt());
+				
+				s.calcTotAvgGrade();
+				System.out.println(s.getName()+"님의 정보가 정상적으로 수정됨");
+				
+				check = true;
+				break;
+			}
+		}
+		if(!check) {
+			System.out.println("해당하는 학번이 없음 ㅋ");			
+		}
+		
+		System.out.println("사랑하는 가족이 되겠습니다.");//항상출력해야하는 문구라면
+							//위처럼 check로 판별해서 해야하고 그게아니라면 return
+		//으로 끝내고 해당학번이 없음은 그냥 평문으로 적으면된다. 
+	}
+	
+	//개별 학생의 성적정보를 삭제할 메서드
+	public static void deletePoints(List<Student> students) {
+		System.out.println("성적을 수정할 학생의 학번을 입력하세요.");
+		System.out.print("=> ");
+		String stuNum = sc.next(); 
+		boolean check = false;
+		
+
+		for(int i=0;i<students.size();i++) {			
+			if(stuNum.equals(students.get(i).getStuId())) {
+				String answer;
+				while(true) {
+					try {					
+						System.out.println(students.get(i).getName()+"님의 정보를 삭제합니다.[Y/N]");
+						System.out.print("> ");
+						answer = sc.next();
+						break;
+					} catch(Exception e) {
+						System.out.println("y/n | yes/no만 입력하세요.숫자입력 거절");
+					}					
+				}
+				
+				if(answer.toLowerCase().charAt(0) == 'y') {
+					//students.remove(students.get(i));
+					students.remove(i);
+					System.out.println(students.get(i).getName()+"님의 정보가 정상적으로 삭제됨");					
+					check = true;
+					break;
+				}
+				System.out.println(students.get(i).getName()+"님의 정보삭제를 취소합니다.");
+				check = true;
+			}
+		}
+		if(!check) {
+			System.out.println("해당하는 학번이 없음 ㅋ");		 	
+		}
+	}
+	
+	//프로그램 메뉴정보를 보여줄 메서드
+	public static void menuInfo() {
+		System.out.println("\n***성적관리 프로그램***");
+		System.out.println("1. 성적정보 입력");
+		System.out.println("2. 전체성적 조회");
+		System.out.println("3. 개별성적 조회");
+		System.out.println("4. 성적정보 수정");
+		System.out.println("5. 성적정보 삭제");
+		System.out.println("6. 프로그램 종료");
+		System.out.println("*****************************");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_linkedlist
+
+
+
+
+* LinkedList
+
+- LinkedList는 List 인터페이스를 구현한 클래스이며 ArrayList와 사용 방법은 같지만 내부 구조는 완전히 다릅니다.
+- ArrayList는 내부 배열에 객체를 저장하여 인덱스로 관리하지만 LinkedList는 인접 참조를 링크하여 체인처럼 관리합니다.
+- ArrayList는 특정 인덱스의 객체를 제거하면 뒤의 모든 객체가 앞으로 한칸씩 당겨지지만, LinkedList는 특정 인덱스의 객체를 제거하면     
+  앞 뒤 링크만 변경되고 나머지 링크는 변경되지 않아 빈번한 객체의 삭제와 삽입이 일어나는 로직에서는 ArrayList보다 좋은 성능을 발휘합니다.
+
+
+arraylist는 1만개의 공간이 있고 1번공간을 삭제하면 9999개의 공간이 앞으로 당겨져야해서 연산부하가 있다.
+
+
+#중간거 추가삭제
+arraylist : 느림
+linkedlist : 빠름
+
+
+#마지막거 추가삭제
+arraylist : 빠름
+linkedlist : 느림
+
+
+
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제50) List_LinkedList
+
+1)ArrayList와 LinkedList의 공통점과 차이점을 대조하라 
+
+
+
+#공통점: 순차적으로 구성된 정보이며 인덱스로 관리함
+
+#내부구조
+ArrayList : 
+LinkedList :
+
+
+Arraylist는 1만개의 공간이 있고 1번공간을 삭제하면 9999개의 공간이 앞으로 당겨져야해서 연산부하가 있다.
+
+
+#중간거 추가삭제할때 누가더 좋은가?
+ : 느림
+: 빠름
+
+
+#마지막거 추가삭제할때 누가더 좋은가?
+: 빠름
+: 느림
+
+
+2-1)굉장히 내부객체가 많은 ArrayList, LinkedList에 각각 중간 위치 인덱스에 객체를 추가하여보고 걸리는 실행시간을 체크하라
+	-누가더 우위인지
+2-2)굉장히 내부객체가 많은 ArrayList, LinkedList에 각각 마지막 위치 인덱스에 객체를 추가하여보고 걸리는 실행시간을 체크하라
+
+
+
+
+######################################################################################################
+
+답:
+
+
+
+
+#공통점: 순차적으로 구성된 정보이며 인덱스로 관리함
+
+#내부구조
+ArrayList : 일반 배열처럼 관리
+LinkedList : 인접참조를 링크하여 체인처럼 관리
+
+
+Arraylist는 1만개의 공간이 있고 1번공간을 삭제하면 9999개의 공간이 앞으로 당겨져야해서 연산부하가 있다.
+
+
+#중간거 추가삭제할때 누가더 좋은가?
+Arraylist : 느림
+Linkedlist : 빠름
+
+
+#마지막거 추가삭제할때 누가더 좋은가?
+Arraylist : 빠름
+Linkedlist : 느림
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_Set
+
+
+#Set특징
+-저장 순서를 보장하지 않음(index가 없다는 말)
+	-대신 저장속도가 매우 빠름
+		-그대신 찾는검색속도가 매우 느림
+-중복 객체저장불가
+
+
+#Map(비정형데이터)
+-key, value 쌍을 가ㅣㄴ entry 객체로 데이터를 저장하는 구조
+-비정형 데이터 저장시 유용
+-저장순서를 보장하지 않음
+
+
+* Set 계열 컬렉션
+
+- Set 컬렉션은 저장 순서를 보장하지 않으며 객체의 중복 저장을 허용하지 않습니다.
+- Set 컬렉션은 인덱스로 관리하지 않으며 들어갈 때의 순서와 나올 때의 순서가 다를 수도 있습니다.
+- Set 컬렉션은 인덱스로 객체를 검색하는 기능이 없고 전체 객체를 대상으로 한번씩 반복해서 객체의 값을 가져오는 반복자(Iterator) 를 제공합니다.
+- 반복자는 Iterator 인터페이스를 구현한 객체를 의미하며 이 객체는 Set 인터페이스의 iterator() 메서드를 호출하여 객체를 얻을 수 있습니다.
+
+- Iterator 인터페이스의 주요 메서드
+1. hasNext(): 가져올 객체가 있으면 true를 리턴하고 없으면 false를 리턴.
+1. next(): 컬렉션에서 하나의 객체를 가져옴.
+1. remove(): Set 컬렉션에서 객체를 제거함.
+
+
+* Set 계열 컬렉션 주요 메서드
+
+- 객체 추가 기능
+1. add(E e): 주어진 객체를 저장, 성공적으로 저장되면 true를 리턴, 중복 객체를 저장하면 false를 리턴.
+
+- 객체 검색 기능
+1. contains(Object o): 주어진 객체가 저장되어 있는지의 여부를 판단.
+1. isEmpty(): 컬렉션이 비어있는지를 조사.
+1. iterator(): 저장된 객체를 한번씩 가져오는 반복자 객체를 리턴.
+1. size(): 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. clear(): 저장된 모든 객체를 삭제.
+1. remove(Object o): 주어진 객체를 삭제.
+
+
+* HashSet
+
+- HashSet 클래스는 Set 인터페이스를 구현한 컬렉션이므로 저장된 객체의 순서를 보장하지 않고 중복을 허용하지 않습니다.
+- HashSet을 사용하면 많은 양의 데이터를 관리할 때 추가/삭제/검색 등에 있어서 순차적으로 데이터를 관리하는 것에 비하여 속도가 향상됩니다.
+################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제51) Set
+
+1)아래 빈칸채워라
+
+- 객체 추가 기능
+1. : 주어진 객체를 저장, 성공적으로 저장되면 true를 리턴, 중복 객체를 저장하면 false를 리턴.
+
+- 객체 검색 기능
+1. : 주어진 객체가 저장되어 있는지의 여부를 판단.
+1. : 컬렉션이 비어있는지를 조사.
+1. : 저장된 객체를 한번씩 가져오는 반복자 객체를 리턴.
+1. : 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. : 저장된 모든 객체를 삭제.
+1. : 주어진 객체를 삭제.
+
+
+2)아래 주석의 기능들을 실행하라.
+	//set에 객체를 추가  -> "닭강정", "김밥", "김말이", "단무지", "김밥"
+	//set객체 내부 객체수 확인 -> 위에 5개를 입력했는데 그대로 나오는지 확인(중복데이터 인정하는지 확인)
+	//저장시 저장순서를 보장하지않음(출력으로 확인)	
+	//while에 넣어서 set객체내부의 객체들을 각각 반환받아 출력해보시오.
+		//만약반환된 객체의 문자열을 저장하는 멤버변수의 값이 "닭강정"이라면 아우~맛있어! 를 출력하세요.
+	//set의 데이터 삭제기능 2개
+	//set객체 내부가 비어있는지 확인하는 기능
+######################################################################################################
+
+
+
+답:
+
+
+package collection.set;
+
+import java.util.*;
+
+public class HashSetExample {
+	public static void main(String[] args) {
+		Set<String> set = new HashSet<>();
+		
+		//set에 객체를 추가  add()
+		set.add("닭강정");
+		set.add("김밥");
+		set.add("김말이");
+		set.add("단무지");
+		set.add("김밥");
+		
+		//set객체 내부 객체수 확인
+		System.out.println("set에 저장된 객체 수 : "+set.size());//4개라함
+							//중복데이터 김밥이 마지막에들어와서 그건 안넣은거임
+
+		//저장시 저장순서를 보장하지않음(출력으로 확인)
+		System.out.println(set);
+		
+		/*
+		 * set의 객체데이터를 사용하려면 반복자(Iterator)를 통해 모든 객체를 대상으로
+		 * 한번씩 반복해서 꺼내야함
+		 */
+		
+		Iterator<String> iter = set.iterator();
+		//set.iterator()메서드를 통해 반복할 자료들을 힙영역에 따로 만든후
+		//Iterator<string>타입 객체변수 iter에 주소를 참조해둔다.
+		//Iterator 반복자 interface를 통해 구현된 객체 iter는 내부에 반복할 element를
+		//하나식 반환할때마다 반환한 객체를 삭제한다.
+//		String s = iter.next();
+//		System.out.println(s);
+//		
+//		s = iter.next();
+//		System.out.println(s);
+//		
+//		s = iter.next();
+//		System.out.println(s);
+//		
+//		s = iter.next();
+//		System.out.println(s);
+//		s = iter.next();	//공간이상 noSuchElementException 
+//		System.out.println(s);//더이상 검색할 element가 없다. 그래서 에러남
+		 
+		/*
+		 * 반복자 객체가 next()메서드를 통해 set 내부의 데이터를 반복소진할때 더이상 조회할 데
+		 * 이터가 없으면 예외를 발생시키기 때문에 hasNext()를 통해 더이상 소모할 데이터가
+		 * 있는지의 유무를 체크합니다.
+		 */
+		while(iter.hasNext()) { //iter.next() 메서드는 객체내부에
+						//반환할 것들을 하나식빼면서 목록을 지워서 마지막까지 빼주는것인데
+				//이렇게 출력을 할때는 저장된 순서대로 출력이 된다.
+				//저장될때만 들쭉날쭉으로 저장됨
+				//근데 iter.hasNext()메서드는  현재 iter객체 내부에 반환할게 남았는지
+			//확인하는 boolean자료형이다. 남았으면 true 없으면 false
+			//set은 반드시 반복자를 통해 빼야하는데 반복자는 특성상 객체내부에 반복할 element
+			//가 없을때 에러가 남으로 hasNext(넥스트할것을 가지고 있느냐?)
+			
+			String s2 = iter.next();
+			System.out.println(s2);
+			if(s2.equals("닭강정")) {
+				System.out.println(s2+"맛있어~~!");
+				break;
+			}
+		}
+//		s=iter.next();에러남
+		
+		//set의 데이터 삭제기능 remove(), clear()
+		set.remove("단무지");
+		System.out.println(set);
+		
+		//set객체 내부가 비어있는지 확인하는 기능
+		if(set.isEmpty()) {
+			System.out.println("set이 비어있음");
+		} else {
+			System.out.println("set이 비어있지 않음");
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_Map
+
+
+* Map 계열 컬렉션
+
+- Map 컬렉션은 키(key)와 값(value)으로 구성된 Entry객체를 저장하는 구조를 가지고 있습니다.
+- 키는 중복저장 될 수 없지만 값은 중복저장 될 수 있습니다.
+
+
+* Map 계열 주요 메서드
+
+- 객체 추가 기능
+1. put(K key, V value): 주어진 키와 값을 추가, 정상적으로 저장되면 그 값(value)를 리턴.
+
+- 객체 검색 기능
+1. containsKey(Object Key): 주어진 키가 있는지의 여부를 확인.
+1. containsValue(Object value): 주어진 값이 있는지의 여부를 확인.
+1. get(Object key): 주어진 키에 들어있는 값을 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 확인.
+1. size(): 저장된 키의 총 수를 리턴.
+1. values(): 저장된 모든 값을 컬렉션에 담아서 리턴.
+1. keySet(): 저장된 모든 키를 Set객체에 담아서 리턴.
+1. entrySet(): 키와 값의 쌍으로 구성된 모든 Entry객체를 Set에 담아서 리턴.
+
+- 객체 삭제 기능
+1. clear(): 모든 Entry를 삭제
+1. remove(Object key): 주어진 키와 일치하는 Entry객체를 삭제.
+
+
+* HashMap
+
+- HashMap은 Map 인터페이스를 구현한 대표적인 Map 컬렉션입니다.
+- 키와 값의 타입은 기본 타입을 사용할 수 없고, 클래스 및 인터페이스 타입만 사용이 가능합니다.
+
+List: 사물함같이 순서규칙이 있는 1번부터 나열되는 데이터는 List계열 컬렉션이 최고좋음
+Map: 부산시 부산진구, 사하구, 동구 등은 각기 다른 동네이지만 각자 순서규칙이 없다. 이럴때는 찾더라도 키값인
+	진구, 사하구 동구로 찾지 번호를 입력해서 찾지는 않는다. 그럼으로 이런 경우에 list보다 훨씬 효율이 좋다.
+
+
+################################################################################################
+
+
+
+
+
+
+
+
+######################################################################################################
+예제52) Map
+
+
+- 객체 추가 기능
+1. : 주어진 키와 값을 추가, 정상적으로 저장되면 그 값(value)를 리턴.
+
+- 객체 검색 기능
+1. : 주어진 키가 있는지의 여부를 확인.
+1. : 주어진 값이 있는지의 여부를 확인.
+1. : 주어진 키에 들어있는 값을 리턴.
+1. : 컬렉션이 비어있는지의 여부를 확인.
+1. : 저장된 키의 총 수를 리턴.
+1. : 저장된 모든 값을 컬렉션에 담아서 리턴.
+1. : 저장된 모든 키를 Set객체에 담아서 리턴.
+1. : 키와 값의 쌍으로 구성된 모든 Entry객체를 Set에 담아서 리턴.
+
+- 객체 삭제 기능
+1.: 모든 Entry를 삭제
+1.: 주어진 키와 일치하는 Entry객체를 삭제.
+
+
+
+		//HashMap타입 객체 만들어서 Map타입 참조변수에 주소값을 넣어라
+			//entry의 key값과 value값의 generic(객체타입일치)은 각각 문자열과 정수형이 되도록하라.
+
+		//map에 객체를 저장 키값과 벨류값이 뭐일지는 알아서 판단. 치킨(20000), 라면(2000), 족발(30000), 라면(3000)
+			//라면이 2개들어갔는데 키값이 과연 2개가 들어갔을지 아니면 어떤일이 일어났는지 확인
+				//즉 put메서드로 중복키를통해 값을 저장하면 해당 키의 값이 수정됨(중복키가 저장되는건 아님)
+
+		//map에 저장된 총 Entry 객체 수 얻기 size()  
+		//키값을 이용하여 map객체 내부에 저장된 entry(키+value형태로 저장된 객체)의 벨류를 반환
+			//반환된 벨류를 정수형 기본자료형의 wrapper클래스타입으로 저장하고
+			//그아래에 반환된 벨류를 정수를 객체화시킨것말고 기본정수타입으로 저장해봐라
+				//즉 자동으로 언박싱되어 저장되는것을 복습하라는말임
+				//map을 통해 key를 전부 추출한 공간을 만든후 
+
+		//map을 통해 key를 전부 추출한 공간을 만든후 
+			//Set타입 객체변수에게만 추출한 데이터가 있는 공간을 참조하게 허락하는 메서드 
+		
+		//그 set으로 추출받은 키값을 하나하나값을 받아서 포문으로 출력하기(Set계열복습)
+			//set으로 추출받은 키값과 map, while을 이용하여 음식의 가격은 얼마원입니다.라고 반복출력
+			//반환받을 변수: foodName, foodPrice
+				//***참고***
+				//Map계열인 hashMap객체는 get(key)를 통해 벨류값만 반환가능하지만,
+				//key값을 반환할순없다. 그래서 key값을 keySet() set에 따로 추출한뒤 
+				//그 키값을 이용하여 벨류를 꺼낸다.
+	
+		//map내부에 있는 key의 유무를 확인하는 메서드 containsKey
+			//food라는 변수를 만들고 거기에 문자열값을 넣어서 if문에
+			//map객체에 food값인 키값이 있는지 확인 하여 있으면 해당 키값의 벨류를 출력하고
+			//없으면 해당 키가 없다고 해라(피자는 없는 메뉴입니다.)
+
+		//map내부 데이터 삭제 
+
+		//map내부 데이터삭제 전부
+
+######################################################################################################
+
+
+
+답:
+
+
+
+- 객체 추가 기능
+1. put(K key, V value): 주어진 키와 값을 추가, 정상적으로 저장되면 그 값(value)를 리턴.
+
+- 객체 검색 기능
+1. containsKey(Object Key): 주어진 키가 있는지의 여부를 확인.
+1. containsValue(Object value): 주어진 값이 있는지의 여부를 확인.
+1. get(Object key): 주어진 키에 들어있는 값을 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 확인.
+1. size(): 저장된 키의 총 수를 리턴.
+1. values(): 저장된 모든 값을 컬렉션에 담아서 리턴.
+1. keySet(): 저장된 모든 키를 Set객체에 담아서 리턴.
+1. entrySet(): 키와 값의 쌍으로 구성된 모든 Entry객체를 Set에 담아서 리턴.
+
+- 객체 삭제 기능
+1. clear(): 모든 Entry를 삭제
+1. remove(Object key): 주어진 키와 일치하는 Entry객체를 삭제.
+
+
+package collection.map;
+
+import java.util.*;
+
+public class HashMapExample {
+	public static void main(String[] args) {
+		Map<String, Integer> map = new HashMap<>();
+		//저장될 객체의 키는 String객체를 이용해서 저장, 저장될 객체들은(value는) 
+		//Integer형태의 객체들만 저장
+		
+		//map에 객체를 저장 put(key, value)
+		map.put("치킨", 20000); 
+		map.put("라면", 2000);
+		map.put("족발", 30000);
+		//put메서드로 중복키를통해 값을 저장하면 해당 키의 값이 수정됨(중복키가 저장되는건 아님)
+		map.put("라면", 3000);
+		
+		System.out.println(map);
+		
+		//map에 저장된 총 Entry 객체 수 얻기 size()  
+			//-entry: 키와 벨류를 통해 저장된 객체를 entry라 함
+			//list와 set계열의 컬렉션객체에서 내부 객체는 elements라고 함
+		
+		System.out.println("map에 저장된 총 객체수: "+map.size());
+		
+		//키값을 이용하여 
+			//map객체 내부에 저장된 entry(키+value형태로 저장된 객체)의 벨류를 반환
+			//get(key)
+//		Integer priceJok = map.get("족발");
+		int priceJok = map.get("족발");
+		//Integer형 데이터가 반환되지만 받는곳이 int라고 해도 자동으로 언박싱해서 저장한다.
+		
+		System.out.println("족발의 가격: "+priceJok);
+		
+		//map을 통해 key를 전부 추출한 공간을 만든후 
+		//Set타입 객체변수에게만  추출한 데이터가 있는 공간을 참조해주는 메서드 keySet();
+		Set<String> kSet = map.keySet();
+//		List<String> kSet = map.keySet(); //에러남
+		System.out.println(kSet);
+		Iterator<String> kIter = kSet.iterator();
+		
+		//그 set으로 추출받은 키값을 하나하나값을 받아서 포문으로 출력하기(Set계열복습)
+		//set으로 추출받은 키값과 map, while을 이용하여 음식의 가격은 얼마원입니다.라고 반복출력
+			//반환받을 변수: foodName, foodPrice
+			//Map계열인 hashMap객체는 get(key)를 통해 벨류값만 반환가능하지만,
+		//key값을 반환할순없다. 그래서 key값을 keySet() set에 따로 추출한뒤 
+		//그 키값을 이용하여 벨류를 꺼낸다.
+		while(kIter.hasNext()) {
+			String foodName = kIter.next();
+			int foodPrice = map.get(foodName);
+			System.out.printf("%s의 가격은 %d원입니다.\n", foodName, foodPrice);
+		}
+		
+		System.out.println(map.get("족발"));
+		System.out.println(map.get("ㅁㅇ러ㅑㅐㄷㅂ")); // 해당키가없으면 null값
+													//반환
+		
+		//map내부에 있는 key의 유무를 확인하는 메서드 containsKey
+			//food라는 변수를 만들고 거기에 문자열값을 넣어서 if문에
+		//map객체에 food값인 키값이 있는지 확인 하여 있으면 해당 키값의 벨류를 출력하고
+		//없으면 해당 키가 없다고 해라(피자는 없는 메뉴입니다.)
+		String food = "피자";
+		
+		if(map.containsKey(food)) {
+			System.out.println(food+"의 가격은 "+map.get(food));
+		} else {
+			System.out.println(food + "는 없는 메뉴입니다.");
+		}
+		
+		//map내부 데이터 삭제 remove(key)
+		map.remove("치킨");
+		System.out.println(map);
+
+		//map내부 데이터삭제 전부
+		map.clear();
+		System.out.println(map);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제53) Map심화
+
+1)로그인 알고리즘을 구현하라
+2)구현하고나서 회원가입도 하게해봐라
+	-회언가입할때 map으로 키와 벨류가 입력되는데 이걸 반복적으로 메뉴에 넣고 1번ㅎ이나 몇번하면 계속나오도록
+	 반복문을 사용해서 해라
+		-일반적인 방식으론 map타입 객체가 만들어져도 다음회차에서 사라지니까 그놈 값을 List에 넣어야한다.
+	-맵 내부에 벨류값으로 리스트타입을 넣어봐라.
+		-그냥하기만해봐라 
+
+package collection.map;
+
+import java.util.*;
+
+public class Login {
+	public static void main(String[] args) {
+		Map<String, String> users = new HashMap<>();
+		
+		//3명이 회원가입 되어있는상태 아래처럼
+		users.put("kim1234", "kkk1234");
+		users.put("lee5678", "lll5678");
+		users.put("park9876", "ppp9876");
+		
+		
+
+		/*
+		 * <로그인 입력값 검증>
+
+		 * 1. 입력받은 아이디가 맵에 입력된 키값에 
+		 *    해당하는지의 여부를 검사하여(containsKey 메서드 활용)
+		 * 2. 맞다면 다시한번 비밀번호의 값과 비교하여 비밀번호도 일치하면
+		 *    "로그인 성공"을 콘솔에 출력하고 반복문을 탈출하세요.
+		 * 3. 비밀번호가 다르다면 "비밀번호가 틀렸습니다"를 출력하세요.
+		 * 4. 입력받은 아이디가 맵에 입력된 키값이 아니라면 
+		 *    "아이디가 존재하지 않습니다"를 출력하세요.
+		 */
+	}
+}
+
+
+######################################################################################################
+
+답:
+
+
+
+package collection.map;
+
+import java.util.*;
+
+public class Login {
+	public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+		List<Map<String, String>> userList = new ArrayList<>();
+		
+		System.out.println("*** 회원가입을 시작합니다. ***");
+		System.out.print("- ID 등록: ");
+		String uId = sc.next();
+		System.out.print("- PW 등록: ");
+		String uPw = sc.next();
+		Map<String, String> users = new HashMap<>();
+		users.put(uId, uPw);
+		
+		userList.add(users);
+
+
+
+		//3명이 회원가입 되어있는상태 아래처럼
+		users.put("kim1234", "kkk1234");
+		users.put("lee5678", "lll5678");
+		users.put("park9876", "ppp9876");
+
+
+
+		/*
+		 * <로그인 입력값 검증>
+
+		 * 1. 입력받은 아이디가 맵에 입력된 키값에 
+		 *    해당하는지의 여부를 검사하여(containsKey 메서드 활용)
+		 * 2. 맞다면 다시한번 비밀번호의 값과 비교하여 비밀번호도 일치하면
+		 *    "로그인 성공"을 콘솔에 출력하고 반복문을 탈출하세요.
+		 * 3. 비밀번호가 다르다면 "비밀번호가 틀렸습니다"를 출력하세요.
+		 * 4. 입력받은 아이디가 맵에 입력된 키값이 아니라면 
+		 *    "아이디가 존재하지 않습니다"를 출력하세요.
+		 */
+
+		Scanner scan = new Scanner(System.in);
+
+		while(true) {
+
+			System.out.print("아이디 입력: ");
+			String id = scan.next();
+
+			System.out.println("비밀번호 입력: ");
+			String password = scan.next();
+
+			if(users.containsKey(id)) {
+				System.out.println("해당 id는 존재합니다.");
+			} else {
+				System.out.println("해당 id는 존재하지 않습니다.");
+				continue;
+			}
+
+			if(users.get(id).equals(password)) {
+				System.out.println("오 아이디와 비번 일치함! 로그인 성공!");
+				System.out.println("로그인 인증 시스템 종료!");
+				return;
+			}
+			System.out.println("에이 아이디는 맞는데 비번 까먹었나봐?");
+		}
+	}//main
+}//class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
