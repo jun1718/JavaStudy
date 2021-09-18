@@ -347,24 +347,6 @@ public class _3RandomExample {
 
 
 
-public class _4ConditionalOperatorExample {
-
-	public static void main(String[] args) {
-		//-4~5까지의 정수 난수값 발생
-		int r = (int)(Math.random()*10-4);
-		
-		System.out.println("-4~5까지의 정수난수값 : " + r);
-		
-		
-	}
-	
-	
-	
-}
-
-
-
-
 
 
 
@@ -2541,194 +2523,6 @@ char gender = scan.next().charAt(0);	//버퍼에서 바로 0번인덱스만 가�
 
 
 
-######################################################################################################
-예제14)고객관리프로그램(다음 강의를 통해 완성될 예제_정보수정, 정보삭제 기능이 없음)
-
-
-
-#요구사항정의
--고객의 정보는 이름,성별,이메일,출생년도가 있습니다. 고객의 정보를 입력받아 배열에 저장해야합니다. 이름은 문자열로 저장하며, 
- 성별은 남자는 M, 여자는 F로 저장합니다. 이메일은 문자열로 저장하며 태어난 출생년도는 정수로 저장합니다.
--고객관리프로그램은 고객의 정보를 저장, 조회, 수정, 삭제할 수 있는 기능이 있어야 합니다. 고객 정보를 파일에 저장하는 기능을 구현하지 않아도 
- 됩니다.
--I를 눌러 고객의 정보를 입력받도록 하며, 저장된 고객정보는 P또는 N을 눌러 이전 고객정보 또는 다음 고객정보를 조회할수 있어야합니다.
- 조회한 고객정보는 U를 눌러 새로운 정보로 수정할수 있어야합니다. D를 누르면 조회한 고객 정보를 배열에서 삭제해야 합니다. 프로그램의 
- 종료는 Q를 누릅니다.
-
-
-
-
-
-######################################################################################################
-
-
-
-
-답:
-
-
-
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class CustomerManager {
-	//프로그램 전체에서 사용할 변수들은 클래스블록 바로 아래에 선언합니다.
-	//static이 붙은 블록에서는 static변수와 static 메서드만 사용할수 있음
-	
-//globalVariable
-	static String[] nameList = new String[100];
-	static char[] genderList = new char[100];
-	static String[] emailList = new String[100];
-	static int[] birthList = new int[100];
-	
-	//현재 고객데이터가 몇명 저장되었는지 알기위한 변수 count 선언
-	static int count = 0;
-	
-	//배열의 인덱스를 조작하기 위해 인덱스를 변수화시킴
-	//배열의 인덱스는 0번부터 출발함으로 초기값을 0바로 이전값인 -1로 세팅하여 초기에
-	//next를 실행했을때 인덱스가 0이되어 첫번째 고객을 조회하기 위함
-	static int index = -1;
-	static Scanner scan = new Scanner(System.in);
-
-//userDefinedMethod
-	//고객정보를 입력받는 메서드 선언
-	public static void insertData() {
-		System.out.println("==============고객정보입력=============");
-		
-		System.out.print("이름 : ");
-		String name = scan.next();
-		
-		System.out.print("성별(M/F): ");
-		char gender = scan.next().charAt(0);
-		
-		System.out.print("이메일: ");
-		String email = scan.next();
-		
-		System.out.print("출생년도: ");
-		int birth = scan.nextInt();
-		
-		nameList[count] = name;
-		genderList[count] = gender;
-		emailList[count] = email;
-		birthList[count] = birth;
-		
-		System.out.println("=====================================");
-		count++;
-		index++;
-	}
-	public static void disp() {
-		for(int i=0;i<count;i++) {
-			System.out.println(nameList[i]);
-			System.out.println(genderList[i]);
-			System.out.println(emailList[i]);
-			System.out.println(birthList[i]);
-		}
-	}
-	public static void printData(int index) {
-		System.out.println("\n===========고객정보=============");
-		System.out.println(nameList[index]);
-		System.out.println(genderList[index]);
-		System.out.println(emailList[index]);
-		System.out.println(birthList[index]);
-		System.out.println("\n==============================");
-	}
-	
-	
-//main
-	public static void main(String[] args) {
-//while
-		while(true) {
-			System.out.println("\n[INFO] 고객수: " + count
-					+ ", 인덱스: " + index);
-			System.out.println("메뉴를 입력하세요.");
-			System.out.println("(I)nsert, (P)revious, "
-					+ "(N)ext, (C)urrent, (U)pdate, "
-					+ "(D)elete, (Q)uit");
-			System.out.print("메뉴 입력: ");
-			String menu = scan.next();
-			
-			menu = menu.toUpperCase();
-			char m = menu.charAt(0);
-//switch
-			switch(m) {
-			case 'ㅑ':
-			case 'I':
-				System.out.println("\n고객정보 입력을 시작합니다.");
-				insertData();
-				System.out.println("고객정보가 정상적으로 입력되었습니다.");
-//				System.out.println("현재 종류별 총 입력정보");
-//				System.out.println(Arrays.toString(nameList));
-//				System.out.println(Arrays.toString(genderList));
-//				System.out.println(Arrays.toString(emailList));
-//				System.out.println(Arrays.toString(birthList));
-				break;
-			case 'ㅔ':
-			case 'P':			
-				if(count==0) {
-					System.out.println("데이터를 먼저 입력해주세요."
-							+"\n현재 데이터가 하나도 없습니다.");
-					continue;
-				}
-				System.out.println("\n이전 고객정보를 조회합니다.");
-				if(index==0) {
-					System.out.println("이전 데이터가 없습니다.(현재 첫번재) "
-							+ "\n첫번째 데이터를 다시 출력합니다.");
-					printData(index);
-					continue;
-				}
-				index--;
-				printData(index);
-				break;
-			case 'ㅜ':
-			case 'N':
-				if(count==0) {
-					System.out.println("데이터를 먼저 입력해주세요."
-							+"\n현재 데이터가 하나도 없습니다.");
-					continue;
-				}
-				System.out.println("\n다음 고객정보를 조회합니다.");
-				if(count!=0&&index==count-1) {
-					System.out.println("다음 데이터가 없습니다.(현재 마지막)"
-							+ "\n가장 마지막 데이터를 출력합니다.");
-					printData(index);
-					continue;
-				} 
-				index++;
-				printData(index);
-				
-				break;
-			case 'ㅊ':
-			case 'C':
-				System.out.println("\n현재 고객정보를 조회합니다.");
-				printData(index);
-				break;
-			case 'ㅕ':
-			case 'U':
-				System.out.println("\n현재 고객정보를 수정합니다.");
-				break;
-			case 'ㅇ':
-			case 'D':
-				System.out.println("\n현재 고객정보를 삭제합니다.");
-				break;
-			case 'ㅂ':
-			case 'Q':
-				System.out.println("\n프로그램을 종료합니다.");
-				scan.close();
-				System.exit(0);	//프로그램을 강제종료하는 구문
-				break;
-			default:
-				System.out.println("\n메뉴를 잘못 입력하셨습니다.");
-			}//switch
-		}//while
-	}//main
-}//class
-
-
-
-
-
-
-
 
 
 
@@ -2918,11 +2712,24 @@ public class CustomerManager {
  조회한 고객정보는 U를 눌러 새로운 정보로 수정할수 있어야합니다. D를 누르면 조회한 고객 정보를 배열에서 삭제해야 합니다. 프로그램의 
  종료는 Q를 누릅니다.
 
+***현재인덱스 값이 previous, next, currently, update, delete등 기능의 모든 기준이된다.
+현재 인덱스값을 기준으로 previous면 이전데이터, next면 다음데이터, update면 현재 인덱스위치의 데이터를 변경, 삭제도 현재 인덱스위치 데이터
+
+
 //각 함수에대한 조건은 모두 switch에 넣어라(함수에 탈출조건넣지마라는소리임)
-insertData(index);
-printData(index);
-updateData(index);	//풀이에서는 함수에넣긴했는데 풀때는 그렇게풀지마라 정해진건아니고 통일하자는 차원에서.. 
-deleteData(index);
+insertData();
+printData();
+updateData();	
+deleteData();
+menu();
+
+<메뉴함수 출력결과>
+
+<명령어 목록>
+현재 count: 0, 현재 index: -1
+Insert, Previous, Current, Next, Update, Delete, Quit
+명령어 입력: 
+
 
 
 ######################################################################################################
@@ -2930,10 +2737,198 @@ deleteData(index);
 
 
 
-답:
+복습시 깔끔답:
+
+
+package customer_manager;
+
+import java.util.Scanner;
+
+public class CustomerManager {
+	private String[] nameList = new String[100];
+	private char[] genderList = new char[100];
+	private String[] emailList = new String[100];
+	private int[] yearList = new int[100];
+
+	public static int count = 0;
+	public static int index = -1;
+	public static Scanner scan = new Scanner(System.in);
+	
+	public char menu() {
+		System.out.println("\n<명령어 목록>");
+		System.out.printf("현재 count : %d, 현재 index : %d\n", count, index);
+		System.out.println("[I]nsert, [P]revious, [C]urrent, [N]ext,"
+				+ "[U]pdate, [D]elete, [Q]uit");
+		System.out.print("명령어 입력: ");
+		char menu = scan.next().toUpperCase().charAt(0);
+		return menu;
+	}
+	
+	public void insertData() {
+		System.out.print("고객 이름입력: ");
+		String name = scan.next();
+		
+		System.out.print("고객 성별입력(M/W): ");
+		char gender = scan.next().toUpperCase().charAt(0);
+		
+		System.out.print("고객 이메일입력: ");
+		String email = scan.next();
+		
+		System.out.print("고객 출생년도입력: ");
+		int year = scan.nextInt();
+		
+		nameList[count] = name;
+		genderList[count] = gender;
+		emailList[count] = email;
+		yearList[count] = year;
+		
+		count++;
+		index = count-1;
+		System.out.println(name+"님의 고객정보 입력을 완료했습니다.");
+	}
+	
+	public void printData() {
+		System.out.println("=============고객정보 조회=============");
+		System.out.println("이름 : "+nameList[index]);
+		System.out.println("성별 : "+genderList[index]);
+		System.out.println("메일 : "+emailList[index]);
+		System.out.println("출생년도 : "+yearList[index]);
+		System.out.println("==================================");
+	}
+	
+	public void updateData() {
+		System.out.print("고객 이름입력: ");
+		String name = scan.next();
+		
+		System.out.print("고객 성별입력(M/W): ");
+		char gender = scan.next().toUpperCase().charAt(0);
+		
+		System.out.print("고객 이메일입력: ");
+		String email = scan.next();
+		
+		System.out.print("고객 출생년도입력: ");
+		int year = scan.nextInt();
+		
+		nameList[index] = name;
+		genderList[index] = gender;
+		emailList[index] = email;
+		yearList[index] = year;
+	}
+	
+	public void deleteData() {
+		for(int i=index;i<count-1;i++) {
+			nameList[i] = nameList[i+1];
+			genderList[i] = genderList[i+1];
+			emailList[i] = emailList[i+1];
+			yearList[i] = yearList[i+1];
+		}
+		count--;
+	}
+}
 
 
 
+
+
+
+
+
+
+
+
+
+package customer_manager;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+	
+		CustomerManager m = new CustomerManager();
+		
+		while(true) {
+			char menu = m.menu();
+			
+			switch (menu) {
+			
+			
+			case 'I':
+				System.out.println("\n***고객정보 입력을 시작합니다***");
+				m.insertData();
+				break;
+				
+				
+			case 'P':
+				System.out.println("\n***이전고객의 정보를 조회합니다.***");
+				if(CustomerManager.count == 0) {
+					System.out.println("데이터부터 입력하세요.");
+					continue;
+				}
+				if(CustomerManager.index == 0) {
+					System.out.println("현재 인덱스가 첫번재 데이터입니다.");
+					continue;
+				}
+				CustomerManager.index--;
+				m.printData();
+				break;
+				
+				
+			case 'C':
+				System.out.println("\n***현재 고객의 정보를 조회합니다.***");
+				if(CustomerManager.count == 0) {
+					System.out.println("데이터부터 입력하세요.");
+					continue;
+				}
+				m.printData();
+				break;
+				
+				
+			case 'N':
+				System.out.println("\n***다음고객의 정보를 조회합니다.***");
+				if(CustomerManager.count == 0) {
+					System.out.println("데이터부터 입력하세요.");
+					continue;
+				}
+				if(CustomerManager.index == CustomerManager.count-1) {
+					System.out.println("현재 인덱스가 마지막 데이터입니다.");
+					continue;
+				}
+				CustomerManager.index++;
+				m.printData();
+				break;
+				
+				
+			case 'U':
+				System.out.println("\n***고객정보를 수정합니다***");
+				m.updateData();
+				break;
+				
+				
+			case 'D':
+				System.out.println("\n***고객정보를 삭제합니다***");
+				m.deleteData();
+				break;
+				
+				
+			case 'Q':
+				System.out.println("\n***프로그램을 종료합니다.***");
+				System.exit(0);
+				break;
+				
+				
+			default:
+				System.out.println("I,P,C,N,D,Q 중에서 하나만 입력하세요.");
+			}
+			
+			
+		}
+	}
+
+}
+
+
+
+
+수업중 답:
 
 
 
@@ -3107,6 +3102,19 @@ public class CustomerManagement {
 		}
 	}//main
 }//class
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4482,12 +4490,11 @@ public class DmbPhone extends Phone{
 
 
 
-
 ######################################################################################################
 개념정리_overriding, overloading
 
 
-* 메서드 재정의(Overriding) : 통상적으로 메서드의 기능은 같게끔 하고 내부 블록만 추가하는 것
+* 메서드 재정의(Overriding) : 통상적으로 메서드의 기능은 같게끔 하고 내부 블록만 변경하는 것
 
 - 메서드 재정의란 부모클래스로부터 상속받은 메서드를 자식클래스에서 행위를 바꾸거나 보완하기 위해 다시 정의해서 사용하는 것을 말합니다.
 
@@ -4597,13 +4604,59 @@ public class MainClass {
 ######################################################################################################
 예제17)overriding
 
-11일차의 goodcase안의 employee,main,person,student,teacher를 가져오고 아래처럼 출력되도록
+12일차의 this_.person안의 employee,person,student,teacher를 가져오고(내부 info메서드는 person제외하고 다지워라) 
+	, oberriding.person안의 main도 가져온후
+	 아래처럼 출력되도록
 오버라이딩하라(main은 손대지마라)
 
+<문제풀기전>
+이름: 홍길동, 나이: 45
+이름: 이순신, 나이: 23
+이름: 강감찬, 나이: 44
+이름: 신사임당, 나이: 33
+
+
+<문제풀고난후 출력>
 이름: 홍길동, 나이: 45
 이름: 이순신, 나이: 23, 학번: 2018110033
 이름: 강감찬, 나이: 44, 과목: 수학
 이름: 신사임당, 나이: 33, 부서: 구매부
+
+package person;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		
+		Person hong = new Person();
+		hong.name = "홍길동";
+		hong.age = 45;
+		System.out.println(hong.info());
+		
+		Student lee = new Student();
+		lee.stuID = "2018110033";
+		lee.name = "이순신";
+		lee.age = 23;
+		System.out.println(lee.info());
+		
+		Teacher kang = new Teacher();
+		kang.subject = "수학";
+		kang.name = "강감찬";
+		kang.age = 44;
+		System.out.println(kang.info());
+		
+		Employee shin = new Employee();
+		shin.department = "구매부";
+		shin.age = 33;
+		shin.name = "신사임당";
+		System.out.println(shin.info());
+		
+
+	}
+
+}
+
+
 
 ######################################################################################################
 
@@ -5934,9 +5987,9 @@ public class Calculator {
 
 
 ######################################################################################################
-예제19)static 메소드
+예제19)static 메소드(예외경우_객체변수사용가능경우)
 
-1)아래의 에러를 고쳐라
+1)아래의 에러를 고쳐라(a를 static으로 간단하게바꿀생각말고 method2에서 뭘해줘야 에러가안날지 생각하고 풀어라)
 
 package static_.method;
 
