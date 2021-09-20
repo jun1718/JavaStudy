@@ -9963,7 +9963,28 @@ public class StringExample {
 
 
 
+java.lang.String
 
+String str2 = str.toUpperCase()
+String str2 =str.toLowerCase()
+
+String str2 = str.replace("hi", "bye");
+
+String str2 = str.length();
+
+int a = 3;
+String str2 = String.valueOf(a);
+
+String str2 = str.indexOf("hi");
+
+String str2 = str.trim();
+
+String str2 = str.substring(6); 6번인덱스부터 끝번인덱스까지 반환
+String str2 = str.substring(0,6); 0번인덱스부터 5번인덱스까지 반환
+
+String str2 = str.charAt(0);
+
+boolean check = str.equals(str2);
 
 
 
@@ -11035,10 +11056,10 @@ public class RandomExample {
 
 
 
-1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
-1. (): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
-1. (): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
-	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. (): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. (): 원본 배열의 0번 인덱스부터 몇개의 공간을 복사할거냐?
+1. (): 원본 배열에서 start인덱스에서부터 end미만 인덱스까지 복사한 배열의 주소를 반환
+
 1. (): 배열의 전체 항목을 오름차순으로 정렬.
 1. (): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
 1. (): 배열 내부공간들의 값이 모두 같은지 값비교
@@ -11064,13 +11085,18 @@ public class RandomExample {
 - Arrays 클래스 주요 메서드
 
 1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
-1. copyOf(원본배열, 복사할길이): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
-1. copyOfRange(원본배열, 시작인덱스, 끝인덱스): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
-	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. copyOf(원본배열, 복사할길이length): 원본 배열의 0번 인덱스부터 몇개의 공간을 복사할거냐?
+1. copyOfRange(arr, start, end(length)): 원본 배열에서 start인덱스에서부터 end미만 인덱스까지 복사한 배열의 주소를 반환
+
 1. sort(배열): 배열의 전체 항목을 오름차순으로 정렬.
 1. toString(배열): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
 1. equals(배열1, 배열2): 배열 내부공간들의 값이 모두 같은지 값비교
 - 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy() 메서드를 이용할 수도 있습니다
+	System.arraycopy(arr, 0, arr2, 0, 5);
+		-0은 의미없는수인거같고(0말고딴거넣으면 예외발생했음) 5는 arr배열의 총 크기 그러니까0번부터 몇개를 복사해갈거냐?라는뜻인듯
+			-이걸생각하면 int[] arr2 = copyOf(arr, length);랑 차이점은 복사한 대상을 넘겨주는차이인듯
+				copy: 반환후 배열변수에 참조해야함
+				arraycopy: 주소를참조해서 반환없이 바로 복사한 대상을 배열변수에 참조해줌
 
 ex) System.arraycopy(원본 배열, 원본시작인덱스, 복사할 타겟배열, 복사할 타겟배열 시작인덱스, 복사할 길이)
 
@@ -11217,7 +11243,7 @@ import java.util.Calendar;
 
 public class CalendarExample {
 	public static void main(String[] args) {
-		Calendar cal = Calendar.getInstance();
+
 		
 //연,월,한달중 몇번째 일, 일주일중 몇번째날, 시간, 분 을 
 //year,month,day,week,hour,min에 저장후 출력하라

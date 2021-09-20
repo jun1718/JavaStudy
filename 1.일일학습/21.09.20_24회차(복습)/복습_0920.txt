@@ -1,0 +1,2274 @@
+21.09.20_24회차(복습)
+======================================================================================================
+*복습
+======================================================================================================
+java.lang.Object
+java.lang.System
+java.lang.String
+java.lang.StringBuffer/Builder
+java.lang.Wrapper
+java.lang.Math
+java.lang.Class
+
+
+java.lang.system
+System.currentTimeMillis()
+System.nanoTime()
+System.exit(0) //프로세스 강제종료 정상종료 0 비정상 ~0
+System.gc();
+System.getProperity()
+
+
+
+java.lang.string
+
+String str2 = str.toUpperCase()
+String str2 =str.toLowerCase()
+
+String str2 = str.replace("hi", "bye");
+
+String str2 = str.length();
+
+int a = 3;
+String str2 = String.valueOf(a);
+
+String str2 = str.indexOf("hi");
+
+String str2 = str.trim();
+
+String str2 = str.substring(6); 6번인덱스부터 끝번인덱스까지 반환
+String str2 = str.substring(0,6); 0번인덱스부터 5번인덱스까지 반환
+
+String str2 = str.charAt(0);
+
+boolean check = str.equals(str2);
+
+
+java.lang.stringbuilder
+
+StringBuilder sb = new StringBuilder("i love you");
+
+sb.append("hh");
+sb.insert(0, "h"); // hi love you
+sb.replace(0,1,"oh my god!"); // oh my god! love you
+sb.setCharAt(0, 'g');
+
+int num = sb.length();
+sb.delete(0,3);
+sb.deleteCharAt(0);
+
+
+int a=6;
+sb.append(StringBuilder.toString(a));
+
+
+java.lang.math
+
+Math.PI
+
+double a = 3.59;
+Math.round(a);
+Math.floor(a);
+Math.ceil(a);
+
+Math.random();
+
+Math.min(3, 4);
+Math.max(0,5);
+
+Math.abs(-5);
+
+
+java.lang.wrapper
+
+int a = 3;
+
+Integer val1 = new Integer(a);
+Double val2 = new Double(a);
+Boolean val3 = new Boolean("ture");
+Byte val4 = new Byte((byte)3);
+Character val5 = new Character('j');
+
+int v1 = val1.intValue();
+
+double v2 = val2.doubleValue();
+boolean v3 = val3.booleanValue();
+byte v4 = val4.byteValue();
+char v5 = val5.charValue();
+
+String str = String.valueOf(a);
+Integer.parseInt(str); //(String->Integer->int언박싱까지)
+Integer.valueOf(str);	//(String->Integer까지)
+			//하지만 이젠 자동 언박싱을 지원하기때문에 굳이 int언박싱까지안해도 대입연산자 l-value가
+			//기본자료형 int이면 알아서 언박싱해주기때문에 사용적인 측면에서의 둘의 차이는 없고
+			//명확하게 나누자면 반환자료형의 차이이다.parseInt -> 기본자료형반환 valueOf -> 사용자정의자료형반환
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_ java.util 패키지(Arrays, Date, Calendar, Random)
+
+* java.util 패키지
+
+- java.util 패키지는 자바 프로그램 개발에 보조 역할을 하는 클래스들을 담고 있습니다. 주로 컬렉션 관련 클래스들을 담고 있습니다.
+- java.util 패키지 주요 클래스
+
+1. Arrays: 배열을 조작할 때 사용.
+2. Date: 날짜와 시간 정보를 저장하는 클래스
+3. Calendar: 운영체제의 날짜와 시간을 얻을 때 사용
+4. Random: 난수를 얻을 때 사용.
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. copyOf(원본배열, 복사할길이): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 인덱스까지 복사한 배열을 리턴.미만아님
+1. copyOfRange(원본배열, 시작인덱스, 끝인덱스): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. sort(배열): 배열의 전체 항목을 오름차순으로 정렬.
+1. toString(배열): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. equals(배열1, 배열2): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy() 메서드를 이용할 수도 있습니다
+
+ex) System.arraycopy(원본 배열, 원본시작인덱스, 복사할 타겟배열, 복사할 타겟배열 시작인덱스, 복사할 길이)
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArrayCopy {
+
+	public static void main(String[] args) {
+		char[] arr1 = {'J', 'A', 'V', 'A'};
+//		char[] arr2 = arr1;
+//		
+//		char[] arr3 = new char[4];
+//		arr3[0] = arr1[0];
+//		arr3[1] = arr1[1];
+//		arr3[2] = arr1[2];
+//		arr3[3] = arr1[3];
+//		
+//		
+//		System.out.println(Arrays.toString(arr1));
+//		System.out.println(Arrays.toString(arr2));
+//		System.out.println(Arrays.toString(arr3));
+//		
+//		arr1[0] = 'B';
+//
+//		System.out.println(Arrays.toString(arr1));
+//		System.out.println(Arrays.toString(arr2));
+//		System.out.println(Arrays.toString(arr3));
+		//copyof: 0번인덱스부터 해당하는 인덱스까지(미만아님) 복사하라
+		char[] arr2 = Arrays.copyOf(arr1,  arr1.length);
+		//char[] arr2 = Arrays.copyOf(arr1,  5);
+		//char[] arr2 = Arrays.copyOf(arr1,  7); 이러면 공간을 더 만들고 널값초기화
+		
+		System.out.println(Arrays.toString(arr1));
+		System.out.println(Arrays.toString(arr2));
+		
+		arr1[0] = 'D';
+		System.out.println(Arrays.toString(arr1));
+		System.out.println(Arrays.toString(arr2));	//깊은복사가 완료됨의 증거
+		
+		//copyOfRange: 첫인덱스이상 둘인덱스 미만까지를 카피하라
+		char[] arr3 = Arrays.copyOfRange(arr1, 1, 3);
+		System.out.println(Arrays.toString(arr3));
+		
+		int[] arr4 = {10,20,30,40,50,60,70,80};
+		//20~60까지 카피
+		int[] arr5 = Arrays.copyOfRange(arr4, 1,6);
+		
+		System.out.println(Arrays.toString(arr5));
+		
+	}
+}
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArrayEqual {
+	public static void main(String[] args) {
+		//배열비교 equals(배열1, 배열2)
+		int[] arr1 = {1,3,5,7,9,10};
+		int[] arr2 = {1,3,5,7,9};
+		
+//		if(arr1 == arr2) {
+//			System.out.println("배열의 각 항목이 일치함");
+//		} else {
+//			System.out.println("배열의 각 항목중 다른것이 있거나 모두 다름");
+//		}
+		if(Arrays.equals(arr1, arr2)) {
+			System.out.println("배열의 각 항목이 일치함");
+		} else {
+			System.out.println("배열의 각 항목중 다른것이 있거나 모두 다름");
+		}
+	}
+}
+
+
+package api.util.arrays;
+
+import java.util.Arrays;
+
+public class ArraySearch {
+	public static void main(String[] args) {
+		int[] scores = {75,47,23,56,89};
+		int[] scores2 = Arrays.copyOf(scores,  scores.length);
+		
+		//배열의 데이터를 오름차순으로 정렬하는 메서드 sort()
+		Arrays.sort(scores2);
+		System.out.println(Arrays.toString(scores));
+		System.out.println(Arrays.toString(scores2));
+		
+		//배열내부데이터의 인덱스번호를 탐색하는 메서드 binarySearch()
+		int index = Arrays.binarySearch(scores2,  75);
+		System.out.println("75가 저장된 인덱스: "+index);
+		
+		
+		
+		
+		
+	}
+}
+
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+package api.util.date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DatyeExample {
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(date);
+		
+		SimpleDateFormat sdf = 
+				new SimpleDateFormat("YYYY년 MM월 dd일 HH시 MM분 SS초");
+		System.out.println(sdf.format(date));
+		
+		/*
+		 * 예제) java 표준 api 공식문서를 보고 아래처럼 출력하시오.  
+		 * 19-02-11 오전 10:50:23
+		 * 오늘은 월요일입니다. 오늘은 1년중 42번째 날입니다.
+		 */
+		
+		SimpleDateFormat sdf1 = 
+				new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
+		System.out.println(sdf1.format(date));
+		SimpleDateFormat sdf2 = 
+				new SimpleDateFormat("오늘은 E요일입니다. 오늘은 1년중 D번째날입니다.");
+		System.out.println(sdf2.format(date));
+	}
+}
+
+
+#Calendar 클래스
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+		
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1; //0~11까지있고 1월이 0이다.
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(day);
+		System.out.println(week);
+		System.out.println(hour);
+		System.out.println(min);
+		String strWeek = null;
+		
+		switch(week) {
+		case 1:
+			strWeek = "일";
+			System.out.println("일요일입니다.");
+			break;
+		case 2:
+			strWeek = "월";
+			System.out.println("월요일입니다.");
+			break;
+		case 3:
+			strWeek = "화";
+			System.out.println("화요일입니다.");
+			break;
+		case 4:
+			strWeek = "수";
+			System.out.println("수요일입니다.");
+			break;
+		case 5:
+			strWeek = "목";
+			System.out.println("목요일입니다.");
+			break;
+		case 6:
+			strWeek = "금";
+			System.out.println("금요일입니다.");
+			break;
+		case 7:
+			strWeek = "토";
+			System.out.println("토요일입니다.");
+			break;
+		}
+		
+	}
+}
+
+
+#Random 클래스
+
+package api.util.random;
+
+import java.util.Random;
+
+public class RandomExample {
+	
+	
+	public static void main(String[] args) {
+		
+		//0.0이상 1.0미만의 실수 난수를리턴(Math.random()이랑 같은거임)
+		Random r = new Random();
+		double d = r.nextDouble();
+		System.out.println("실수 랜덤값: "+d);
+		//사실 이것만쓰려면 메스보다 복잡함. 메스는 스태틱메서드로 random을 가지니까 
+		//객체를 안만들어도 됨
+		
+		//논리랜덤값을 리턴하는 nextBoolean()
+		boolean b = r.nextBoolean();
+		System.out.println("논리 랜덤값: "+b);
+		
+		//정수 랜덤값(매개변수 넣거나 안넣거나)
+		//정수 int가 저장할수 있는 모든범위에서 난수를발생 -21억 ~ +21억
+		int i = r.nextInt();
+		System.out.println("정수 랜덤값: "+i);
+		
+		//전달인자로 10넣으면 0~10미만으로 출력함 즉 0~9
+		i = r.nextInt(10);		
+		System.out.println("0~9 랜덤값: "+i);
+		System.out.println("1~10 랜덤값: "+(i+1));
+	
+	}
+	
+}
+
+################################################################################################
+
+
+
+
+package java_.util.date;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateExample {
+
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(date);
+		
+		System.out.println(date.toString());
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY년ㅋ MM월 dd일 HH시 MM분 ss초");
+		System.out.println(sdf);
+		System.out.println(sdf.format(date));
+		
+	}
+}
+
+
+
+package java_.util.calendar;
+
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();	//싱글톤패턴
+		
+		int year = cal.get(Calendar.YEAR);
+//		int month = cal.get(cal.MONTH);
+		int month = cal.get(Calendar.MONTH)+1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(day);
+		System.out.println(week);
+		System.out.println(hour);
+		System.out.println(min);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제42)Arrays 클래스
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+
+1)아래것들 빈칸채우고 한번식 해봐라
+
+
+
+1. Arrays.binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. Arrays.copyOf(arr, 10): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
+1. Arrays.copyOfRange(arr, start, end(length)): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. Arrays.sort(arr): 배열의 전체 항목을 오름차순으로 정렬.
+1. Arrays.toString(arr): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. Arrays.equals(arr1, arr2): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy()메서드를 이용할 수도 있습니다
+
+
+package java_.util.arrays;
+
+import java.util.Arrays;
+
+public class ArraysExample {
+
+	
+	public static void main(String[] args) {
+//		Person p1 = new Person(1);
+//		Person p2 = new Person(2);
+//		Person p3 = new Person(3);
+//		Person p4 = new Person(4);
+//		
+//		Person[] persons = {p1, p2, p3, p4};
+//		
+//		System.out.println(p1);
+//		
+//		System.out.println(Arrays.toString(persons));
+//		
+//		String[] str = {"hi1", "bye", "good", "hhe"};
+//		System.out.println(Arrays.toString(str));
+//		Arrays.sort(str);
+//		System.out.println(Arrays.toString(str));
+//		System.out.println(Arrays.binarySearch(str, "good"));
+//		
+//		System.out.println(str[0].equals("hi1"));
+//		System.out.println(str[0]=="hi1");
+//		
+//		int[] arr = {1,2,4,3, 5};
+//		System.out.println(Arrays.binarySearch(arr, 3));
+		
+		int[] arr = {1,2,3,4,5};
+//		
+//		int[] arr1 = Arrays.copyOf(arr, 5);
+//		
+//		
+//		System.out.println(Arrays.toString(arr));
+//		System.out.println(Arrays.toString(arr1));
+////		System.gc();
+////		System.getProperty(null);
+//		System.currentTimeMillis();
+//		int[] arr2 = new int[5];
+//		System.arraycopy(arr, 0, arr2, 0, 5);
+//		
+//		System.out.println(Arrays.toString(arr2));
+//		
+//		
+		
+		int[] arr2 = Arrays.copyOf(arr, 5);
+		
+		System.out.println(Arrays.toString(arr2));
+		
+		int[] arr3 = Arrays.copyOfRange(arr, 1, 4);
+		
+		System.out.println(Arrays.toString(arr3));
+		
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
+
+		
+		System.out.println(Arrays.binarySearch(arr, 1));
+		
+		System.out.println(Arrays.equals(arr, arr2));
+		System.out.println(Arrays.equals(arr, arr3));
+	}
+	
+}
+
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+* Arrays 클래스
+
+- Arrays 클래스는 배열 조작 기능을 가지고 있습니다. 배열 조작이란 배열의 복사, 항목 정렬, 항목 검색과 같은 기능을 말합니다.
+- Arrays 클래스의 모든 메서드는 정적 메서드이므로 클래스이름으로 바로 사용이 가능합니다.
+- Arrays 클래스 주요 메서드
+
+1. binarySearch(배열, 찾는값): 전체 배열 항목에서 찾는 값이 있는 인덱스를 리턴.
+1. copyOf(원본배열, 복사할길이): 원본 배열의 0번 인덱스부터 복사할 길이만큼의 즉, 길이-1인 인덱스까지 복사한 배열을 리턴.미만
+1. copyOfRange(원본배열, 시작인덱스, 끝인덱스): 원본 배열의 시작 인덱스에서 끝 인덱스 이전까지 복사한 배열 리턴, 
+	시작 인덱스는 포 함되지만 끝 인덱스는 포함되지 않음.미만
+1. sort(배열): 배열의 전체 항목을 오름차순으로 정렬.
+1. toString(배열): 배열의 값들을 "[값1, 값2,...]"와 같은 문자열 형식으로 리턴.
+1. equals(배열1, 배열2): 배열 내부공간들의 값이 모두 같은지 값비교
+- 단순히 배열을 복사할 목적이라면 System 클래스의 arraycopy() 메서드를 이용할 수도 있습니다
+
+ex) System.arraycopy(원본 배열, 원본시작인덱스, 복사할 타겟배열, 복사할 타겟배열 시작인덱스, 복사할 길이)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제43)Date
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+
+
+1)아래 출력양식이 되도록 Date 클래스를 이용해서 만들어라
+
+(요일날짜 등은 푸는 날에 맞춰서)
+Tue Sep 14 21:09:13 KST 2021
+2021년 09월 14일 21시 09분 887초 
+21-09-14 오후 09:09:13
+오늘은 화요일입니다. 오늘은 1년중 257번째날입니다.
+
+package java_.util.date;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DateExample {
+
+	public static void main(String[] args) {
+//		Date date = new Date();
+//		System.out.println(date);
+//		
+//		System.out.println(date.toString());
+//		
+//		
+//		SimpleDateFormat sdf = new SimpleDateFormat("YYYY년ㅋ MM월 dd일 HH시 MM분 ss초");
+//		System.out.println(sdf);
+//		System.out.println(sdf.format(date));
+//		
+//		
+//		
+		Date date = new Date();
+		System.out.println(date);
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYY년 MM월 dd일 HH시 MM분 ss초");
+		
+		System.out.println(sdf.format(date));
+		
+		SimpleDateFormat sdf2 = new SimpleDateFormat("YY-MM-dd a HH:MM:ss\n"
+				+ "오늘은 E요일입니다. 오늘은 1년중 DD번째 날입니다.");
+		System.out.println(sdf2.format(date));
+	}
+}
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+
+* Date 클래스
+
+- Date 클래스는 날짜를 표현하는 클래스입니다. 객체 간에 날짜 정보를 주고받을 때 주로 사용합니다.
+- Date 객체를 기본생성자로 생성하면 컴퓨터의 현재 날짜를 읽어 객체로 만듭니다.
+- Date 클래스의 toString() 메서드는 영문으로 된 날짜를 문자열로 리턴하는데 만약 특정 문자열 포맷으로 
+	얻고 싶다면 java.text 패키지의 SimpleDateFormat 클래스를 이용하면 됩니다.
+
+
+
+
+
+
+
+
+package api.util.date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class DatyeExample {
+	public static void main(String[] args) {
+		Date date = new Date();
+		System.out.println(date);
+		
+		SimpleDateFormat sdf = 
+				new SimpleDateFormat("YYYY년 MM월 dd일 HH시 MM분 SS초");
+		System.out.println(sdf.format(date));
+		
+		/*
+		 * 예제) java 표준 api 공식문서를 보고 아래처럼 출력하시오.  
+		 * 19-02-11 오전 10:50:23
+		 * 오늘은 월요일입니다. 오늘은 1년중 42번째 날입니다.
+		 */
+		
+		SimpleDateFormat sdf1 = 
+				new SimpleDateFormat("yy-MM-dd a hh:mm:ss");
+		System.out.println(sdf1.format(date));
+		SimpleDateFormat sdf2 = 
+				new SimpleDateFormat("오늘은 E요일입니다. 오늘은 1년중 D번째날입니다.");
+		System.out.println(sdf2.format(date));
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제44)#Calendar 클래스
+
+
+
+1)아래 주석의 요구대로 하라
+
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+
+		
+//연,월,한달중 몇번째 일, 일주일중 몇번째날, 시간, 분 을 
+//year,month,day,week,hour,min에 저장후 출력하라
+
+		
+//일주일중 몇번째날인지(week)와 switch~case를 이용하여 각번째 날에 맞춰 무슨요일인지 출력하도록 하라		
+	
+	}
+}
+
+
+
+package java_.util.calendar;
+
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+//		Calendar cal = Calendar.getInstance();	//싱글톤패턴
+//		
+//		int year = cal.get(Calendar.YEAR);
+////		int month = cal.get(cal.MONTH);
+//		int month = cal.get(Calendar.MONTH)+1;
+//		int day = cal.get(Calendar.DAY_OF_MONTH);
+//		int week = cal.get(Calendar.DAY_OF_WEEK);
+//		int hour = cal.get(Calendar.HOUR);
+//		int min = cal.get(Calendar.MINUTE);
+//		
+//		System.out.println(year);
+//		System.out.println(month);
+//		System.out.println(day);
+//		System.out.println(week);
+//		System.out.println(hour);
+//		System.out.println(min);
+		
+		Calendar cal = Calendar.getInstance();
+		
+//연,월,한달중 몇번째 일, 일주일중 몇번째날, 시간, 분 을 
+//year,month,day,week,hour,min에 저장후 출력하라
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int minute = cal.get(Calendar.MINUTE);
+		int second = cal.get(Calendar.SECOND);
+		
+		System.out.printf("%d년 %d월 %d일, 일주일중 %d번째날(일요일~토요일/1~7) %d시 %d분 %d초\n",
+				year, month, day, week, hour, minute, second);
+
+		//일주일중 몇번째날인지(week)와 switch~case를 이용하여 각번째 날에 맞춰 무슨요일인지 출력하도록 하라		
+		switch(week) {
+		case 1:
+			System.out.println("일요일입니다.");
+			break;
+		case 2:
+			System.out.println("월요일입니다.");
+			break;
+		case 3:
+			System.out.println("화요일입니다.");
+			break;
+		case 4:
+			System.out.println("수요일입니다.");
+			break;
+		case 5:
+			System.out.println("목요일입니다.");
+			break;
+		case 6:
+			System.out.println("금요일입니다.");
+			break;
+		case 7:
+			System.out.println("토요일입니다.");
+			break;
+		}
+	}
+}
+
+######################################################################################################
+
+
+답:
+
+
+
+
+#Calendar 클래스
+package api.util.calendar;
+
+import java.util.Calendar;
+
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar cal = Calendar.getInstance();
+		
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH)+1; //0~11까지있고 1월이 0이다.
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int week = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		int min = cal.get(Calendar.MINUTE);
+		
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(day);
+		System.out.println(week);
+		System.out.println(hour);
+		System.out.println(min);
+		String strWeek = null;
+		
+		switch(week) {
+		case 1:
+			strWeek = "일";
+			System.out.println("일요일입니다.");
+			break;
+		case 2:
+			strWeek = "월";
+			System.out.println("월요일입니다.");
+			break;
+		case 3:
+			strWeek = "화";
+			System.out.println("화요일입니다.");
+			break;
+		case 4:
+			strWeek = "수";
+			System.out.println("수요일입니다.");
+			break;
+		case 5:
+			strWeek = "목";
+			System.out.println("목요일입니다.");
+			break;
+		case 6:
+			strWeek = "금";
+			System.out.println("금요일입니다.");
+			break;
+		case 7:
+			strWeek = "토";
+			System.out.println("토요일입니다.");
+			break;
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제45) java.util.Random
+
+<로또번호 출력하기> 
+1.생성: 로또번호 6개를 담을 배열을 생성하세요
+2.저장: 정수 1~45 범위의 난수를 6개 발생시켜 배열에 담으세요
+	-단, 중복되는 수는 저장될수 없다.
+3.정렬: Arrays.sort(배열이름) 메서드를 이용하여 배열을 오름차순으로 정돈하세요.
+
+package lotto;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Lotto {
+	private int[] myLotto = new int[6];
+	private int[] realLotto = new int[6];
+	
+	private Random r = new Random();	
+	private Scanner scan =new Scanner(System.in);
+	
+	public void createNumber(int[] arr) {
+		int i = 0;
+		while(i<6) {
+			int num = r.nextInt(45)+1;
+			int j;
+			for(j=0;j<i;j++) {
+				if(arr[j]==num) break;
+			}
+			
+			if(j==i) {
+				arr[i] = num;
+				i++;				
+			}
+		}//while
+		Arrays.sort(arr);
+	}//createNumber
+
+	
+	
+	public void setMyLotto() {
+		createNumber(myLotto);
+		System.out.println("myLotto번호 6자리가 자동입력되었습니다.\n"
+				+ "myLotto : "+Arrays.toString(myLotto)+"\n");
+	}
+	public String getMyLotto() {
+		return Arrays.toString(myLotto);
+	}
+	
+	public void setRealLotto() {
+		createNumber(realLotto);
+		System.out.println("로또머신이 Lotto번호를  랜덤으로 6자리 뽑았습니다.\n"
+				+ "realLotto : "+Arrays.toString(realLotto)+"\n");
+	}
+	public String getRealLotto() {
+		return Arrays.toString(realLotto);
+	}
+	
+	
+	public void closeScan() {
+		scan.close();
+	}
+}
+
+
+package lotto;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Lotto lottoM = new Lotto();
+		
+		lottoM.setMyLotto();
+		lottoM.setRealLotto();
+		
+		System.out.println("고객들에게 로또번호 공개!!!");
+		System.out.print("내 로또번호 : ");
+		System.out.println(lottoM.getMyLotto());
+		System.out.print("당첨번호 : ");
+		System.out.println(lottoM.getRealLotto());
+			
+		lottoM.closeScan();
+	}
+}
+
+######################################################################################################
+
+
+강사님 답:
+
+
+package api.util.random;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class Lotto3 {
+	public static void main(String[] args) {
+		Random r = new Random();
+		int[] win = new int[6];
+		
+		int count = 0;
+		
+		while(true) {
+			int rn = r.nextInt(45)+1;
+			boolean check = true;
+			for(int j=0;j<count;j++) {//count가 0개있을때는 비교할필요가없다. 1개있을때는 1번비교 2개잇을때는
+				if(rn == win[j]) {//2번비교
+					check=false;
+					break;
+				}
+			}
+			if(check) {
+				win[i] = rn;
+				count++;
+			}
+			
+			if(count==6) break;
+		}
+		
+		Arrays.sort(win);
+		System.out.println(Arrays.toString(win));
+	}//main
+}//class
+
+
+
+
+
+
+내 답(시간복잡도가 쓰레기임):
+
+package api.util.random;
+
+import java.util.Random;
+import java.util.Arrays;
+
+public class Lotto2 {
+	public static void main(String[] args) {
+		int[] arr = new int[6];
+				
+		Random r = new Random();
+		int num;
+		
+		for(int i=0;i<6;i++) {
+			while(true) {
+				int j=0;
+				num = r.nextInt(45)+1;
+				while(j<6 && num!=arr[j]) {
+					j++;
+				}
+				if(j==6) {
+					arr[i] = num;
+					break;
+				}//if
+			}//while
+		}//for
+		
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
+	}//main
+}//class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제46) java.util.Random 로또게임(보너스게임)
+
+
+#아래 출력결과가 노오도록 Random클래스를 이용해서(lang 패키지의 Math사용금지) 
+	-최대한 메서드를 최소단위로 쪼개라(생각하는 연습)
+
+1)bonusgame이 실패한경우
+
+가슴이~~ 두근두근!! 로또 자동입력 시작!
+
+고객님의 로또번호 자동입력이 완료되었습니다.
+고객님의  인생역전 번호 : [2, 4, 22, 23, 29, 45]
+
+이번주 로또번호 추첨시작!
+이번주 로또번호 결과 : [1, 9, 13, 15, 22, 25]
+
+*****!!보너스게임 시작!!*****
+bonus number : 39
+보너스게임 실패하셨네요!
+
+<결과 발표! 두구두구두구~~!!!>
+
+맞춘갯수 : 1개
+꽝! 그냥 꽝! 역전은 무슨! 꽝!!!
+
+
+2)bonusgame이 성공한경우
+
+가슴이~~ 두근두근!! 로또 자동입력 시작!
+
+고객님의 로또번호 자동입력이 완료되었습니다.
+고객님의  인생역전 번호 : [2, 3, 17, 26, 27, 34]
+
+이번주 로또번호 추첨시작!
+이번주 로또번호 결과 : [2, 5, 14, 18, 27, 37]
+
+*****!!보너스게임 시작!!*****
+bonus number : 26
+보너스게임은 승리하셨네요! 과연 5개를 맞추셨을까요?
+맞추셨다면 2등! 못맞췄다면 무쓸모!
+
+<결과 발표! 두구두구두구~~!!!>
+
+맞춘갯수 : 2개
+꽝! 그냥 꽝! 역전은 무슨! 꽝!!!
+ 
+
+package lotto;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Lotto2 {
+	private int[] myLotto = new int[6];
+	private int[] realLotto = new int[6];
+	private int bonusNum;
+	private int count;
+	private boolean bonusResult;
+	
+	private Random r = new Random();	
+	private Scanner scan = new Scanner(System.in);
+	
+	public void createNumber(int[] arr) {
+		int i = 0;
+		while(i<arr.length) {
+			int num = r.nextInt(45)+1;
+			int j;
+			for(j=0;j<i;j++) {
+				if(arr[j]==num) break;
+			}
+			
+			if(j==i) {
+				arr[i] = num;
+				i++;				
+			}
+		}//while
+		Arrays.sort(arr);
+	}//createNumber
+
+	public void bonusGame() {
+		System.out.println("\n참고)저희 세계관에서는 극적 기대감을 조성하기 위해서 실행결과를 보너스게임부터 발표합니다.");
+		System.out.println("\n*****!!보너스게임 결과 발표!!*****");
+		
+		setBonusNum();
+		System.out.println("bonus number : "+bonusNum);
+		
+		compareNumber();
+		
+		if(bonusResult) {
+			System.out.println("\n보너스게임은 승리하셨네요! 과연 5개를 맞추셨을까요?"
+					+ "\n5개를 안맞추셨다면 보너스게임을 맞춰도 2등을 못한답니다! 무쓸모라는거!!");
+			return;
+		}
+		System.out.println("\n보너스게임 패배! 이러면 5개맞춰도 자동 3등입니다.");
+	}
+	
+	public void compareNumber() {
+		int point=0;
+		for(int i=0;i<myLotto.length;i++) {
+			for(int j=point;j<realLotto.length;j++) {
+				if(myLotto[i]==realLotto[j]) {
+					count++;
+					point = j+1;
+					break;
+				}
+			}
+		}
+		
+		for(int i=0;i<myLotto.length;i++) {
+			if(bonusNum==myLotto[i]) {
+				bonusResult = true;
+			}
+		}
+	}
+	
+	public void resultPresent() {
+		System.out.println("\n<결과 발표! 두구두구두구~~!!!>\n과연 인생역전 가능할것인가?!!!");
+		
+		System.out.println("고객들에게 로또번호 공개!!!");
+		System.out.println("\n내 로또번호 : "+Arrays.toString(myLotto));
+		System.out.println("당첨번호 : "+Arrays.toString(realLotto));
+		
+		System.out.printf("\n본게임 맞춘 갯수 : %d개\n\n", count);
+		
+		switch(count) {
+		case 6:
+			System.out.println("허걱!!! 1등 당첨하셨당!! 추카포카 몰디브가서 모히또 한잔하세요^_^");
+			break;
+			
+		case 5:
+			if(bonusResult) {
+				System.out.println("2등 당첨되셨습니다.");
+				break;
+			} 
+			System.out.println("에헤이 2등 못됐네~~ 보너스게임을 못맞추셔서 ㅜㅜ 어쨋든 3등 축하!!");
+			break;
+			
+		case 4:
+			System.out.println("4등축하!!");
+			break;
+			
+		case 3:
+			System.out.println("5등축하!!");
+			break;
+			
+		default:
+			System.out.println("꽝!! 인생역전은 무슨!!!!!! 일이나 열심히 하자!");
+		}
+	}
+	
+	public void setMyLotto() {
+		createNumber(myLotto);
+		System.out.println("myLotto번호 6자리가 자동입력되었습니다.");
+//		System.out.println("myLotto : "+Arrays.toString(myLotto)+"\n");
+	}
+	public String getMyLotto() {
+		return Arrays.toString(myLotto);
+	}
+	
+	public void setRealLotto() {
+		createNumber(realLotto);
+		System.out.println("로또머신이 Lotto번호를  랜덤으로 6자리 뽑았습니다.");
+//		System.out.println("realLotto : "+Arrays.toString(realLotto)+"\n");
+	}
+	public String getRealLotto() {
+		return Arrays.toString(realLotto);
+	}
+	
+	public void setBonusNum() {
+		while(true) {
+			bonusNum = r.nextInt(46)+1;
+			int j;
+			for(j=0;j<realLotto.length;j++) {
+				if(realLotto[j]==bonusNum) break;
+			}
+			
+			if(j==realLotto.length) break;				
+		}//while
+	}
+	public int getBonusNum() {
+		return bonusNum;
+	}
+	
+	public void closeScan() {
+		scan.close();
+	}
+}
+
+
+package lotto;
+
+public class MainClass {
+
+	public static void main(String[] args) {
+		Lotto2 lottoM = new Lotto2();
+		
+		lottoM.setMyLotto();
+		lottoM.setRealLotto();
+		
+		lottoM.bonusGame();
+		
+		lottoM.resultPresent();
+		
+		lottoM.closeScan();
+	}
+}
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+package api.util.random;
+
+import java.util.Random;
+import java.util.Arrays;
+
+public class Lotto4 {
+	
+	
+	public static int randomNumber() {
+		Random r = new Random();
+		int num = r.nextInt(45)+1;
+		
+		return num;
+	}
+	
+	
+	public static int[] createLotto() {
+		int[] lotto = new int[6];
+		int count = 0;
+	
+		while(true) {
+			int num = randomNumber();
+			boolean check = true;
+			for(int i=0;i<count;i++) {				
+				if(num==lotto[i]) {
+					check = false; 
+					break;
+				}
+			}
+			if(check) {
+				lotto[count] = num;
+				count++;
+			}
+			
+			if(count==6) break;
+		}
+		
+		Arrays.sort(lotto);
+		
+		return lotto;
+	}
+	
+	
+	public static boolean bonusCheck(int[] myLotto, int bonusNumber) {		
+		for(int j=0;j<myLotto.length;j++) {				
+			if(myLotto[j] == bonusNumber) {
+				System.out.println("보너스게임은 승리하셨네요! 과연 5개를 맞추셨을까요?\n맞추셨다면 2등! 못맞췄다면 무쓸모!");
+				return true;
+			}
+		}
+		System.out.println("보너스게임 실패하셨네요!");
+		return false;
+	}
+	
+	
+	public static boolean bonusGame(int[] myLotto, int[] win) {
+		System.out.println("\n*****!!보너스게임 시작!!*****");
+		int i=0;
+		int bonusNumber;
+		
+		while(true) {
+			bonusNumber = randomNumber();
+			while(i<win.length && bonusNumber != win[i]) {
+				i++;
+			}
+			if(i==6) break;
+		}			
+		
+		System.out.println("bonus number : "+bonusNumber);
+		return bonusCheck(myLotto, bonusNumber);
+	}
+	
+	public static int firstCheck(int[] myLotto, int[] win) {			
+		int count = 0;
+		
+		for(int i=0;i<myLotto.length;i++) {
+			for(int j=0;j<win.length;j++) {
+				if(myLotto[i]==win[j]) count++;
+			}
+		}
+		
+		return count;
+	}
+
+	
+	public static void disp(int count, boolean bonusGameResult) {
+		System.out.println("\n<결과 발표! 두구두구두구~~!!!>");
+		System.out.println("\n맞춘갯수 : "+count+"개");
+		if(count==6) {
+			System.out.println("당첨 1등입니다! 100억원");
+			return;
+		}
+		if(count==5 && bonusGameResult) {
+			System.out.println("2등입니다. 20억원");
+			return;
+		}
+		if(count==5) {
+			System.out.println("3등입니다. 1억원");
+			return;
+		}
+		if(count==4) {
+			System.out.println("4등입니다. 1천만원");
+			return;
+		}
+		if(count==3) {
+			System.out.println("5등입니다. 5천원");
+			return;
+		}	
+		if(count<=2) {
+			System.out.println("꽝! 그냥 꽝! 역전은 무슨! 꽝!!!");
+			return;
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		System.out.println("가슴이~~ 두근두근!! 로또 자동입력 시작!");
+		int[] myLotto = createLotto();
+		System.out.println("\n고객님의 로또번호 자동입력이 완료되었습니다.");
+		System.out.println("고객님의  인생역전 번호 : "+ Arrays.toString(myLotto));
+		
+		
+		System.out.println("\n이번주 로또번호 추첨시작!");
+		int[] win = createLotto();
+		System.out.println("이번주 로또번호 결과 : "+Arrays.toString(win));
+
+		
+		//System.out.println(myLotto.equals(win)); // 이게 true면 당첨임
+		
+		int count = firstCheck(myLotto, win);
+		boolean bonusGameResult = bonusGame(myLotto, win);
+		disp(count, bonusGameResult);		
+		
+	}//main
+}//class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################################################
+개념정리_collection개념과 List 컬렉션
+
+
+list : 순차형 집합
+map : 비정형 집합
+set : 중복을 허용 x, 순서x
+
+
+* Collection(배열의 단점인 고정적 크기(이미터블) 같은 문제를 좀 해결함)
+
+- 자바 프로그램에서 객체를 객체들의 모음 형식으로 관리할 수 있는 방법을 제공하는 클래스들을 컬렉션이라고 부릅니다.
+- 컬렉션은 배열과 유사하지만 데이터를  저장/조회/수정/삭제하는 작업을 쉽게 처리할  수 있으며, 동적인 크기를 갖는다는 장점이  있습  니다.
+- 컬렉션 계열은 Set/List/Map 등의 인터페이스가 있으며 이를 구현한 클래스를 이용하면 객체들을 모음저장할 수 있습니다.
+
+
+* List 컬렉션
+	-컬렉션의 계열은 setlistmap 3가지의 인터페이스로 나누고, 해당 인터페이스가 구현하여 컬렉션을(객체들 저장 가능 클래스) 만든다.
+	-이 과정을통해 만들어진 컬렉션의 인터페이스가 list라면 list컬렉션이라한다.
+	-즉 진짜 컬렉션이라고한다면 ArrayList가 진짜 컬렉션인거다.
+
+- List 컬렉션은 객체를 인덱스로 관리하기 때문에 객체를 저장하면 자동으로 인덱스 번호가 부여되고 인덱스를 통해 객체를 검색, 삭제할 수 
+	있는 기능을 제공합니다.
+- List 는 객체를 순서대로 저장하며 동일한 객체를 중복 저장할 수 있습니다.
+1.데이터가 순서대로 저장된다
+2.같은주소를 가진 문자열이 들어간다 => 중복데이터를 저장가능
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+1. add(E e): 주어진 객체를 List의 맨 끝부분에 추가.
+1. add(int index, E e): 주어진 인덱스에 객체를 추가.
+1. set(int index, E e): 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+
+
+- 객체 검색 기능
+1. contains(Object o): 주어진 객체가 저장되어있는지의 여부를 판단.
+1. get(int index): 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 판단.
+1. size(): 저장되어 있는 전체 객체 수를 리턴.
+
+- 객체 삭제 기능
+1. clear(): 저장된 모든 객체를 삭제.
+1. remove(int index): 주어진 인덱스에 저장된 객체를 삭제.
+1. remove(Object o): 주어진 객체를 삭제.
+
+
+* ArrayList
+
+- ArrayList 클래스는 List 인터페이스의 구현 클래스로 ArrayList에 객체를 추가하면 객체가 인덱스로 관리됩니다.
+- 일반 배열과 ArrayList는  인덱스로 객체를  관리한다는 점에서는 유사하지만 배열은 생성될 때 크기가 고정되고, 사용 중에 크기를 
+	변경할 수 없지만 ArrayList는 저장 용량을 초과한 객체들이 들어오면 자동으로 저장 용량을 증가시킵니다.
+- 기본 생성자로 ArrayList 객체를 생성하면 내부에 10개의 객체를 저장할 수 있는 초기 용량을 가지게 되며 저장되는 
+	객체 수가 증가하면 용량이 자동적으로 증가합니다.
+- ArrayList에 특정 인덱스의 객체를 제거하면 자동으로 바로 뒤 인덱스부터 마지막 인덱스까지 모두 앞으로 1칸씩 당겨집니다.
+################################################################################################
+
+
+
+
+
+
+package collection.list;
+
+import java.util.*;
+
+public class ArrayListExample {
+	public static void main(String[] args) {
+		//ArrayList 객체 생성
+		//ArrayList list = new ArrayList();
+		//List list = new ArrayList();
+		//ArrayList의 부모가 list이기때문에 list라고 많이씀
+		
+		//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는
+		//타입을 일치시키는 방법
+		//그냥 list라고만하면 모든 자료형을 다 오면 오히려 관리가 힘들어서 이랬단다
+		
+		List<String> list = new ArrayList<String>();
+		
+		String str1 = "Java";
+		String str2 = "JSP";
+		
+		System.out.println(list);
+		
+		//list에 객체를 저장하는 메서드 add(): 데이터를 맨 끝에 추가
+		list.add(str1);
+		list.add(str2);
+		list.add("DataBase");
+		list.add("JDBC");
+		list.add("JSP"); //리스트는 객체의 중복저장을 허용
+		
+		System.out.println(list);
+		
+		//list에 저장된 총 객체수 얻기size()
+		
+		int size = list.size();
+		System.out.println("list에 저장된 총 객체 수: "+size);
+		
+		//list에 객체 삽입 add(index, 객체) : 데이터를 해당 인덱스에 삽입
+		list.add(2, "Oracle");
+		
+		System.out.println(list);
+		
+		//list 객체 수정
+//		list[3] = "MySQL"; list는 객체들을 모으는 객체일뿐이지 그렇다고 배열은아니다.
+		//배열처럼 순차적으로 모이긴하는데 괄호에 인덱스로 접근하는건 컬렉션의 arrayList에는
+		//존재하지 않는 연산자기능이다.
+		
+		//이방법을 씀 : list 데이터수정 set(index, 객체)
+		
+		list.set(3,  "MySQL");
+		
+		System.out.println(list);
+		
+		//list 내부 객체 가져오기 get(index)
+//		System.out.println(list[3]); 이것도 마찬가지. 배열과는다름 괄호는 컬렉션에없다.
+		String s = list.get(2);
+		System.out.println("2번인덱스 객체: "+s);
+		
+		//list에 저장된 객체의 인덱스번호 확인하기 indexOf(객체)
+		int idx = list.indexOf("MySQL");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+		
+		//indexOf는 객체를 검색하지 못했을 경우 -1을 리턴함
+		idx = list.indexOf("안녕~~~");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+
+		//list에서 객체데이터 삭제 remove(index), remove(obj)
+				//삭제시 자동으로 공간도 없어짐
+		list.remove(5); //특정인덱스의 공간을 삭제
+		
+		System.out.println(list);
+		
+		list.remove(str1);	//특정 객체를 삭제
+		System.out.println(list);
+		
+		//list 내부에 저장된 객체의 유무확인 contains() boolean 반환
+		System.out.println(list.contains("JSP"));
+		System.out.println(list.contains(str1));
+		System.out.println(list.contains(str2));
+		System.out.println(list.contains("바붕이"));
+		
+		//list의 반복문 처리
+		System.out.println("--------------------");
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		System.out.println("--------------------");
+		
+		for(String str : list) {
+			System.out.println(str);
+		}
+		System.out.println("--------------------");
+		
+		//list내부 데이터가 전부 비었는지 확인하는 메서드 isEmpty() is면보통 의무문으로
+				//해석하는방식. 비어있니? 이러니까 값이 보통 불리언으로 반환됨
+		//비었으면 true 비지 않았으면 false
+		
+		if(list.isEmpty()) {
+			System.out.println("list가 비어있음");
+		} else {
+			System.out.println("list가 비어있지 않음");
+		}
+		
+		//list 내부 객체 전체 삭제 clear()
+		
+		list.clear();
+		System.out.println(list);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제47) collection
+collection의 계열 3가지(list, map, set)
+list 구현된 클래스를 통해 객체생성
+
+
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+List<String> strings = new ArrayList<String>();
+String str = "hi";
+
+1. strings.add(str);: 주어진 객체를 List의 맨 끝부분에 추가.
+1. strings.add(0, "bye");: 주어진 인덱스에 객체를 추가.
+1. strings.set(1, "hi");: 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+- 객체 검색 기능
+1. strings.contains("이거없을껄?");: 주어진 객체가 저장되어있는지의 여부를 판단.
+1. strings.get(0);: 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. strings.isEmpty();: 컬렉션이 비어있는지의 여부를 판단.
+1. strings.size(): 저장되어 있는 전체 객체 수를 리턴.
+1.  strings.indexOf("hi");: 특정 객체에 대한 인덱스값이 몇인지 확인
+
+
+- 객체 삭제 기능
+1. strings.clear(): 저장된 모든 객체를 삭제.
+1. strings.remove(3): 주어진 인덱스에 저장된 객체를 삭제.
+1. strings.remove(str): 주어진 객체를 삭제.
+
+
+
+1)list가 구현된 ArrayList를 이용해서 객체를 생성한후 List타입 참조변수 list에 업케스팅하시오(interface와 객체간의 다형성)
+	-단 generic을 적용하여 만드시오. ArrayList 객체에 저장할 객체들의 동일타입  :String
+	//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는 객체들의
+		//타입을 일치시키는 방법  
+
+2)아래 두 문자열을 만들고 위에서 만든 List타입 변수를 이용하여 ArrayList 객체(list)를 참조함으로 str1,str2를 객체 내부에
+	하나 하나식 각각 순차적으로 넣어라.
+	-그 후 "DataBase", "JDBC", "JSP"를 넣어라
+		-순차적으로 저장된다는 것과 중복정보도 저장된다는 것을 확인
+String str1 = "JAVA";
+String str2 = "JSP";
+
+3)List 타입 참조변수 list를 이용하여 ArrayList 객체의 내부 객체들을 출력하라.
+	-list가 가리키는 곳에 객체삽입
+		-이걸 줄여서 list에 객체삽입 이라고도 표현하나봄? 강사님보니까
+
+4)list가 가리키는 객체의 내부 객체 수정
+	list가 가진 주소를 참조하여 해당 객체의 3번인덱스 위치의 객체를 넣는 공간에
+	 "MySQL"이라는 문자열을 String 객체로 만들어서 객체 삽입
+
+5)list 객체의 내부 객체 주소 가져오기
+	-list타입 객체가 가진 객체중 2번인덱스의 주소를 반환한 후 그 값을 String s에 집어 넣은 후 
+	 s의 문자열을 출력하라.
+
+6)list 객체에 저장된 String객체중 내부 값 "MySQL"을 가지는 String객체의 인덱스번호를 반환하라
+	-내부 String객체중 그어느 객체에도 내부값으로 가지고 있지않은 값으로 메서드 적용해보고 이럴땐 뭘 봔환하는지 확인하라
+		- '-1'반환함
+
+7)객체를 참조하는 list변수의 값인 주소를 참조하여 5번째 인덱스 공간을 삭제하라(4번,3번해서 당겨지는지도확인)
+  그리고 객체인 str1이 있는 공간을 삭제하라(특정 인덱스의 공간, 특정 객체의 공간)
+	-이때 가르키는도 참조하는 이라고 사용할수있는가..
+	참조는 멤버참조연산자 등을 이용하여 직접적으로 사용할대를 참조한다고하는지
+	아니면 참조변수에 담고있는 가리키고 있는것도 참조라하는지 궁금
+		패시브적으로 주소를 가지고있는것도 참조? 엑티브적으로 직접 위치로 이동했을때를 참조?
+
+8)객체참조변수 list를 이용하여 ArrayList타입 객체의 내부객체들중에 "JSP", str1, str2, "아무거나" 라는 객체들이 있는지
+	확인하고 boolean으로 반환시켜라
+
+9)list를 이용하여 ArrayList타입 객체의 내부 모든 객체의 문자열 값들을 출력하라.
+	-일반 포문, 향상된 포문
+
+10)list 객체변수를 이용하여 객체변수가 가리키는 객체 내부가 모두 비어서 아무 객체가 없는지 확인하라
+if else를 사용해서 출력하라
+	System.out.println("list가 비어있지 않음");
+	System.out.println("list가 비어있음");
+
+11)list 객체변수를 이용하여 내부 객체 전체를 삭제하라
+
+
+
+
+
+package collection_.list.arraylist;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class ArrayListExample {
+
+	public static void main(String[] args) {
+		List<String> strings = new ArrayList<String>(); 
+		String str1 = "JAVA";
+		String str2 = "JSP";
+		
+		strings.add(str1);
+		strings.add(str2);
+		strings.add("DataBase");
+		strings.add("JDBC");
+		strings.add("JSP");
+		
+		for(int i=0;i<strings.size();i++) {
+			System.out.println(strings.get(i));
+		}
+		
+		System.out.println();
+		strings.set(3, "MySQL");
+		
+		for(String s : strings) {
+			System.out.println(s);
+		}
+		
+		String s = strings.get(2);
+		System.out.println();
+		System.out.println(s);
+		
+		System.out.println(strings.indexOf("MySQL"));
+		System.out.println(strings.indexOf("MySQLd"));
+		
+		strings.remove(4);
+		strings.remove(str1);
+		
+		for(String s1 : strings) {
+			System.out.println(s1);
+		}
+		
+		System.out.println();
+		System.out.println(strings.contains("JSP"));
+		System.out.println(strings.contains(str1));
+		System.out.println(strings.contains(str2));
+		
+		System.out.println(strings.toString());
+		
+		strings.clear();
+		
+		boolean check = strings.isEmpty();
+		if(check) {
+			System.out.println("list가 비어있음");
+		} else {
+			System.out.println("list가 비어있지 않음");
+		}
+		
+		
+	}
+
+}
+
+
+######################################################################################################
+
+
+답:
+
+
+
+
+
+
+
+
+* List 계열 주요 메서드
+
+- 객체 추가 기능
+1. add(E e): 주어진 객체를 List의 맨 끝부분에 추가.
+1. add(int index, E e): 주어진 인덱스에 객체를 추가.
+1. set(int index, E e): 주어진 인덱스에 저장된 객체를 주어진 객체로 바꿈.
+
+
+
+
+- 객체 검색 기능
+1. contains(Object o): 주어진 객체가 저장되어있는지의 여부를 판단.
+1. get(int index): 주어진 인덱스에 저장되어 있는 객체를 리턴.
+1. isEmpty(): 컬렉션이 비어있는지의 여부를 판단.
+1. size(): 저장되어 있는 전체 객체 수를 리턴.
+1. list.indexof("MySQL"); : 특정 객체에 대한 인덱스값이 몇인지 확인
+
+- 객체 삭제 기능
+1. clear(): 저장된 모든 객체를 삭제.
+1. remove(int index): 주어진 인덱스에 저장된 객체를 삭제.
+1. remove(Object o): 주어진 객체를 삭제.
+
+
+
+
+
+
+
+package collection.list;
+
+import java.util.*;
+
+public class ArrayListExample {
+	public static void main(String[] args) {
+		//ArrayList 객체 생성
+		//ArrayList list = new ArrayList();
+		//List list = new ArrayList();
+		//ArrayList의 부모가 list이기때문에 list라고 많이씀
+		
+		//제네릭(generic): 타입의 안정화를 위해 객체 내부에 저장되는
+		//타입을 일치시키는 방법
+		//그냥 list라고만하면 모든 자료형을 다 오면 오히려 관리가 힘들어서 이랬단다
+		
+		List<String> list = new ArrayList<String>();
+		
+		String str1 = "Java";
+		String str2 = "JSP";
+		
+		
+		
+		
+		
+		System.out.println(list);
+		
+		//list에 객체를 저장하는 메서드 add(): 데이터를 맨 끝에 추가
+		list.add(str1);
+		list.add(str2);
+		list.add("DataBase");
+		list.add("JDBC");
+		list.add("JSP"); //리스트는 객체의 중복저장을 허용
+		
+		System.out.println(list);
+		
+		//list에 저장된 총 객체수 얻기size()
+		
+		int size = list.size();
+		System.out.println("list에 저장된 총 객체 수: "+size);
+		
+		//list에 객체 삽입 add(index, 객체) : 데이터를 해당 인덱스에 삽입
+		list.add(2, "Oracle");
+		
+		System.out.println(list);
+		
+		//list 객체 수정
+//		list[3] = "MySQL"; list는 객체들을 모으는 객체일뿐이지 그렇다고 배열은아니다.
+		//배열처럼 순차적으로 모이긴하는데 괄호에 인덱스로 접근하는건 컬렉션의 arrayList에는
+		//존재하지 않는 연산자기능이다.
+		
+		//이방법을 씀 : list 데이터수정 set(index, 객체)
+		
+		list.set(3,  "MySQL");
+		
+		System.out.println(list);
+		
+		//list 내부 객체 가져오기 get(index)
+//		System.out.println(list[3]); 이것도 마찬가지. 배열과는다름 괄호는 컬렉션에없다.
+		String s = list.get(2);
+		System.out.println("2번인덱스 객체: "+s);
+		
+		//list에 저장된 객체의 인덱스번호 확인하기 indexOf(객체)
+		int idx = list.indexOf("MySQL");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+		
+		//indexOf는 객체를 검색하지 못했을 경우 -1을 리턴함
+		idx = list.indexOf("안녕~~~");
+		System.out.println("MySQL이 저장된 인덱스: "+idx);
+
+		//list에서 객체데이터 삭제 remove(index), remove(obj)
+				//삭제시 자동으로 공간도 없어짐
+		list.remove(5); //특정인덱스의 공간을 삭제
+		
+		System.out.println(list);
+		
+		list.remove(str1);	//특정 객체를 삭제
+		System.out.println(list);
+		
+		//list 내부에 저장된 객체의 유무확인 contains() boolean 반환
+		System.out.println(list.contains("JSP"));
+		System.out.println(list.contains(str1));
+		System.out.println(list.contains(str2));
+		System.out.println(list.contains("바붕이"));
+		
+		//list의 반복문 처리
+		System.out.println("--------------------");
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		System.out.println("--------------------");
+		
+		for(String str : list) {
+			System.out.println(str);
+		}
+		System.out.println("--------------------");
+		
+		//list내부 데이터가 전부 비었는지 확인하는 메서드 isEmpty() is면보통 의무문으로
+				//해석하는방식. 비어있니? 이러니까 값이 보통 불리언으로 반환됨
+		//비었으면 true 비지 않았으면 false
+		
+		if(list.isEmpty()) {
+			System.out.println("list가 비어있음");
+		} else {
+			System.out.println("list가 비어있지 않음");
+		}
+		
+		//list 내부 객체 전체 삭제 clear()
+		
+		list.clear();
+		System.out.println(list);
+		
+		String s1 = "hi";
+		String s2 = "hi";
+		
+		System.out.println(s1==s2);
+		s2 += "bye";
+		System.out.println(s1 == s2);
+		System.out.println(s1);
+		System.out.println(s2);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+######################################################################################################
+예제48) 학생정보를 저장하는 클래스 복습
+
+
+1)아래의 메서드들을 만들어라
+
+//학생정보를 입력받는 메서드
+//public void inputStuInfo()
+
+//총점, 평균, 학점을 계산할 메서드
+//public void calcTotAvgGrade()
+
+//학생의 성적정보를 출력하는 메서드
+//public void outputStuInfo()
+
+//getter setter
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Student {
+	private String stuId;
+	private String name;
+	private int kor, eng, math, tot;
+	private double avg;
+	private char grade;
+	
+
+}
+
+
+package collection_.list.arraylist;
+
+
+import java.util.Scanner;
+
+public class Student {
+	private String stuId;
+	private String name;
+	private int kor, eng, math, tot;
+	private double avg;
+	private char grade;
+
+	private Scanner scan = new Scanner(System.in);
+
+	public void inputStuInfo() {
+		System.out.println("# 성적정보 입력을 시작합니다.");
+		System.out.print("학번: ");
+		stuId = scan.next();
+		System.out.print("이름: ");
+		name = scan.next();
+		while(true) {
+			try {
+				System.out.print("국어: ");
+				stuId = scan.next();
+				System.out.print("영어: ");
+				stuId = scan.next();
+				System.out.print("수학: ");
+				stuId = scan.next();
+				break;
+			}catch(Exception e) {
+				System.out.println("점수만 입력하세요^_^");
+				scan.nextLine();
+			}
+		}//while
+	}//inputStuInfo
+
+
+	public void calcTotAvgGrade() {
+		this.setTot();
+		this.setAvg();
+
+		if(avg>=90) {
+			grade = 'A';
+			return;
+		}
+		if(avg>=80) {
+			grade = 'B';
+			return;
+		}
+		if(avg>=70) {
+			grade = 'C';
+			return;
+		}
+		if(avg>=60) {
+			grade = 'D';
+			return;
+		}
+		grade = 'F';
+	}
+
+	public void outputStuInfo() {
+		System.out.printf("%4s  %3s  %3d  %3d  %3d  %3d  %3.2f  %3s\n",
+				this.stuId, this.name, this.kor, this.eng, this.math,
+				this.tot, this.avg, this.grade);
+	}
+
+
+	public String getStuId() {
+		return stuId;
+	}
+
+
+	public void setStuId(String stuId) {
+		this.stuId = stuId;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public int getKor() {
+		return kor;
+	}
+
+
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+
+
+	public int getEng() {
+		return eng;
+	}
+
+
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+
+
+	public int getMath() {
+		return math;
+	}
+
+
+	public void setMath(int math) {
+		this.math = math;
+	}
+
+
+	public int getTot() {
+		return tot;
+	}
+
+
+	public void setTot() {
+		this.tot = kor+eng+math;
+	}
+
+
+	public double getAvg() {
+		return avg;
+	}
+
+
+	public void setAvg() {
+		this.avg = tot/3.0;
+	}
+
+
+	public char getGrade() {
+		return grade;
+	}
+
+
+	public void setGrade(char grade) {
+		this.grade = grade;
+	}
+
+
+}//class
+
+######################################################################################################
+
+
+답:
+
+
+
+package collection.list.student;
+
+import java.util.*;
+
+public class Student {
+	private String stuId;
+	private String name;
+	private int kor, eng, math, tot;
+	private double avg;
+	private char grade;
+	
+	private Scanner sc = new Scanner(System.in);
+	
+	//학생정보를 입력받는 메서드
+	public void inputStuInfo() {
+		System.out.println("# 성적정보 입력을 시작합니다. ");
+		System.out.print("학번: ");
+		this.stuId = sc.next();
+		System.out.print("이름: ");
+		this.name = sc.next();
+		
+		while(true) {
+			try {
+				System.out.print("국어: ");
+				this.kor = sc.nextInt();
+				System.out.print("영어: ");
+				this.eng = sc.nextInt();
+				System.out.print("수학: ");
+				this.math = sc.nextInt();
+				break;
+			}catch(Exception e) {
+				System.out.println("점수는 숫자로만 입력하세요.");
+				sc.nextLine(); //nextInt()는 자동으로엔터를 입력하기때문에
+				//입력창을 고정하기 위함 //이게없으면 무한루프가 일어난다네?
+			}
+		}
+	}
+	
+	//총점, 평균, 학점을 계산할 메서드
+	public void calcTotAvgGrade() {
+		this.tot = this.kor + this.eng + this.math;
+		this.avg = this.tot / 3.0;
+		
+		if(avg>=90) {
+			this.grade = 'A';
+		} else if(avg >= 80) {
+			this.grade = 'B';
+			
+		} else if(avg >= 70) {
+			this.grade = 'C';
+			
+		} else if(avg >= 60) {
+			this.grade = 'D';
+			
+		} else {
+			this.grade = 'E';
+		}
+	}
+	
+	//학생의 성적정보를 출력하는 메서드
+	public void outputStuInfo() {
+		System.out.printf("%4s  %3s  %3d  %3d  %3d  %3d  %3.2f  %3s\n",
+				this.stuId, this.name, this.kor, this.eng, this.math,
+				this.tot, this.avg, this.grade);
+	}
+	
+	public String getStuId() {
+		return stuId;
+	}
+	public void setStuId(String stuId) {
+		this.stuId = stuId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getKor() {
+		return kor;
+	}
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+	public int getEng() {
+		return eng;
+	}
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+	public int getMath() {
+		return math;
+	}
+	public void setMath(int math) {
+		this.math = math;
+	}
+	public int getTot() {
+		return tot;
+	}
+	public void setTot(int tot) {
+		this.tot = tot;
+	}
+	public double getAvg() {
+		return avg;
+	}
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+	public char getGrade() {
+		return grade;
+	}
+	public void setGrade(char grade) {
+		this.grade = grade;
+	}
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
